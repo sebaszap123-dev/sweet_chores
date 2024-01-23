@@ -33,16 +33,11 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
     final firstTime = await getIt<SweetChoresPreferences>().isFirstOpen;
-    getIt<DatabaseManagerCubit>()
-        .stream
-        .firstWhere((data) => data.status == DatabaseStatus.ready)
-        .then((_) {
-      if (firstTime) {
-        state.replace(const StartedRoute());
-      } else {
-        state.replace(const HomeRoute());
-      }
-    });
+    if (firstTime) {
+      state.replace(const StartedRoute());
+    } else {
+      state.replace(const HomeRoute());
+    }
   }
 
   BuildContext? getContext() => state.navigatorKey.currentContext;

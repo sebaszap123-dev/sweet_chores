@@ -52,8 +52,8 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
   }
 
   void startManager() async {
-    final db = await _initDatabase();
     emit(state.copyWith(status: DatabaseStatus.loading));
+    final db = await _initDatabase();
     try {
       emit(state.copyWith(db: db, status: DatabaseStatus.ready));
     } catch (e) {
