@@ -1,0 +1,70 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sweet_chores_reloaded/src/data/data_source.dart';
+
+// TODO: IMPLEMENT INTL for messages
+const Map<String, String> messages = {
+  'firstTime': 'Oh! It seems you have no reminders yet :c',
+  'today': "You've done for today Go for a snack, you deserve it",
+  'week': "Wow! You completed all this week tasks It's time to relax",
+  'month': 'Looks like you have nothing else to do this month, YAY!',
+  'all': "It's time to rest! You have no more tasks",
+  'overDue': 'Relax! You have no overdue tasks Go sleep or something',
+  'done': 'Hey! Now You need complete new tasks. Take a well-deserved break.',
+};
+
+class EmptyStateWidget extends StatelessWidget {
+  const EmptyStateWidget({
+    super.key,
+    this.status = FilterStatus.all,
+  });
+  final FilterStatus status;
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SweetPreferencesBloc, SweetPreferencesState>(
+      builder: (context, state) {
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                _getAssetImage(status, state.firstTimeApp),
+                width: MediaQuery.of(context).size.width * 0.7,
+                filterQuality: FilterQuality.high,
+              ),
+              const SizedBox(height: 10),
+              Container(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.6),
+                child: Text(
+                  messages[status.name]!,
+                  style: GoogleFonts.spicyRice(
+                      fontSize: 22,
+                      color: Theme.of(context).colorScheme.primary),
+                  textAlign: TextAlign.center,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+String _getAssetImage(FilterStatus status, bool isFirstTime) {
+  if (isFirstTime) {
+    return 'assets/images/empty/first_empty.jpg';
+  } else {
+    switch (status) {
+      case FilterStatus.all:
+        return 'assets/images/empty/empty_state.png';
+      default:
+        return 'assets/images/empty/empty_state.png';
+    }
+  }
+}

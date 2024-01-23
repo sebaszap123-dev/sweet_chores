@@ -1,0 +1,10 @@
+Crear iconos y con IconData.codePoint obtener un int y guardarlo en la base de datos.
+Que el icono por defecto de la categoria sea el de categories y color primary de la app,
+
+UI
+Slibar from bottom para agregar categorias!
+Slibar from bottom para agregar notas!
+Implementar el Auth (Futuro para Firebase o Una base de datos personalizada)
+
+Database
+Agregar implementación subtasks al BlocTodo (modelos, status, alter task)
