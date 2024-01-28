@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/router/todo_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 enum RouterStatus { initial, loading, success, error }
