@@ -1,36 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CLIENT_ID</key>
-	<string>855392154485-6k3elfe3r0hecif0e1tsoahuck82aeg7.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.855392154485-6k3elfe3r0hecif0e1tsoahuck82aeg7</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>855392154485-m8j2uksls2194voiq3dltu9ibvc5tc07.apps.googleusercontent.com</string>
-	<key>API_KEY</key>
-	<string>AIzaSyA8G6uSgV15hFf06P0K053EVzU2IYMC8Ms</string>
-	<key>GCM_SENDER_ID</key>
-	<string>855392154485</string>
-	<key>PLIST_VERSION</key>
-	<string>1</string>
-	<key>BUNDLE_ID</key>
-	<string>com.example.sweetChoresReloaded</string>
-	<key>PROJECT_ID</key>
-	<string>sweet-chores-e8144</string>
-	<key>STORAGE_BUCKET</key>
-	<string>sweet-chores-e8144.appspot.com</string>
-	<key>IS_ADS_ENABLED</key>
-	<false></false>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
-	<key>IS_GCM_ENABLED</key>
-	<true></true>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
-	<key>GOOGLE_APP_ID</key>
-	<string>1:855392154485:ios:95bc6fbc74d32e7a54d93c</string>
-</dict>
+	<dict>
+		<key>CLIENT_ID</key>
+		<string>855392154485-6k3elfe3r0hecif0e1tsoahuck82aeg7.apps.googleusercontent.com</string>
+		<key>REVERSED_CLIENT_ID</key>
+		<string>com.googleusercontent.apps.855392154485-6k3elfe3r0hecif0e1tsoahuck82aeg7</string>
+		<key>ANDROID_CLIENT_ID</key>
+		<string>855392154485-m8j2uksls2194voiq3dltu9ibvc5tc07.apps.googleusercontent.com</string>
+		<key>API_KEY</key>
+		<string>AIzaSyA8G6uSgV15hFf06P0K053EVzU2IYMC8Ms</string>
+		<key>GCM_SENDER_ID</key>
+		<string>855392154485</string>
+		<key>PLIST_VERSION</key>
+		<string>1</string>
+		<key>BUNDLE_ID</key>
+		<string>com.example.sweetChoresReloaded</string>
+		<key>PROJECT_ID</key>
+		<
+		<
+		<
+		<
+		<
+		<
+		< HEAD
+		<string>sweet-chores-e8144</string>
+		<key>STORAGE_BUCKET</key>
+		<string>sweet-chores-e8144.appspot.com</string>
+		=======
+		<string>sweet-chores</string>
+		<key>STORAGE_BUCKET</key>
+		<string>sweet-chores.appspot.com</string>
+		>>>>>>> a35bce0 (add firebase auth and core)
+		<key>IS_ADS_ENABLED</key>
+		<false></false>
+		<key>IS_ANALYTICS_ENABLED</key>
+		<false></false>
+		<key>IS_APPINVITE_ENABLED</key>
+		<true></true>
+		<key>IS_GCM_ENABLED</key>
+		<true></true>
+		<key>IS_SIGNIN_ENABLED</key>
+		<true></true>
+		<key>GOOGLE_APP_ID</key>
+		<
+		<
+		<
+		<
+		<
+		<
+		< HEAD
+		<string>1:855392154485:ios:95bc6fbc74d32e7a54d93c</string>
+		=======
+		<string>1:1046436470007:ios:626711e7d31990a3d947f2</string>
+		>>>>>>> a35bce0 (add firebase auth and core)
+	</dict>
 </plist>
