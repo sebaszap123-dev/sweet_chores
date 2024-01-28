@@ -17,21 +17,9 @@
 		<key>BUNDLE_ID</key>
 		<string>com.example.sweetChoresReloaded</string>
 		<key>PROJECT_ID</key>
-		<
-		<
-		<
-		<
-		<
-		<
-		< HEAD
 		<string>sweet-chores-e8144</string>
 		<key>STORAGE_BUCKET</key>
 		<string>sweet-chores-e8144.appspot.com</string>
-		=======
-		<string>sweet-chores</string>
-		<key>STORAGE_BUCKET</key>
-		<string>sweet-chores.appspot.com</string>
-		>>>>>>> a35bce0 (add firebase auth and core)
 		<key>IS_ADS_ENABLED</key>
 		<false></false>
 		<key>IS_ANALYTICS_ENABLED</key>
@@ -43,16 +31,6 @@
 		<key>IS_SIGNIN_ENABLED</key>
 		<true></true>
 		<key>GOOGLE_APP_ID</key>
-		<
-		<
-		<
-		<
-		<
-		<
-		< HEAD
 		<string>1:855392154485:ios:95bc6fbc74d32e7a54d93c</string>
-		=======
-		<string>1:1046436470007:ios:626711e7d31990a3d947f2</string>
-		>>>>>>> a35bce0 (add firebase auth and core)
 	</dict>
 </plist>
