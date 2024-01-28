@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
@@ -58,7 +59,7 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
       emit(state.copyWith(db: db, status: DatabaseStatus.ready));
     } catch (e) {
       emit(state.copyWith(status: DatabaseStatus.error));
-      throw Exception("Error emiting state of status");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -67,7 +68,7 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
     if (db != null) {
       return db;
     } else {
-      throw Exception("Can handle database");
+      return SweetDialogs.databaseSqlite();
     }
   }
 

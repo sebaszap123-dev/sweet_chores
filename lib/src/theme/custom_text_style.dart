@@ -8,9 +8,9 @@ import '../core/app_export.dart';
 class CustomTextStyles {
   // Body text style
   static get bodyMedium13 => theme.textTheme.bodyMedium!.copyWith(
-        fontSize: 13.fSize,
-      );
+      color: appTheme.blue100, fontSize: 13.fSize, fontWeight: FontWeight.bold);
   static get bodyMedium13_1 => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.blue100,
         fontSize: 13.fSize,
       );
   // Headline text style
@@ -29,6 +29,7 @@ class CustomTextStyles {
   // Label text style
   static get labelLargeSFProText =>
       theme.textTheme.labelLarge!.sFProText.copyWith(
+        color: appTheme.blue100,
         fontWeight: FontWeight.w600,
       );
 }

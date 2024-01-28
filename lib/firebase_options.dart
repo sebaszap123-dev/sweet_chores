@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC6mQOuN-ZZCwi7r0ZzJE7X0GVoIwkSXdg',
-    appId: '1:1046436470007:web:b609698d78cf04f3d947f2',
-    messagingSenderId: '1046436470007',
-    projectId: 'sweet-chores',
-    authDomain: 'sweet-chores.firebaseapp.com',
-    storageBucket: 'sweet-chores.appspot.com',
-    measurementId: 'G-SL3EBTPQQB',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBphru8opEJfdY9TSKoNcbiEYErMDZhAZQ',
-    appId: '1:1046436470007:android:07a1a7b35f3b3114d947f2',
-    messagingSenderId: '1046436470007',
-    projectId: 'sweet-chores',
-    storageBucket: 'sweet-chores.appspot.com',
+    apiKey: 'AIzaSyB3J-bsz2w3Gyn0bQsGkBUS5-Pyym7tqIY',
+    appId: '1:855392154485:android:76a096647e5a77d654d93c',
+    messagingSenderId: '855392154485',
+    projectId: 'sweet-chores-e8144',
+    storageBucket: 'sweet-chores-e8144.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAdQbE2iVWMrVznAN_d2G81q3ZctlDoQBo',
-    appId: '1:1046436470007:ios:626711e7d31990a3d947f2',
-    messagingSenderId: '1046436470007',
-    projectId: 'sweet-chores',
-    storageBucket: 'sweet-chores.appspot.com',
+    apiKey: 'AIzaSyA8G6uSgV15hFf06P0K053EVzU2IYMC8Ms',
+    appId: '1:855392154485:ios:95bc6fbc74d32e7a54d93c',
+    messagingSenderId: '855392154485',
+    projectId: 'sweet-chores-e8144',
+    storageBucket: 'sweet-chores-e8144.appspot.com',
     iosBundleId: 'com.example.sweetChoresReloaded',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAdQbE2iVWMrVznAN_d2G81q3ZctlDoQBo',
-    appId: '1:1046436470007:ios:b8e5b92ab4c0744cd947f2',
-    messagingSenderId: '1046436470007',
-    projectId: 'sweet-chores',
-    storageBucket: 'sweet-chores.appspot.com',
-    iosBundleId: 'com.example.sweetChoresReloaded.RunnerTests',
   );
 }

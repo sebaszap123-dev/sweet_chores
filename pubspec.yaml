@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  art_sweetalert: ^0.0.5
   auto_route: ^7.8.4
   bloc: ^8.1.2
   cached_network_image: ^3.3.1

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores_reloaded/src/domain/services/todo_service.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
 import 'package:sweet_chores_reloaded/src/domain/services/todo_helper.dart';
@@ -35,10 +36,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         status: TodoStatus.success,
       ));
     } catch (e) {
-      emit(state.copyWith(
-        status: TodoStatus.error,
-        errorMessage: 'A type error occurred $e',
-      ));
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -60,10 +58,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         filterTodos: state.isFiltered ? todos : [],
       ));
     } catch (e) {
-      emit(state.copyWith(
-        status: TodoStatus.error,
-        makeTodoStatus: AddTodoStatus.error,
-      ));
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -84,8 +79,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         filterTodos: state.isFiltered ? todos : [],
       ));
     } catch (e) {
-      emit(state.copyWith(status: TodoStatus.error));
-      throw Exception("can't remove to-do $e");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -118,8 +112,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         emit(state.copyWith(status: TodoStatus.error));
       }
     } catch (e) {
-      emit(state.copyWith(status: TodoStatus.error));
-      throw Exception("Can't edit to-do $e");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -157,8 +150,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         status: TodoStatus.success,
       ));
     } catch (e) {
-      emit(state.copyWith(status: TodoStatus.error));
-      throw Exception("can't alter to-do $e");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -189,8 +181,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
             caAll ? FilterCategoryStatus.all : FilterCategoryStatus.filtered,
       ));
     } catch (e) {
-      emit(state.copyWith(status: TodoStatus.error));
-      throw Exception("Can't filter todos by categories $e");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 

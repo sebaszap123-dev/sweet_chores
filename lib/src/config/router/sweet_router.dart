@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores_reloaded/src/data/blocs/firebase/firebase_auth_bloc.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 enum RouterStatus { initial, loading, success, error }
@@ -27,7 +28,6 @@ class SweetChoresRouter extends $SweetChoresRouter {
           AutoRoute(page: BackUpRoute.page),
         ]),
         AutoRoute(page: CategoriesManagerRoute.page),
-        AutoRoute(page: RegisterRoute.page),
       ];
 }
 
@@ -35,23 +35,45 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   SweetRouterCubit(super.initialState) {
     redirect();
   }
-  bool _hasUser(User? user) {
+  User? activeUser;
+
+  bool _hasUser({User? user}) {
     if (user != null) {
+      activeUser = user;
+      return true;
+    }
+    if (activeUser != null) {
       return true;
     }
     return false;
+  }
+
+  void goHome() {
+    final hasUser = _hasUser();
+    if (hasUser) {
+      state.replace(const HomeRoute());
+    } else {
+      goLogin();
+    }
+  }
+
+  void goLogin() => state.replace(const AuthLayout(children: [LoginRoute()]));
+
+  void goWithOutAccount() {
+    state.replace(const HomeRoute());
   }
 
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
     final firstTime = await getIt<SweetChoresPreferences>().isFirstOpen;
     FirebaseAuth.instance.authStateChanges().listen((event) {
-      final hasUser = _hasUser(event);
+      final hasUser = _hasUser(user: event);
       if (firstTime && !hasUser) {
         state.replace(const StartedRoute());
       } else if (!hasUser) {
         state.replace(const AuthLayout(children: [LoginRoute()]));
       } else {
+        getIt<FirebaseAuthBloc>().add(NoPremiumEvent(event!));
         state.replace(const HomeRoute());
       }
     });

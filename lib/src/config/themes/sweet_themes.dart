@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
 
 enum SweetChoresThemes { sweetboy, sweetgirl }
@@ -6,6 +7,7 @@ enum SweetChoresThemes { sweetboy, sweetgirl }
 mixin SweetThemes implements ThemeData {
   static ThemeData sweetboy({bool darkMode = false}) {
     return ThemeData(
+      // textTheme: GoogleFonts.spicyRiceTextTheme(),
       colorScheme: ColorScheme.light(
         background: Colors.white,
         primary: darkMode

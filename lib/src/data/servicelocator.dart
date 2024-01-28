@@ -11,6 +11,7 @@ final router = SweetChoresRouter();
 
 void serviceLocator() {
   getIt.registerSingleton(Greeting());
+  getIt.registerSingleton(FirebaseAuthBloc());
   getIt.registerSingleton(InternetInfo());
   getIt.registerSingleton(SweetChoresPreferences());
   getIt.registerSingleton(SweetPreferencesBloc());
