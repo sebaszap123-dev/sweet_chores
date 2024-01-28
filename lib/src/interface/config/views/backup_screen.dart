@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 @RoutePage()

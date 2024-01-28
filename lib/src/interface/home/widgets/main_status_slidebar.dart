@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.gr.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/greetings.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
