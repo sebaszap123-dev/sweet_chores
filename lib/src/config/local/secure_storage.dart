@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 
 // Create storage
 
@@ -128,7 +129,7 @@ class SweetChoresPreferences {
                 DateTime.fromMillisecondsSinceEpoch(timestamp);
             return dateTimeValue;
           } catch (e) {
-            throw Exception("Error parsing timestamp: $e");
+            SweetDialogs.unhandleErros(error: '$e');
           }
         }
       }

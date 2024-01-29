@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/database_helper.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 @RoutePage()
@@ -28,7 +27,8 @@ class BackUpScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
-              onPressed: () => DatabaseHelper.exportDatabase(),
+              // TODO: ADD FUNCTION BACKUP DATABASE
+              onPressed: () {},
               color: Theme.of(context).colorScheme.primary,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +50,7 @@ class BackUpScreen extends StatelessWidget {
               ),
             ),
             MaterialButton(
-              onPressed: () => DatabaseHelper.importDatabaseFromFilePicker(),
+              onPressed: () {},
               color: Theme.of(context).colorScheme.primary,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
