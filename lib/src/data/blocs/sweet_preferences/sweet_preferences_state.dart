@@ -3,37 +3,51 @@ part of 'sweet_preferences_bloc.dart';
 class SweetPreferencesState extends Equatable {
   final bool firstTimeApp;
   final bool autoDeleteTask;
-  final ThemeData theme;
-  final SweetChoresThemes typeTheme;
+  final ThemeData themeData;
+  final SweetThemeColors themeColors;
+  final SweetTheme typeTheme;
   final bool isDarkMode;
   final storageData = getIt<SweetChoresPreferences>();
   final SweetChoresStatus status;
   SweetPreferencesState({
+    required this.themeColors,
     this.firstTimeApp = true,
     this.autoDeleteTask = false,
     this.isDarkMode = false,
-    required this.typeTheme,
-    required this.theme,
+    this.typeTheme = SweetTheme.cinnamon,
+    required this.themeData,
     this.status = SweetChoresStatus.initial,
   });
   @override
-  List<Object> get props => [firstTimeApp, theme, isDarkMode, autoDeleteTask];
+  List<Object> get props =>
+      [firstTimeApp, themeData, isDarkMode, autoDeleteTask];
 
   SweetPreferencesState copyWith({
     bool? firstTimeApp,
     bool? autoDeleteTask,
     bool? isDarkMode,
-    ThemeData? theme,
+    ThemeData? themeData,
     SweetChoresStatus? status,
-    SweetChoresThemes? typeTheme,
+    SweetTheme? typeTheme,
+    SweetThemeColors? themeColors,
   }) {
     return SweetPreferencesState(
       firstTimeApp: firstTimeApp ?? this.firstTimeApp,
-      theme: theme ?? this.theme,
+      themeData: themeData ?? this.themeData,
       status: status ?? this.status,
       typeTheme: typeTheme ?? this.typeTheme,
       isDarkMode: isDarkMode ?? this.isDarkMode,
       autoDeleteTask: autoDeleteTask ?? this.autoDeleteTask,
+      themeColors: themeColors ?? this.themeColors,
+    );
+  }
+
+  static SweetPreferencesState get instance {
+    final colors = SweetThemeColors.fromDefault();
+    final themeData = SweetThemes.sweetThemeData(themeColors: colors);
+    return SweetPreferencesState(
+      themeColors: colors,
+      themeData: themeData,
     );
   }
 }

@@ -160,7 +160,7 @@ class RegisterScreen extends StatelessWidget {
                                   margin: EdgeInsets.only(
                                       right: 34.h, bottom: 12.v),
                                   decoration: BoxDecoration(
-                                      color: appTheme.blue100,
+                                      color: appAutoGeneraterTheme.blue100,
                                       borderRadius:
                                           BorderRadius.circular(75.h)))),
                           Align(
@@ -170,7 +170,7 @@ class RegisterScreen extends StatelessWidget {
                                   width: 150.adaptSize,
                                   margin: EdgeInsets.only(left: 75.h),
                                   decoration: BoxDecoration(
-                                      color: appTheme.blue100,
+                                      color: appAutoGeneraterTheme.blue100,
                                       borderRadius:
                                           BorderRadius.circular(75.h)))),
                           Align(

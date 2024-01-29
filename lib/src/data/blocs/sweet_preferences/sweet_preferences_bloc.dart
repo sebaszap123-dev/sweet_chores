@@ -10,10 +10,7 @@ part 'sweet_preferences_state.dart';
 
 class SweetPreferencesBloc
     extends Bloc<PreferencesEvent, SweetPreferencesState> {
-  SweetPreferencesBloc()
-      : super(SweetPreferencesState(
-            theme: SweetThemes.sweetboy(),
-            typeTheme: SweetChoresThemes.sweetboy)) {
+  SweetPreferencesBloc() : super(SweetPreferencesState.instance) {
     on<InitalStatusSweetCh>(_initialState);
     on<ChangeTheme>(_onUpdateTheme);
     on<DarkMode>(_onDarkMode);
@@ -25,13 +22,16 @@ class SweetPreferencesBloc
     emit(state.copyWith(
       status: SweetChoresStatus.loading,
     ));
-    final theme = await state.storageData.getThemeData;
+    final theme = await state.storageData.getTheme;
     final firstOpen = await state.storageData.isFirstOpen;
     final isDarkMode = await state.storageData.isDarkMode;
     final autoTask = await state.storageData.autoDeleteTask;
+    final themeData = SweetThemes.sweetThemeData(
+        themeColors: SweetThemeColors.fromMode(
+            isDarkMode ? SweetMode.dark : SweetMode.light, theme));
     emit(state.copyWith(
-      theme: theme['themeData'],
-      typeTheme: theme['theme'],
+      themeData: themeData,
+      typeTheme: theme,
       isDarkMode: isDarkMode,
       firstTimeApp: firstOpen,
       autoDeleteTask: autoTask,
@@ -41,29 +41,26 @@ class SweetPreferencesBloc
 
   void _onUpdateTheme(
       ChangeTheme event, Emitter<SweetPreferencesState> emit) async {
-    final theme =
-        SweetThemes.themeByType(event.theme, darkMode: state.isDarkMode);
+    final colors = SweetThemeColors.fromMode(
+        state.isDarkMode ? SweetMode.dark : SweetMode.light, event.theme);
+    final theme = SweetThemes.sweetThemeData(themeColors: colors);
+    await state.storageData.toggleTheme(event.theme);
     emit(state.copyWith(
-      theme: theme,
+      themeData: theme,
       typeTheme: event.theme,
       status: SweetChoresStatus.success,
     ));
-    await state.storageData.toggleTheme(event.theme);
   }
 
   void _onDarkMode(DarkMode event, Emitter<SweetPreferencesState> emit) async {
-    ThemeData? updatedTheme;
-    switch (state.typeTheme) {
-      case SweetChoresThemes.sweetboy:
-        updatedTheme = SweetThemes.sweetboy(darkMode: event.isDarkMode);
-      case SweetChoresThemes.sweetgirl:
-        updatedTheme = SweetThemes.sweetgirl(darkMode: event.isDarkMode);
-    }
+    final colors = SweetThemeColors.fromMode(
+        event.isDarkMode ? SweetMode.dark : SweetMode.light, state.typeTheme);
+    final theme = SweetThemes.sweetThemeData(themeColors: colors);
+    await state.storageData.toggleDarkMode(event.isDarkMode);
     emit(state.copyWith(
-      theme: updatedTheme,
+      themeData: theme,
       isDarkMode: event.isDarkMode,
     ));
-    await state.storageData.toggleDarkMode(event.isDarkMode);
   }
 
   void _onUpdateAutoDeleteTask(

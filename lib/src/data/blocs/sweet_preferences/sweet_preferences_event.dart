@@ -18,9 +18,9 @@ class InitalStatusSweetCh extends PreferencesEvent {
 }
 
 class ChangeTheme extends PreferencesEvent {
-  final SweetChoresThemes theme;
+  final SweetTheme theme;
   const ChangeTheme({
-    this.theme = SweetChoresThemes.sweetboy,
+    required this.theme,
   });
 
   @override

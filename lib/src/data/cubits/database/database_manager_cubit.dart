@@ -112,7 +112,7 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
         DatabaseNotes.tbCategories,
         Categories(
           name: 'to-do',
-          color: SweetBoyThemeColors.primary,
+          color: sweetIconColors[0],
           iconData: Icons.category_sharp,
         ).toJson(),
       );

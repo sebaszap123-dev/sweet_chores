@@ -57,7 +57,7 @@ class SweetChoresApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = getIt<SweetPreferencesBloc>().state.theme;
+    final theme = context.watch<SweetPreferencesBloc>().state.themeData;
 
     return BlocBuilder<SweetRouterCubit, SweetChoresRouter>(
       builder: (context, state) {

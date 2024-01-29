@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                           child: Text(
                             "lbl_log_in".tr,
                             style: GoogleFonts.spicyRice(
-                              color: appTheme.blue100,
+                              color: appAutoGeneraterTheme.blue100,
                               fontSize: 40,
                             ),
                           )),
@@ -82,7 +82,9 @@ class LoginScreen extends StatelessWidget {
                                                     style: theme
                                                         .textTheme.bodyMedium
                                                         ?.copyWith(
-                                                      color: appTheme.blue100,
+                                                      color:
+                                                          appAutoGeneraterTheme
+                                                              .blue100,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -106,7 +108,9 @@ class LoginScreen extends StatelessWidget {
                                                     style: theme
                                                         .textTheme.bodyMedium
                                                         ?.copyWith(
-                                                      color: appTheme.blue100,
+                                                      color:
+                                                          appAutoGeneraterTheme
+                                                              .blue100,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                     ),
@@ -144,7 +148,8 @@ class LoginScreen extends StatelessWidget {
                                                             .titleSmall
                                                             ?.copyWith(
                                                           color:
-                                                              appTheme.blue100,
+                                                              appAutoGeneraterTheme
+                                                                  .blue100,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -155,8 +160,8 @@ class LoginScreen extends StatelessWidget {
                                                   CustomElevatedButton(
                                                     buttonStyle: ButtonStyle(
                                                       backgroundColor:
-                                                          MaterialStateProperty
-                                                              .all(appTheme
+                                                          MaterialStateProperty.all(
+                                                              appAutoGeneraterTheme
                                                                   .blue100),
                                                     ),
                                                     text: "lbl_login2".tr,
@@ -247,7 +252,7 @@ class LoginScreen extends StatelessWidget {
                                     height: 150.adaptSize,
                                     width: 150.adaptSize,
                                     decoration: BoxDecoration(
-                                        color: appTheme.blue100,
+                                        color: appAutoGeneraterTheme.blue100,
                                         borderRadius:
                                             BorderRadius.circular(75.h)))),
                             Align(
@@ -256,7 +261,7 @@ class LoginScreen extends StatelessWidget {
                                     height: 150.adaptSize,
                                     width: 150.adaptSize,
                                     decoration: BoxDecoration(
-                                        color: appTheme.blue100,
+                                        color: appAutoGeneraterTheme.blue100,
                                         borderRadius:
                                             BorderRadius.circular(75.h))))
                           ]))

@@ -30,7 +30,7 @@ class SplashLayout extends StatelessWidget {
                                 TextSpan(
                                   text: "lbl_sweet_chores".tr,
                                   style: GoogleFonts.spicyRice(
-                                    color: appTheme.blue100,
+                                    color: appAutoGeneraterTheme.blue100,
                                     fontSize: 50,
                                   ),
                                 )

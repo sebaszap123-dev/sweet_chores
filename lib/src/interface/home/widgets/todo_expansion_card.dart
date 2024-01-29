@@ -1,3 +1,5 @@
+import 'package:sweet_chores_reloaded/src/core/app_export.dart';
+
 import '../../../models/todo.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +62,11 @@ class _TodoExpansionCardState extends State<TodoExpansionCard> {
               margin: EdgeInsets.zero,
               color: !isOverDue(widget.todo)
                   ? Theme.of(context).colorScheme.primary
-                  : SweetBoyThemeColors.overDue.withOpacity(0.36),
+                  : context
+                      .watch<SweetPreferencesBloc>()
+                      .state
+                      .themeColors
+                      .overDue,
               shadowColor: Colors.transparent,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

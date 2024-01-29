@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
+import 'package:sweet_chores_reloaded/src/core/app_export.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
+import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
 
 class SlideActionCardHeader extends StatelessWidget {
@@ -34,7 +36,7 @@ class SlideActionCardHeader extends StatelessWidget {
       margin: EdgeInsets.zero,
       color: !isOverDue
           ? Theme.of(context).colorScheme.tertiary
-          : SweetBoyThemeColors.overDue,
+          : context.watch<SweetPreferencesBloc>().state.themeColors.overDue,
       shadowColor: Colors.transparent,
       elevation: 0,
       shape: RoundedRectangleBorder(
