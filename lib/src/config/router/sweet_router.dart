@@ -39,10 +39,6 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
 
   bool _hasUser({User? user}) {
     if (user != null) {
-      activeUser = user;
-      return true;
-    }
-    if (activeUser != null) {
       return true;
     }
     return false;
@@ -67,13 +63,12 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
     await Future.delayed(const Duration(milliseconds: 300));
     final firstTime = await getIt<SweetChoresPreferences>().isFirstOpen;
     FirebaseAuth.instance.authStateChanges().listen((event) {
-      final hasUser = _hasUser(user: event);
-      if (firstTime && !hasUser) {
+      if (firstTime && event == null) {
         state.replace(const StartedRoute());
-      } else if (!hasUser) {
+      } else if (event == null) {
         state.replace(const AuthLayout(children: [LoginRoute()]));
       } else {
-        getIt<FirebaseAuthBloc>().add(NoPremiumEvent(event!));
+        getIt<FirebaseAuthBloc>().add(NoPremiumEvent(event));
         state.replace(const HomeRoute());
       }
     });

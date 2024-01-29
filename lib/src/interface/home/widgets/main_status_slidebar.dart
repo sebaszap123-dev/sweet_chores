@@ -7,6 +7,7 @@ import 'package:sweet_chores_reloaded/src/core/utils/greetings.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores_reloaded/src/domain/domain.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
 import 'package:sweet_chores_reloaded/src/interface/home/widgets/slidebar_item.dart';
 
@@ -151,12 +152,12 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                 leading: const Icon(Icons.cloud_outlined),
                 title: const Text('Backup'),
               ),
-              // const ListTile(
-              //   contentPadding: EdgeInsets.symmetric(horizontal: 8),
-              //   minLeadingWidth: minLeadingWidth,
-              //   leading: Icon(Icons.star_outline),
-              //   title: Text('Premium'),
-              // ),
+              const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: Icon(Icons.star_outline),
+                title: Text('Premium'),
+              ),
               // ? TODO: OPEN DIALOG TO SEND A MESSAGE
               ListTile(
                 onTap: () {},
@@ -164,6 +165,13 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                 minLeadingWidth: minLeadingWidth,
                 leading: const Icon(Icons.message_outlined),
                 title: const Text('Contac us'),
+              ),
+              ListTile(
+                onTap: () => FirebaseAuthService.signOut(),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: const Icon(Icons.logout_outlined),
+                title: const Text('Log out'),
               ),
             ],
           );
