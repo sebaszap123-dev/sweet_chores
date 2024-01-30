@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/greetings.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/domain/domain.dart';
@@ -45,116 +43,110 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
   @override
   Widget build(BuildContext context) {
     const double minLeadingWidth = 10;
-    return SafeArea(
-      child: Drawer(
-        child: BlocBuilder<CategoriesBloc, CategoriesState>(
-          builder: (context, state) {
-            return ListView(
-              addAutomaticKeepAlives: true,
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.zero,
-              children: [
-                const ProfileWidget(
-                  name: 'Darknight',
-                  photoURL:
-                      'https://miro.medium.com/v2/resize:fit:1100/format:webp/1*bY0JW-6HG3w0QZR9yzP4UA.jpeg',
-                  lema: 'Cui cui',
+    return Drawer(
+      child: BlocBuilder<CategoriesBloc, CategoriesState>(
+        builder: (context, state) {
+          return ListView(
+            addAutomaticKeepAlives: true,
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.zero,
+            children: [
+              const ProfileWidget(),
+              const SizedBox(height: 10),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 8, right: 0),
+                title: Text(
+                  'My lists',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                const SizedBox(height: 10),
-                ListTile(
-                  contentPadding: const EdgeInsets.only(left: 8, right: 0),
-                  title: Text(
-                    'My lists',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  trailing: TextButton(
-                    onPressed: () {
-                      if (state.categories.length == 1) return;
-                      setState(() {
-                        isEditing = !isEditing;
-                      });
-                    },
-                    child: const Text('Edit'),
-                  ),
-                ),
-                Divider(
-                    color: context
-                        .watch<SweetPreferencesBloc>()
-                        .state
-                        .themeColors
-                        .text
-                        .withOpacity(0.3)),
-                if (state.categories.isNotEmpty)
-                  ...state.categories.asMap().entries.map((categoryEntry) {
-                    return SlidebarItem(
-                      category: categoryEntry.value,
-                      isEditing: isEditing,
-                      selectedState: (selected) {
-                        if (selected) {
-                          _filterTodos(categoryEntry.value, true);
-                        } else {
-                          _filterTodos(categoryEntry.value, false);
-                        }
-                      },
-                    );
-                  }),
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  leading: const Icon(Icons.add, color: Colors.green),
-                  title: Text(
-                    'Add new list',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  onTap: () {
-                    AutoRouter.of(context).push(CategoriesManagerRoute());
+                trailing: TextButton(
+                  onPressed: () {
+                    if (state.categories.length == 1) return;
+                    setState(() {
+                      isEditing = !isEditing;
+                    });
                   },
+                  child: const Text('Edit'),
                 ),
-                const Divider(color: Colors.black26),
-                const SizedBox(height: 40),
-                ListTile(
-                  onTap: () => getIt<SweetRouterCubit>().state.push(
-                      const ConfigRouteLayout(children: [SettingsRoute()])),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  minLeadingWidth: minLeadingWidth,
-                  leading: const Icon(Icons.settings_outlined),
-                  title: const Text('Settings'),
-                ),
-                ListTile(
-                  onTap: () => getIt<SweetRouterCubit>()
+              ),
+              Divider(
+                  color: context
+                      .watch<SweetPreferencesBloc>()
                       .state
-                      .push(const ConfigRouteLayout(children: [BackUpRoute()])),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  minLeadingWidth: minLeadingWidth,
-                  leading: const Icon(Icons.cloud_outlined),
-                  title: const Text('Backup'),
+                      .themeColors
+                      .text
+                      .withOpacity(0.3)),
+              if (state.categories.isNotEmpty)
+                ...state.categories.asMap().entries.map((categoryEntry) {
+                  return SlidebarItem(
+                    category: categoryEntry.value,
+                    isEditing: isEditing,
+                    selectedState: (selected) {
+                      if (selected) {
+                        _filterTodos(categoryEntry.value, true);
+                      } else {
+                        _filterTodos(categoryEntry.value, false);
+                      }
+                    },
+                  );
+                }),
+              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                leading: const Icon(Icons.add, color: Colors.green),
+                title: Text(
+                  'Add new list',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
-                const ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                  minLeadingWidth: minLeadingWidth,
-                  leading: Icon(Icons.star_outline),
-                  title: Text('Premium'),
-                ),
-                // ? TODO: OPEN DIALOG TO SEND A MESSAGE
-                ListTile(
-                  onTap: () {},
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  minLeadingWidth: minLeadingWidth,
-                  leading: const Icon(Icons.message_outlined),
-                  title: const Text('Contac us'),
-                ),
-                ListTile(
-                  onTap: () => FirebaseAuthService.signOut(),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  minLeadingWidth: minLeadingWidth,
-                  leading: const Icon(Icons.logout_outlined),
-                  title: const Text('Log out'),
-                ),
-              ],
-            );
-          },
-        ),
+                onTap: () {
+                  AutoRouter.of(context).push(CategoriesManagerRoute());
+                },
+              ),
+              const Divider(color: Colors.black26),
+              const SizedBox(height: 40),
+              ListTile(
+                onTap: () => getIt<SweetRouterCubit>()
+                    .state
+                    .push(const ConfigRouteLayout(children: [SettingsRoute()])),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: const Icon(Icons.settings_outlined),
+                title: const Text('Settings'),
+              ),
+              ListTile(
+                onTap: () => getIt<SweetRouterCubit>()
+                    .state
+                    .push(const ConfigRouteLayout(children: [BackUpRoute()])),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: const Icon(Icons.cloud_outlined),
+                title: const Text('Backup'),
+              ),
+              const ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: Icon(Icons.star_outline),
+                title: Text('Premium'),
+              ),
+              // ? TODO: OPEN DIALOG TO SEND A MESSAGE
+              ListTile(
+                onTap: () {},
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: const Icon(Icons.message_outlined),
+                title: const Text('Contac us'),
+              ),
+              ListTile(
+                onTap: () => FirebaseAuthService.signOut(),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                minLeadingWidth: minLeadingWidth,
+                leading: const Icon(Icons.logout_outlined),
+                title: const Text('Log out'),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

@@ -6,7 +6,7 @@ import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 
 enum GlobalStatusApp { firstOpen, open }
 
-abstract class SweetChoresPreferences {
+abstract class SweetSecurePreferences {
   static final _storage = FlutterSecureStorage(
       iOptions: _getIOSOptions, aOptions: _getAndroidOptions);
 

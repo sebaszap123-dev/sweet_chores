@@ -1,16 +1,16 @@
 part of 'firebase_auth_bloc.dart';
 
-sealed class FirebaseAuthState extends Equatable {
-  const FirebaseAuthState();
+sealed class FirebaseState extends Equatable {
+  const FirebaseState();
+
   @override
   List<Object> get props => [];
 }
 
-final class FirebaseAuthInitial extends FirebaseAuthState {}
+final class FirebaseInitial extends FirebaseState {}
 
-final class FirebaseAuthNoAccount extends FirebaseAuthState {}
-
-class FirebaseAuthPremium extends FirebaseAuthState {
+final class FirebaseAuthState extends FirebaseState {
   final User userFirebase;
-  const FirebaseAuthPremium({required this.userFirebase});
+  final bool premium;
+  const FirebaseAuthState({required this.userFirebase, this.premium = false});
 }

@@ -7,17 +7,9 @@ sealed class FirebaseAuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class NoAccountLoginEvent extends FirebaseAuthEvent {}
-
-class NoPremiumEvent extends FirebaseAuthEvent {
-  const NoPremiumEvent(this.user);
-
+class AuthLoginEvent extends FirebaseAuthEvent {
   final User user;
-}
+  final bool premium;
 
-class PremiumEvent extends FirebaseAuthEvent {
-  const PremiumEvent(this.user);
-
-  final User user;
-  // TODO: GET PREMIUM DATA?
+  const AuthLoginEvent({required this.user, required this.premium});
 }

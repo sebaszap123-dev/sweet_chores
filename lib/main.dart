@@ -46,6 +46,9 @@ class MyBlocApp extends StatelessWidget {
         BlocProvider<SweetRouterCubit>(
           create: (_) => getIt<SweetRouterCubit>(),
         ),
+        BlocProvider<FirebaseAuthBloc>(
+          create: (_) => getIt<FirebaseAuthBloc>(),
+        ),
       ],
       child: const SweetChoresApp(),
     );

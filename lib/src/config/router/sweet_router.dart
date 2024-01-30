@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
+import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores_reloaded/src/config/router/guards/home_guard.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';
@@ -62,15 +62,16 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
 
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
-    final firstTime = await SweetChoresPreferences.isFirstOpen;
-    // TODO: IS PREMIUM?
+    final firstTime = await SweetSecurePreferences.isFirstOpen;
     FirebaseAuth.instance.authStateChanges().listen((event) {
       if (firstTime && event == null) {
         state.replace(const StartedRoute());
       } else if (event == null) {
         state.replace(const AuthLayout(children: [LoginRoute()]));
       } else {
-        getIt<FirebaseAuthBloc>().add(NoPremiumEvent(event));
+        // ? TODO: HANDLE PREMIUM DATA
+        getIt<FirebaseAuthBloc>()
+            .add(AuthLoginEvent(user: event, premium: false));
         getIt<TodoBloc>().add(TodoStarted());
         state.replace(const HomeRoute());
       }
