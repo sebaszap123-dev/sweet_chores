@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/localization/app_localization.dart';
 
+import 'src/config/remote/firebase_database.dart';
+
 final globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FirebaseDatabase.initFirebase();
   serviceLocator();
   Future.wait([
     SystemChrome.setPreferredOrientations([
@@ -54,7 +57,7 @@ class SweetChoresApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = getIt<SweetPreferencesBloc>().state.theme;
+    final theme = context.watch<SweetPreferencesBloc>().state.themeData;
 
     return BlocBuilder<SweetRouterCubit, SweetChoresRouter>(
       builder: (context, state) {

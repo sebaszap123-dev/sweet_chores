@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/color_tohex.dart';
 
+enum SweetMode { light, dark }
+
+enum SweetTheme { cinnamon, strawberry }
+
 final List<Color> sweetIconColors = [
   '#BBC2FF'.toColor(),
   '#c7ff8f'.toColor(),
@@ -28,63 +32,72 @@ final List<Color> sweetIconColors = [
   '#000000'.toColor(),
 ];
 
-class SweetBoyThemeColors {
-  SweetBoyThemeColors();
-  static Color primary = '#b4cfe9'.toColor();
-  static Color primary2 = '#CEE7FF'.toColor();
-  static Color secondary = '#9FC9F3'.toColor();
-  static Color tertiary = '#cee6ff'.toColor();
-  static Color lowBlueCard = '#e0f0ff'.toColor();
-  static Color lightBlue = '#9fc9f3'.toColor();
-  static Color tinyBlue = '#dbedff'.toColor();
-  static Color blueGray = '#648cb4'.toColor();
-  static Color secondaryShadow = '#7695b4'.toColor();
-  static Color userName = '#648CB4'.toColor();
-  static Color overDue = '#FFCECE'.toColor();
-}
+class SweetThemeColors {
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+  final Color grayly;
+  final Color overDue;
+  final Color text;
+  SweetThemeColors({
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+    required this.grayly,
+    required this.overDue,
+    required this.text,
+  });
 
-extension SweetBoyThemeColorsDark on SweetBoyThemeColors {
-  Color get primaryDark => '#004ba0'.toColor();
-  Color get primary2Dark => '#002f6c'.toColor();
-  Color get secondaryDark => '#003d80'.toColor();
-  Color get checkedColorDark => Colors.indigoAccent;
-  Color get tertiaryDark => '#002f6c'.toColor();
-  Color get lowBlueCardDark => '#000a33'.toColor();
-  Color get lightBlueDark => '#003d80'.toColor();
-  Color get tinyBlueDark => '#002f6c'.toColor();
-  Color get blueGrayDark => '#001a40'.toColor();
-  Color get secondaryShadowDark => '#002f6c'.toColor();
-  Color get userNameDark => '#000a33'.toColor();
-  Color get overDueDark => '#330000'.toColor();
-}
+  static SweetThemeColors fromDefault() {
+    return SweetThemeColors.fromMode(SweetMode.light, SweetTheme.cinnamon);
+  }
 
-class SweetGirlThemeColors {
-  static Color primary = '#FFB6C1'.toColor(); // Rosa claro
-  static Color primary2 = '#FFD9E6'.toColor(); // Rosa muy claro
-  static Color secondary = '#FF69B4'.toColor(); // Rosa intenso
-  static Color tertiary = '#FFC0CB'.toColor(); // Rosa claro más fuerte
-  static Color lowPinkCard = '#FFEBF2'.toColor(); // Rosa claro suave
-  static Color lightPink = '#FFC0CB'.toColor(); // Rosa claro más fuerte
-  static Color tinyPink = '#FFD9E6'.toColor(); // Rosa muy claro más fuerte
-  static Color pinkGray = '#C71585'.toColor(); // Rosa oscuro
-  static Color secondaryShadow =
-      '#FF69B4'.toColor(); // Rosa intenso (usando el mismo que secondary)
-  static Color userName =
-      '#C71585'.toColor(); // Rosa oscuro (usando el mismo que pinkGray)
-  static Color overDue = '#FFC0CB'
-      .toColor(); // Rosa claro más fuerte (usando el mismo que tertiary)
-}
+  factory SweetThemeColors.fromMode(SweetMode mode, SweetTheme theme) {
+    if (mode == SweetMode.dark) {
+      return theme == SweetTheme.cinnamon
+          ? _darkCinnamonTheme
+          : _darkStrawBerryTheme;
+    } else {
+      return theme == SweetTheme.cinnamon
+          ? _lightCinnamonTheme
+          : _lightStrawBerryTheme;
+    }
+  }
 
-extension SweetGirlThemeColorsDark on SweetGirlThemeColors {
-  Color get primaryDark => '#880E4F'.toColor();
-  Color get primary2Dark => '#B0003A'.toColor();
-  Color get secondaryDark => '#C2185B'.toColor();
-  Color get tertiaryDark => '#E91E63'.toColor();
-  Color get lowPinkCardDark => '#4A148C'.toColor();
-  Color get lightPinkDark => '#C2185B'.toColor();
-  Color get tinyPinkDark => '#B0003A'.toColor();
-  Color get pinkGrayDark => '#880E4F'.toColor();
-  Color get secondaryShadowDark => '#C2185B'.toColor();
-  Color get userNameDark => '#4A148C'.toColor();
-  Color get overDueDark => '#E91E63'.toColor();
+  static final SweetThemeColors _lightCinnamonTheme = SweetThemeColors(
+    // Primary 60 (blanco) Secondary 30 (#cee6ff) y tertiary 10 (#CFD7FF)
+    text: Colors.black,
+    primary: '#cee6ff'.toColor(),
+    secondary: '#A0CAF4'.toColor(),
+    tertiary: '#4F7CAC'.toColor(),
+    grayly: '#648cb4'.toColor(),
+    overDue: '#FFCECE'.toColor(),
+  );
+
+  static final SweetThemeColors _darkCinnamonTheme = SweetThemeColors(
+    text: Colors.white,
+    primary: '#004ba0'.toColor(),
+    secondary: '#003d80'.toColor(),
+    tertiary: '#002f6c'.toColor(),
+    grayly: '#001a40'.toColor(),
+    overDue: '#330000'.toColor(),
+  );
+
+  static final SweetThemeColors _lightStrawBerryTheme = SweetThemeColors(
+    text: Colors.black,
+    primary: '#FBCEC3'.toColor(),
+    secondary: '#FF8CBA'.toColor(),
+    tertiary: '#FFE4ED'.toColor(),
+    overDue: '#FFE4ED'.toColor(),
+    grayly: '#C71585'.toColor(),
+  );
+
+  static final SweetThemeColors _darkStrawBerryTheme = SweetThemeColors(
+    text: Colors.white,
+    primary: '#880E4F'.toColor(),
+    secondary: '#C2185B'.toColor(),
+    tertiary: '#E91E63'.toColor(),
+    overDue: '#E91E63'.toColor(),
+    grayly: '#880E4F'.toColor(),
+  );
 }

@@ -17,7 +17,7 @@ class AddTodoButton extends StatelessWidget {
         builder: (context) => Container(
           height: MediaQuery.of(context).size.height * 0.915,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.tertiary,
+            color: Theme.of(context).colorScheme.primary,
             boxShadow: const [],
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(25.0),

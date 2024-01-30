@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
@@ -28,7 +29,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           categories: categories, status: CategoriesStatus.success));
     } catch (e) {
       emit(state.copyWith(status: CategoriesStatus.error));
-      throw Exception("can't get all categories");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -44,7 +45,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       emit(state.copyWith(categories: temp, status: CategoriesStatus.success));
     } catch (e) {
       emit(state.copyWith(status: CategoriesStatus.error));
-      throw Exception("can't add category");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -59,7 +60,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       emit(state.copyWith(categories: temp, status: CategoriesStatus.success));
     } catch (e) {
       emit(state.copyWith(status: CategoriesStatus.error));
-      throw Exception("can't alter category");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -87,7 +88,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       }
     } catch (e) {
       emit(state.copyWith(status: CategoriesStatus.error));
-      throw Exception("Failed to alter category");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 
@@ -100,7 +101,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
           categories: state.categories, status: CategoriesStatus.success));
     } catch (e) {
       emit(state.copyWith(status: CategoriesStatus.error));
-      throw Exception("can't remove category");
+      SweetDialogs.unhandleErros(error: '$e');
     }
   }
 }

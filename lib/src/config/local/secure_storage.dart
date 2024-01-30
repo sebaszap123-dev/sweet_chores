@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 
 // Create storage
 
@@ -54,47 +55,29 @@ class SweetChoresPreferences {
         value: value ? timeLapse.millisecondsSinceEpoch.toString() : null);
   }
 
-  Future<void> toggleTheme(SweetChoresThemes value) async {
+  Future<void> toggleTheme(SweetTheme value) async {
     await storage.write(key: themeKey, value: value.name);
   }
 
-  Future<SweetChoresThemes> get getTheme async {
+  Future<SweetTheme> get getTheme async {
     final currentTheme = await storage.read(key: themeKey);
-    late SweetChoresThemes theme;
+    bool orElse = false;
     if (currentTheme != null) {
-      theme = SweetChoresThemes.values.firstWhere(
+      final theme = SweetTheme.values.firstWhere(
         (theme) => theme.name == currentTheme,
-        orElse: () => SweetChoresThemes.sweetboy,
+        orElse: () {
+          orElse = true;
+          return SweetTheme.cinnamon;
+        },
       );
+      if (orElse) {
+        await storage.write(key: themeKey, value: SweetTheme.cinnamon.name);
+      }
+      return theme;
     } else {
-      theme = SweetChoresThemes.sweetboy;
+      await storage.write(key: themeKey, value: SweetTheme.cinnamon.name);
+      return SweetTheme.cinnamon;
     }
-    return theme;
-  }
-
-  Future<Map<String, dynamic>> get getThemeData async {
-    SweetChoresThemes selectedTheme = SweetChoresThemes.sweetboy;
-    bool isDarkMode = false;
-
-    if (await storage.containsKey(key: themeKey)) {
-      final readedTheme = await storage.read(key: themeKey);
-      selectedTheme = SweetChoresThemes.values.firstWhere(
-          (theme) => theme.name == readedTheme,
-          orElse: () => SweetChoresThemes.sweetboy);
-    } else {
-      await storage.write(
-          key: themeKey, value: SweetChoresThemes.sweetboy.name);
-    }
-
-    if (await storage.containsKey(key: darkmodeKey)) {
-      final readedDarkMode = await storage.read(key: darkmodeKey);
-      isDarkMode = readedDarkMode?.toLowerCase() == 'true';
-    }
-
-    return {
-      'themeData': SweetThemes.themeByType(selectedTheme, darkMode: isDarkMode),
-      'theme': selectedTheme
-    };
   }
 
   Future<bool> get isDarkMode async {
@@ -128,7 +111,7 @@ class SweetChoresPreferences {
                 DateTime.fromMillisecondsSinceEpoch(timestamp);
             return dateTimeValue;
           } catch (e) {
-            throw Exception("Error parsing timestamp: $e");
+            SweetDialogs.unhandleErros(error: '$e');
           }
         }
       }

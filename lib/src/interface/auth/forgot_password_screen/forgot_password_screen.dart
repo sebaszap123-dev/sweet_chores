@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/image_constant.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
+import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/localization/app_localization.dart';
 import 'package:sweet_chores_reloaded/src/theme/custom_text_style.dart';
 import 'package:sweet_chores_reloaded/src/theme/theme_helper.dart';
@@ -17,20 +19,20 @@ import 'package:flutter/material.dart';
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<ForgotPasswordBloc>(
-        create: (context) => ForgotPasswordBloc(ForgotPasswordState(
-            forgotPasswordModelObj: const ForgotPasswordModel()))
-          ..add(ForgotPasswordInitialEvent()),
-        child: const ForgotPasswordScreen());
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SizedBox(
+        child: BlocProvider(
+      create: (context) => ForgotPasswordBloc(ForgotPasswordState(
+          forgotPasswordModelObj: const ForgotPasswordModel()))
+        ..add(ForgotPasswordInitialEvent()),
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: DefaultTextStyle(
+            style: TextStyle(
+              color: appAutoGeneraterTheme.blue100,
+            ),
+            child: SizedBox(
                 width: double.maxFinite,
                 child: SingleChildScrollView(
                     child: Column(
@@ -81,19 +83,28 @@ class ForgotPasswordScreen extends StatelessWidget {
                           ])),
                       Padding(
                           padding: EdgeInsets.only(left: 40.h, top: 92.v),
-                          child: Text("msg_forgot_password2".tr,
-                              style: theme.textTheme.headlineSmall)),
+                          child: Text(
+                            "msg_forgot_password2".tr,
+                            style: const TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          )),
                       Container(
                           width: 249.h,
                           margin: EdgeInsets.only(left: 40.h),
-                          child: Text("msg_enter_the_email".tr,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: theme.textTheme.bodyLarge)),
+                          child: Text(
+                            "msg_enter_the_email".tr,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )),
                       Padding(
                           padding: EdgeInsets.only(left: 43.h, top: 17.v),
-                          child: Text("msg_email_or_phone_number".tr,
-                              style: theme.textTheme.bodyMedium)),
+                          child: Text(
+                            "msg_email_or_phone_number".tr,
+                            style: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          )),
                       BlocSelector<ForgotPasswordBloc, ForgotPasswordState,
                               TextEditingController?>(
                           selector: (state) => state.phoneNumberController,
@@ -107,6 +118,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                           }),
                       CustomElevatedButton(
                           text: "lbl_submit".tr,
+                          buttonStyle: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  appAutoGeneraterTheme.blue100)),
+                          buttonTextStyle: const TextStyle(color: Colors.white),
                           margin: EdgeInsets.only(
                               left: 40.h, top: 23.v, right: 41.h),
                           onTap: () {
@@ -139,8 +154,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 Opacity(
                                     opacity: 0.7,
                                     child: CustomImageView(
-                                        imagePath:
-                                            ImageConstant.imgImg1124photoroom,
+                                        imagePath: ImageConstant
+                                            .forgotPasswordCinnamon,
                                         height: 270.v,
                                         width: 302.h,
                                         alignment: Alignment.topLeft)),
@@ -156,7 +171,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                                     alignment: Alignment.topRight,
                                     margin: EdgeInsets.only(top: 16.v))
                               ]))
-                    ])))));
+                    ]))),
+          )),
+    ));
   }
 
   /// Navigates to the previous screen.
@@ -166,7 +183,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   /// function uses the [NavigatorService] to navigate to the previous screen
   /// in the navigation stack.
   onTapImgArrowleftone(BuildContext context) {
-    // NavigatorService.goBack();
+    getIt<SweetRouterCubit>().state.back();
   }
 
   /// Navigates to the loginScreen when the action is triggered.
@@ -175,6 +192,6 @@ class ForgotPasswordScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the loginScreen.
   onTapSubmit(BuildContext context) {
-    // AUTH: NAVIGATION WHEN IMPLEMENT
+    // TODO AUTH: DO THE RESET OF PASSWORD
   }
 }

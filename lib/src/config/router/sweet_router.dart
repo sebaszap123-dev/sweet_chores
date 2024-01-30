@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.gr.dart';
+import 'package:sweet_chores_reloaded/src/config/router/guards/home_guard.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
@@ -16,13 +18,17 @@ class SweetChoresRouter extends $SweetChoresRouter {
         AutoRoute(page: SplashLayout.page, initial: true),
         AutoRoute(page: LoadingRoute.page),
         AutoRoute(page: StartedRoute.page),
-        AutoRoute(page: HomeRoute.page),
+        AutoRoute(page: HomeRoute.page, guards: [AuthGuard()]),
+        AutoRoute(page: AuthLayout.page, children: [
+          AutoRoute(page: LoginRoute.page),
+          AutoRoute(page: RegisterRoute.page),
+          AutoRoute(page: ForgotPasswordRoute.page),
+        ]),
         AutoRoute(page: ConfigRouteLayout.page, children: [
           AutoRoute(page: SettingsRoute.page),
           AutoRoute(page: BackUpRoute.page),
         ]),
         AutoRoute(page: CategoriesManagerRoute.page),
-        AutoRoute(page: RegisterRoute.page),
       ];
 }
 
@@ -30,14 +36,45 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   SweetRouterCubit(super.initialState) {
     redirect();
   }
+  User? activeUser;
+
+  bool _hasUser({User? user}) {
+    if (user != null) {
+      return true;
+    }
+    return false;
+  }
+
+  void goHome() {
+    final hasUser = _hasUser();
+    if (hasUser) {
+      state.replace(const HomeRoute());
+    } else {
+      goLogin();
+    }
+  }
+
+  void goLogin() => state.replace(const AuthLayout(children: [LoginRoute()]));
+
+  void goWithOutAccount() {
+    state.replace(const HomeRoute());
+  }
+
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
     final firstTime = await getIt<SweetChoresPreferences>().isFirstOpen;
-    if (firstTime) {
-      state.replace(const StartedRoute());
-    } else {
-      state.replace(const HomeRoute());
-    }
+    // TODO: IS PREMIUM?
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      if (firstTime && event == null) {
+        state.replace(const StartedRoute());
+      } else if (event == null) {
+        state.replace(const AuthLayout(children: [LoginRoute()]));
+      } else {
+        getIt<FirebaseAuthBloc>().add(NoPremiumEvent(event));
+        getIt<TodoBloc>().add(TodoStarted());
+        state.replace(const HomeRoute());
+      }
+    });
   }
 
   BuildContext? getContext() => state.navigatorKey.currentContext;

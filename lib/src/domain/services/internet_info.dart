@@ -1,5 +1,5 @@
 class InternetInfo {
-  // TODO: IMPLEMENT
+  // TODO: IMPLEMENT INTERNET
   Future<bool> get hasInternet async {
     return false;
   }

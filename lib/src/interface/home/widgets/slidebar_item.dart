@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.gr.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
 
@@ -102,7 +102,13 @@ class _SlidebarItemState extends State<SlidebarItem> {
                       color: Theme.of(context).colorScheme.secondary)
                   : null,
         ),
-        const Divider(color: Colors.black26)
+        Divider(
+            color: context
+                .watch<SweetPreferencesBloc>()
+                .state
+                .themeColors
+                .text
+                .withOpacity(0.3)),
       ],
     );
   }

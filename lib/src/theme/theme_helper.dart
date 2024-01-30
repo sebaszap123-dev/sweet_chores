@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
+import 'package:sweet_chores_reloaded/src/data/data_source.dart';
+import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 class PrimaryColors {
   // Amber
@@ -15,5 +16,5 @@ class PrimaryColors {
   Color get blueGray400 => const Color(0XFF888888);
 }
 
-PrimaryColors get appTheme => PrimaryColors();
-ThemeData get theme => SweetThemes.sweetboy();
+PrimaryColors get appAutoGeneraterTheme => PrimaryColors();
+ThemeData get theme => getIt<SweetPreferencesBloc>().state.themeData;

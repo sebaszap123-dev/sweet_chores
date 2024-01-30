@@ -30,7 +30,7 @@ class SplashLayout extends StatelessWidget {
                                 TextSpan(
                                   text: "lbl_sweet_chores".tr,
                                   style: GoogleFonts.spicyRice(
-                                    color: appTheme.blue100,
+                                    color: appAutoGeneraterTheme.blue100,
                                     fontSize: 50,
                                   ),
                                 )
@@ -39,7 +39,7 @@ class SplashLayout extends StatelessWidget {
                       Opacity(
                           opacity: 0.7,
                           child: CustomImageView(
-                              imagePath: ImageConstant.imgImg1125photoroom,
+                              imagePath: ImageConstant.welcomeCinnamon,
                               height: 250.v,
                               width: 251.h)),
                     ]))));

@@ -61,6 +61,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Theme.of(context).colorScheme.secondary,
                         fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                 ),
               ),

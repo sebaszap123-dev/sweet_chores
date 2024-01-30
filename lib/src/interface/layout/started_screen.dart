@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sweet_chores_reloaded/src/config/router/todo_router.gr.dart';
+import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/core/app_export.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
@@ -30,14 +30,14 @@ class StartedScreen extends StatelessWidget {
                                 TextSpan(
                                   text: "lbl_hi_weelcome_to".tr,
                                   style: GoogleFonts.spicyRice(
-                                    color: appTheme.blue100,
+                                    color: appAutoGeneraterTheme.blue100,
                                     fontSize: 18,
                                   ),
                                 ),
                                 TextSpan(
                                   text: "lbl_sweet_chores".tr,
                                   style: GoogleFonts.spicyRice(
-                                    color: appTheme.blue100,
+                                    color: appAutoGeneraterTheme.blue100,
                                     fontSize: 50,
                                   ),
                                 )
@@ -46,7 +46,7 @@ class StartedScreen extends StatelessWidget {
                       Opacity(
                           opacity: 0.7,
                           child: CustomImageView(
-                              imagePath: ImageConstant.imgImg1125photoroom,
+                              imagePath: ImageConstant.welcomeCinnamon,
                               height: 250.v,
                               width: 251.h)),
                       const SizedBox(height: 80),
