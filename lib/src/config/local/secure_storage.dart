@@ -6,61 +6,67 @@ import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 
 enum GlobalStatusApp { firstOpen, open }
 
-class SweetChoresPreferences {
-  final storage = FlutterSecureStorage(
-      iOptions: getIOSOptions(), aOptions: getAndroidOptions());
+abstract class SweetChoresPreferences {
+  static final _storage = FlutterSecureStorage(
+      iOptions: _getIOSOptions, aOptions: _getAndroidOptions);
 
   /// CONSTANT KEY theme
-  final String themeKey = 'themeData';
+  static const String _themeKey = 'themeData';
 
   /// CONSTANT KEY status
-  final String statusKey = 'sweet_preferences';
+  static const String _statusKey = 'sweet_preferences';
 
   /// CONSTANT KEY darkmode
-  final String darkmodeKey = 'sweet_darkmode';
+  static const String _darkmodeKey = 'sweet_darkmode';
 
   /// CONSTANT KEY darkmode
-  final String autoTaskKey = 'sweet_delete_notes';
-  final String autoTime = 'sweet_delete_notes_time';
+  static const String _autoTaskKey = 'sweet_delete_notes';
+  static const String _autoTime = 'sweet_delete_notes_time';
 
-  final String initialStatus = GlobalStatusApp.firstOpen.name;
-  static IOSOptions getIOSOptions() => const IOSOptions(
-        accountName: AppleOptions.defaultAccountName,
-      );
-  static AndroidOptions getAndroidOptions() => const AndroidOptions(
-        encryptedSharedPreferences: true,
-      );
+  static final String _initialStatus = GlobalStatusApp.firstOpen.name;
 
-  Future<bool> get isFirstOpen async {
+  static IOSOptions get _getIOSOptions {
+    return const IOSOptions(
+      accountName: AppleOptions.defaultAccountName,
+    );
+  }
+
+  static AndroidOptions get _getAndroidOptions {
+    return const AndroidOptions(
+      encryptedSharedPreferences: true,
+    );
+  }
+
+  static Future<bool> get isFirstOpen async {
     bool open = true;
-    if (await storage.containsKey(key: statusKey)) {
-      final readedValue = await storage.read(key: statusKey);
+    if (await _storage.containsKey(key: _statusKey)) {
+      final readedValue = await _storage.read(key: _statusKey);
       open = readedValue == GlobalStatusApp.firstOpen.name;
     } else {
-      await storage.write(key: statusKey, value: initialStatus);
+      await _storage.write(key: _statusKey, value: _initialStatus);
     }
     return open;
   }
 
-  Future<void> toggleDarkMode(bool value) async {
-    await storage.write(key: darkmodeKey, value: value.toString());
+  static Future<void> toggleDarkMode(bool value) async {
+    await _storage.write(key: _darkmodeKey, value: value.toString());
   }
 
-  Future<void> toggleAutoDeleteTask(bool value, int time) async {
+  static Future<void> toggleAutoDeleteTask(bool value, int time) async {
     final now = DateTime.now();
     final timeLapse = now.add(Duration(days: time));
-    await storage.write(key: autoTaskKey, value: value.toString());
-    await storage.write(
-        key: autoTime,
+    await _storage.write(key: _autoTaskKey, value: value.toString());
+    await _storage.write(
+        key: _autoTime,
         value: value ? timeLapse.millisecondsSinceEpoch.toString() : null);
   }
 
-  Future<void> toggleTheme(SweetTheme value) async {
-    await storage.write(key: themeKey, value: value.name);
+  static Future<void> toggleTheme(SweetTheme value) async {
+    await _storage.write(key: _themeKey, value: value.name);
   }
 
-  Future<SweetTheme> get getTheme async {
-    final currentTheme = await storage.read(key: themeKey);
+  static Future<SweetTheme> get getTheme async {
+    final currentTheme = await _storage.read(key: _themeKey);
     bool orElse = false;
     if (currentTheme != null) {
       final theme = SweetTheme.values.firstWhere(
@@ -71,39 +77,39 @@ class SweetChoresPreferences {
         },
       );
       if (orElse) {
-        await storage.write(key: themeKey, value: SweetTheme.cinnamon.name);
+        await _storage.write(key: _themeKey, value: SweetTheme.cinnamon.name);
       }
       return theme;
     } else {
-      await storage.write(key: themeKey, value: SweetTheme.cinnamon.name);
+      await _storage.write(key: _themeKey, value: SweetTheme.cinnamon.name);
       return SweetTheme.cinnamon;
     }
   }
 
-  Future<bool> get isDarkMode async {
-    if (await storage.containsKey(key: darkmodeKey)) {
-      final darkModeValue = await storage.read(key: darkmodeKey);
+  static Future<bool> get isDarkMode async {
+    if (await _storage.containsKey(key: _darkmodeKey)) {
+      final darkModeValue = await _storage.read(key: _darkmodeKey);
       return darkModeValue?.toLowerCase() == 'true';
     } else {
       return false;
     }
   }
 
-  Future<bool> get autoDeleteTask async {
-    if (await storage.containsKey(key: autoTaskKey)) {
-      final autoValue = await storage.read(key: autoTaskKey);
+  static Future<bool> get autoDeleteTask async {
+    if (await _storage.containsKey(key: _autoTaskKey)) {
+      final autoValue = await _storage.read(key: _autoTaskKey);
       return autoValue?.toLowerCase() == 'true';
     } else {
       return false;
     }
   }
 
-  Future<DateTime?> get getTimeTask async {
+  static Future<DateTime?> get getTimeTask async {
     final isActive = await autoDeleteTask;
 
     if (isActive) {
-      if (await storage.containsKey(key: autoTime)) {
-        final autoValue = await storage.read(key: autoTime);
+      if (await _storage.containsKey(key: _autoTime)) {
+        final autoValue = await _storage.read(key: _autoTime);
         if (autoValue != null) {
           try {
             final timestamp = int.parse(autoValue);
@@ -120,7 +126,7 @@ class SweetChoresPreferences {
     return null;
   }
 
-  Future<void> initializedApp() async {
-    await storage.write(key: statusKey, value: GlobalStatusApp.open.name);
+  static Future<void> initializedApp() async {
+    await _storage.write(key: _statusKey, value: GlobalStatusApp.open.name);
   }
 }

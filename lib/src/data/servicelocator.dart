@@ -9,13 +9,13 @@ GetIt getIt = GetIt.instance;
 
 final router = SweetChoresRouter();
 
-void serviceLocator() {
-  getIt.registerSingleton(Greeting());
+Future<void> serviceLocator() async {
+  getIt.registerSingleton(SweetPreferencesBloc());
+  final dbManager = await DatabaseManagerCubit.startManager();
+
   getIt.registerSingleton(FirebaseAuthBloc());
   getIt.registerSingleton(InternetInfo());
-  getIt.registerSingleton(SweetChoresPreferences());
-  getIt.registerSingleton(SweetPreferencesBloc());
-  getIt.registerSingleton(DatabaseManagerCubit());
+  getIt.registerSingleton(dbManager);
   getIt.registerSingleton(TodoBloc());
   getIt.registerSingleton(CategoriesBloc());
   getIt.registerSingleton(SweetRouterCubit(router));

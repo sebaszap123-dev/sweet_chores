@@ -7,9 +7,8 @@ class SweetPreferencesState extends Equatable {
   final SweetThemeColors themeColors;
   final SweetTheme typeTheme;
   final bool isDarkMode;
-  final storageData = getIt<SweetChoresPreferences>();
   final SweetChoresStatus status;
-  SweetPreferencesState({
+  const SweetPreferencesState({
     required this.themeColors,
     this.firstTimeApp = true,
     this.autoDeleteTask = false,

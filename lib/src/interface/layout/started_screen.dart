@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/theme/custom_button_style.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +69,6 @@ class StartedScreen extends StatelessWidget {
   /// to push the named route for the loginScreen.
   onTapGetstarted(BuildContext context) async {
     AutoRouter.of(context).push(const HomeRoute());
-    await getIt<SweetPreferencesBloc>().state.storageData.initializedApp();
+    await SweetChoresPreferences.initializedApp();
   }
 }

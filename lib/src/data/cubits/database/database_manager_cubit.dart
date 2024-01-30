@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
@@ -14,12 +13,8 @@ part 'database_manager_state.dart';
 
 /// Main Manager Database need to be in first instance when creating the app (BlocProvider or MultiBloc)
 class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
-  DatabaseManagerCubit()
-      : super(const DatabaseManagerState(
-          db: null, // Inicialmente, db es nulo
-        )) {
-    startManager();
-  }
+  final Database db;
+  DatabaseManagerCubit(this.db) : super(DatabaseManagerState(db: db));
 
   static Future<Database> _initDatabase() async {
     // Inicializar la base de datos aquí y devolver la instancia de Database
@@ -41,8 +36,8 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   // TODO: CREATE OR ADD TO REPOSITORY AND IMPLEMENT THERE NOT HERE!!!!
   static Future<void> _autoDeleteTask(Database db) async {
-    final isActive = getIt<SweetPreferencesBloc>().state.autoDeleteTask;
-    final timeLapse = await getIt<SweetChoresPreferences>().getTimeTask;
+    final isActive = await SweetChoresPreferences.autoDeleteTask;
+    final timeLapse = await SweetChoresPreferences.getTimeTask;
     final now = DateTime.now().millisecondsSinceEpoch;
     if (isActive &&
         timeLapse != null &&
@@ -52,23 +47,9 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
     }
   }
 
-  void startManager() async {
-    emit(state.copyWith(status: DatabaseStatus.loading));
-    try {
-      final db = await _initDatabase();
-      emit(state.copyWith(db: db, status: DatabaseStatus.ready));
-    } catch (e) {
-      SweetDialogs.databaseSqlite(error: '$e');
-    }
-  }
-
-  Database get database {
-    final db = state.status == DatabaseStatus.ready ? state.db : state.db;
-    if (db != null) {
-      return db;
-    } else {
-      return SweetDialogs.databaseSqlite();
-    }
+  static Future<DatabaseManagerCubit> startManager() async {
+    final db = await _initDatabase();
+    return DatabaseManagerCubit(db);
   }
 
   static Future<void> _onCreate(Database db, int version) async =>

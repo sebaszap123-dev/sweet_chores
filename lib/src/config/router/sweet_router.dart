@@ -62,7 +62,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
 
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
-    final firstTime = await getIt<SweetChoresPreferences>().isFirstOpen;
+    final firstTime = await SweetChoresPreferences.isFirstOpen;
     // TODO: IS PREMIUM?
     FirebaseAuth.instance.authStateChanges().listen((event) {
       if (firstTime && event == null) {

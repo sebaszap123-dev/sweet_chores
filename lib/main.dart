@@ -13,7 +13,7 @@ final globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseDatabase.initFirebase();
-  serviceLocator();
+  await serviceLocator();
   Future.wait([
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
