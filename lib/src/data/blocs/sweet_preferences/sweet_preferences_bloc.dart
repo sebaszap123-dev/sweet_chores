@@ -59,6 +59,7 @@ class SweetPreferencesBloc
     await state.storageData.toggleDarkMode(event.isDarkMode);
     emit(state.copyWith(
       themeData: theme,
+      themeColors: colors,
       isDarkMode: event.isDarkMode,
     ));
   }

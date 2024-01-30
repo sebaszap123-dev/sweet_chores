@@ -54,8 +54,8 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   void startManager() async {
     emit(state.copyWith(status: DatabaseStatus.loading));
-    final db = await _initDatabase();
     try {
+      final db = await _initDatabase();
       emit(state.copyWith(db: db, status: DatabaseStatus.ready));
     } catch (e) {
       SweetDialogs.databaseSqlite(error: '$e');

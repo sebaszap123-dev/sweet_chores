@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
+import 'package:sweet_chores_reloaded/src/config/router/guards/home_guard.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
@@ -17,7 +18,7 @@ class SweetChoresRouter extends $SweetChoresRouter {
         AutoRoute(page: SplashLayout.page, initial: true),
         AutoRoute(page: LoadingRoute.page),
         AutoRoute(page: StartedRoute.page),
-        AutoRoute(page: HomeRoute.page),
+        AutoRoute(page: HomeRoute.page, guards: [AuthGuard()]),
         AutoRoute(page: AuthLayout.page, children: [
           AutoRoute(page: LoginRoute.page),
           AutoRoute(page: RegisterRoute.page),

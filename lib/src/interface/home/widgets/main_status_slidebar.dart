@@ -65,10 +65,9 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                   contentPadding: const EdgeInsets.only(left: 8, right: 0),
                   title: Text(
                     'My lists',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   trailing: TextButton(
                     onPressed: () {
@@ -80,7 +79,13 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                     child: const Text('Edit'),
                   ),
                 ),
-                const Divider(color: Colors.black26),
+                Divider(
+                    color: context
+                        .watch<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .text
+                        .withOpacity(0.3)),
                 if (state.categories.isNotEmpty)
                   ...state.categories.asMap().entries.map((categoryEntry) {
                     return SlidebarItem(
