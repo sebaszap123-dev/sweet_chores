@@ -39,7 +39,7 @@ class SplashLayout extends StatelessWidget {
                       Opacity(
                           opacity: 0.7,
                           child: CustomImageView(
-                              imagePath: ImageConstant.imgImg1125photoroom,
+                              imagePath: ImageConstant.welcomeCinnamon,
                               height: 250.v,
                               width: 251.h)),
                     ]))));

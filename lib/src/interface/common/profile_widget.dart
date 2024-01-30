@@ -9,7 +9,7 @@ class ProfileWidget extends StatelessWidget {
     super.key,
     required this.name,
     this.lema,
-    this.width = 80,
+    this.width = 100,
     this.photoURL,
   });
   final String? photoURL;
@@ -24,15 +24,16 @@ class ProfileWidget extends StatelessWidget {
         color: Theme.of(context).colorScheme.primary,
         child: photoURL != null
             ? ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: _getImage(context),
-                ),
+                leading: _getImage(context),
                 title: Text(
                   'DarkNight',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w500,
+                        color: context
+                            .watch<SweetPreferencesBloc>()
+                            .state
+                            .themeColors
+                            .grayly,
+                        fontWeight: FontWeight.bold,
                       ),
                 ),
                 subtitle: Text(
@@ -49,34 +50,18 @@ class ProfileWidget extends StatelessWidget {
   Widget _getImage(BuildContext context) {
     return photoURL != null
         ? CachedNetworkImage(
-            width: width,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
             imageUrl: photoURL!,
-            // imageBuilder: (context, imageProvider) => Container(
-            //   height: width,
-            //   clipBehavior: Clip.antiAlias,
-            //   width: width,
-            //   decoration: BoxDecoration(
-            //     shape: BoxShape.circle,
-            //     image: DecorationImage(
-            //       fit: BoxFit.cover,
-            //       image: imageProvider,
-            //     ),
-            //   ),
-            // ),
+            imageBuilder: (context, imageProvider) => CircleAvatar(
+              backgroundImage: imageProvider,
+            ),
             placeholder: (context, url) => const CircularProgressIndicator(),
             errorWidget: (context, url, error) => const Icon(Icons.person),
           )
-        : Container(
-            height: width,
-            width: width,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.person,
-              color: Colors.white,
-            ));
+        : const CircleAvatar(
+            child: Icon(
+            Icons.person,
+            color: Colors.white,
+          ));
   }
 }

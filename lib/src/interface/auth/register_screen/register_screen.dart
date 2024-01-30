@@ -47,7 +47,7 @@ class RegisterScreen extends StatelessWidget {
                                             opacity: 0.7,
                                             child: CustomImageView(
                                                 imagePath: ImageConstant
-                                                    .imgCinnaphotoroom,
+                                                    .registerCinnamon,
                                                 height: 240.v,
                                                 width: 390.h,
                                                 alignment: Alignment.center)),

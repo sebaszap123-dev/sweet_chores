@@ -3,7 +3,6 @@ import 'package:sweet_chores_reloaded/src/core/app_export.dart';
 import '../../../models/todo.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
 import 'package:sweet_chores_reloaded/src/interface/home/widgets/edit_todo_dialog.dart';
 import 'package:sweet_chores_reloaded/src/interface/home/widgets/widgets.dart';
@@ -61,7 +60,7 @@ class _TodoExpansionCardState extends State<TodoExpansionCard> {
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.zero,
               color: !isOverDue(widget.todo)
-                  ? Theme.of(context).colorScheme.primary
+                  ? Theme.of(context).cardTheme.color
                   : context
                       .watch<SweetPreferencesBloc>()
                       .state

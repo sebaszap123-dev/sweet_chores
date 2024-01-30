@@ -154,8 +154,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 Opacity(
                                     opacity: 0.7,
                                     child: CustomImageView(
-                                        imagePath:
-                                            ImageConstant.imgImg1124photoroom,
+                                        imagePath: ImageConstant
+                                            .forgotPasswordCinnamon,
                                         height: 270.v,
                                         width: 302.h,
                                         alignment: Alignment.topLeft)),

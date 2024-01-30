@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/image_constant.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 
 // TODO: IMPLEMENT INTL for messages
@@ -30,7 +31,7 @@ class EmptyStateWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                _getAssetImage(status, state.firstTimeApp),
+                _getAssetImage(state.firstTimeApp),
                 width: MediaQuery.of(context).size.width * 0.7,
                 filterQuality: FilterQuality.high,
               ),
@@ -54,17 +55,7 @@ class EmptyStateWidget extends StatelessWidget {
       },
     );
   }
-}
 
-String _getAssetImage(FilterStatus status, bool isFirstTime) {
-  if (isFirstTime) {
-    return 'assets/images/empty/first_empty.jpg';
-  } else {
-    switch (status) {
-      case FilterStatus.all:
-        return 'assets/images/empty/empty_state.png';
-      default:
-        return 'assets/images/empty/empty_state.png';
-    }
-  }
+  String _getAssetImage(bool isFirstTime) =>
+      isFirstTime ? ImageConstant.noTasks : ImageConstant.doneTasks;
 }

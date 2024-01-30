@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores_reloaded/src/config/local/secure_storage.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/firebase/firebase_auth_bloc.dart';
+import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 enum RouterStatus { initial, loading, success, error }
@@ -62,6 +62,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
     final firstTime = await getIt<SweetChoresPreferences>().isFirstOpen;
+    // TODO: IS PREMIUM?
     FirebaseAuth.instance.authStateChanges().listen((event) {
       if (firstTime && event == null) {
         state.replace(const StartedRoute());
@@ -69,6 +70,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
         state.replace(const AuthLayout(children: [LoginRoute()]));
       } else {
         getIt<FirebaseAuthBloc>().add(NoPremiumEvent(event));
+        getIt<TodoBloc>().add(TodoStarted());
         state.replace(const HomeRoute());
       }
     });

@@ -35,7 +35,7 @@ class SlideActionCardHeader extends StatelessWidget {
     return Card(
       margin: EdgeInsets.zero,
       color: !isOverDue
-          ? Theme.of(context).colorScheme.tertiary
+          ? Theme.of(context).cardTheme.color
           : context.watch<SweetPreferencesBloc>().state.themeColors.overDue,
       shadowColor: Colors.transparent,
       elevation: 0,
@@ -180,10 +180,10 @@ class _CheckBox extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color:
-              !active ? Colors.white : Theme.of(context).colorScheme.secondary,
+              !active ? Colors.white : Theme.of(context).colorScheme.tertiary,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.tertiary,
+            color: Theme.of(context).colorScheme.primary,
             width: 1.5,
           ),
         ),

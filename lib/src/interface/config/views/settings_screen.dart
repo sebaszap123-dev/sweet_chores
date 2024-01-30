@@ -100,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ListTile(
               enabled: autoDeleteTask,
               leading: const Icon(Icons.access_time),
-              title: const Text('Cada:'),
+              title: const Text('Each:'),
               trailing: DecoratedBox(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -114,14 +114,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  value: 30,
+                  value: 7,
                   underline: Container(),
-                  items: [30, 60, 120]
+                  items: [7, 14, 30, 60, 120]
                       .map((e) => DropdownMenuItem<int>(
                             value: e,
-                            child: Text('$e días'),
+                            // ? TODO: PARSE WEEK, MONTH string instead days
+                            child: Text('$e days'),
                           ))
                       .toList(),
+                  // TODO: CHANGE AUTO DELETE TIME
                   onChanged: autoDeleteTask ? (value) {} : null,
                 ),
               ),

@@ -23,7 +23,7 @@ class FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).dialogBackgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       title: Text(
         'Filter To-do',
         style: TextStyle(

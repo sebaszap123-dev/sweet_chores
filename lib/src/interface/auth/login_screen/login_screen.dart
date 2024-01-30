@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isLoading = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Opacity(
                                             opacity: 0.7,
                                             child: CustomImageView(
-                                                imagePath: ImageConstant
-                                                    .imgImg1127photoroom,
+                                                imagePath:
+                                                    ImageConstant.loginCinnamon,
                                                 height: 255.v,
                                                 width: 272.h,
                                                 margin: EdgeInsets.only(

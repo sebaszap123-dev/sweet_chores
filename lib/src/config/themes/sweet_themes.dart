@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
 
 mixin SweetThemes implements ThemeData {
   static ThemeData sweetThemeData({required SweetThemeColors themeColors}) {
     return ThemeData(
-      // textTheme: GoogleFonts.spicyRiceTextTheme(),
+      textTheme: GoogleFonts.robotoTextTheme(),
       colorScheme: ColorScheme.light(
         background: Colors.white,
         primary: themeColors.primary,
@@ -16,7 +17,12 @@ mixin SweetThemes implements ThemeData {
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: themeColors.primary,
-        elevation: 0,
+        foregroundColor: themeColors.primary,
+        shadowColor: themeColors.primary,
+        surfaceTintColor: themeColors.primary,
+      ),
+      cardTheme: CardTheme(
+        color: themeColors.primary,
       ),
       scaffoldBackgroundColor: Colors.white,
       checkboxTheme: CheckboxThemeData(
@@ -32,19 +38,19 @@ mixin SweetThemes implements ThemeData {
         }),
       ),
       iconTheme: IconThemeData(
-        color: themeColors.secondary,
+        color: themeColors.primary,
       ),
       iconButtonTheme: IconButtonThemeData(style: ButtonStyle(
         iconColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
-            return themeColors.secondary;
+            return themeColors.primary;
           }
           return Colors.white;
         }),
       )),
       listTileTheme: ListTileThemeData(
-        iconColor: themeColors.secondary,
+        iconColor: themeColors.primary,
         enableFeedback: true,
       ),
       dividerColor: themeColors.tertiary,
