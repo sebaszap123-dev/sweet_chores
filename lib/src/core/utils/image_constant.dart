@@ -1,46 +1,53 @@
 class ImageConstant {
   // Image folder path
-  static String imagePath = 'assets/images';
+  static const String imagePath = 'assets/images';
 
   // started_screen images
-  static String imgImg1125photoroom = '$imagePath/img_img1125photoroom.png';
+  static const String welcomeCinnamon = '$imagePath/welcome.png';
 
   // login_screen images
-  static String imgImg1127photoroom = '$imagePath/img_img1127photoroom.png';
+  static const String loginCinnamon = '$imagePath/login_surprise.png';
 
-  static String imgEllipse29 = '$imagePath/img_ellipse29.png';
+  static const String imgEllipse29 = '$imagePath/img_ellipse29.png';
 
   // register_screen images
-  static String imgCinnaphotoroom = '$imagePath/img_cinnaphotoroom.png';
+  static const String registerCinnamon = '$imagePath/register.png';
 
-  static String imgEllipse29150x101 = '$imagePath/img_ellipse29_150x101.png';
+  static const String imgEllipse29150x101 =
+      '$imagePath/img_ellipse29_150x101.png';
 
-  static String imgEllipse30 = '$imagePath/img_ellipse30.png';
+  static const String imgEllipse30 = '$imagePath/img_ellipse30.png';
 
   // forgot_password_screen images
-  static String imgEllipse2931x150 = '$imagePath/img_ellipse29_31x150.png';
+  static const String imgEllipse2931x150 =
+      '$imagePath/img_ellipse29_31x150.png';
 
-  static String imgEllipse3083x112 = '$imagePath/img_ellipse30_83x112.png';
+  static const String imgEllipse3083x112 =
+      '$imagePath/img_ellipse30_83x112.png';
 
-  static String imgArrowleftOnprimary =
+  static const String imgArrowleftOnprimary =
       '$imagePath/img_arrowleft_onprimary.svg';
 
-  static String imgEllipse31 = '$imagePath/img_ellipse31.png';
+  static const String imgEllipse31 = '$imagePath/img_ellipse31.png';
 
-  static String imgImg1124photoroom = '$imagePath/img_img1124photoroom.png';
+  static const String forgotPasswordCinnamon = '$imagePath/forgot_password.png';
 
-  static String imgEllipse32 = '$imagePath/img_ellipse32.png';
+  static const String imgEllipse32 = '$imagePath/img_ellipse32.png';
 
-  static String imgEllipse33 = '$imagePath/img_ellipse33.png';
+  static const String imgEllipse33 = '$imagePath/img_ellipse33.png';
 
   // Common images
-  static String imgArrowleft = '$imagePath/img_arrowleft.svg';
+  static const String imgArrowleft = '$imagePath/img_arrowleft.svg';
 
-  static String imgFlatcoloriconsgoogle =
+  static const String imgFlatcoloriconsgoogle =
       '$imagePath/img_flatcoloriconsgoogle.svg';
 
-  static String imgAntdesignapplefilled =
+  static const String imgAntdesignapplefilled =
       '$imagePath/img_antdesignapplefilled.svg';
 
-  static String imageNotFound = 'assets/images/image_not_found.png';
+  static const String imageNotFound = '$imagePath/image_not_found.png';
+  // Home Screen
+  static const String noTasks = '$imagePath/surprise_no_tasks.png';
+  static const String doneTasks = '$imagePath/done_task.png';
+  // ? TODO: GOODBYE ('$imagePath/goodbye.png')
 }

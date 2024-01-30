@@ -18,7 +18,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  SweetChoresThemes? selectedOption = SweetChoresThemes.sweetboy;
+  SweetTheme selectedOption = SweetTheme.cinnamon;
   bool isDarkMode = false;
   bool autoDeleteTask = false;
   @override
@@ -29,24 +29,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
   }
 
-  void _updateTheme(SweetChoresThemes? value) {
-    final myTheme = value ?? SweetChoresThemes.sweetboy;
-    final result = SweetChoresThemes.values.firstWhere(
-      (theme) => theme == myTheme,
-      orElse: () => SweetChoresThemes.sweetboy,
-    );
-    context.read<SweetPreferencesBloc>().add(ChangeTheme(theme: result));
-    setState(() {
-      selectedOption = value;
-    });
+  void _updateTheme(SweetTheme? value) {
+    if (value != null) {
+      final myTheme = value;
+      final result = SweetTheme.values.firstWhere(
+        (theme) => theme == myTheme,
+        orElse: () => SweetTheme.cinnamon,
+      );
+      context.read<SweetPreferencesBloc>().add(ChangeTheme(theme: result));
+      setState(() {
+        selectedOption = value;
+      });
+    }
   }
 
   void _updateDarkMode(bool value) async {
+    context.read<SweetPreferencesBloc>().add(DarkMode(isDarkMode: value));
     setState(() {
       isDarkMode = value;
     });
-    await Future.delayed(const Duration(milliseconds: 150));
-    context.read<SweetPreferencesBloc>().add(DarkMode(isDarkMode: value));
   }
 
   void _updateAutoDeleteTask(bool value) async {
@@ -99,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ListTile(
               enabled: autoDeleteTask,
               leading: const Icon(Icons.access_time),
-              title: const Text('Cada:'),
+              title: const Text('Each:'),
               trailing: DecoratedBox(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -113,14 +114,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  value: 30,
+                  value: 7,
                   underline: Container(),
-                  items: [30, 60, 120]
+                  items: [7, 14, 30, 60, 120]
                       .map((e) => DropdownMenuItem<int>(
                             value: e,
-                            child: Text('$e días'),
+                            // ? TODO: PARSE WEEK, MONTH string instead days
+                            child: Text('$e days'),
                           ))
                       .toList(),
+                  // TODO: CHANGE AUTO DELETE TIME
                   onChanged: autoDeleteTask ? (value) {} : null,
                 ),
               ),
@@ -141,12 +144,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _buildThemeOption(
                     Icons.person,
                     'Cinnamon',
-                    SweetChoresThemes.sweetboy,
+                    SweetTheme.cinnamon,
                   ),
                   _buildThemeOption(
                     Icons.person_outline,
                     'Strawberry',
-                    SweetChoresThemes.sweetgirl,
+                    SweetTheme.strawberry,
                     color: Colors.pink.shade100,
                   ),
                 ],
@@ -161,13 +164,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildThemeOption(
     IconData icon,
     String title,
-    SweetChoresThemes value, {
+    SweetTheme value, {
     Color? color,
   }) {
     return ListTile(
       leading: Icon(icon, color: color),
       title: Text(title),
-      trailing: Radio<SweetChoresThemes>(
+      trailing: Radio<SweetTheme>(
         value: value,
         groupValue: selectedOption,
         onChanged: _updateTheme,

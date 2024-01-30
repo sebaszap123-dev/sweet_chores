@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
+import 'package:sweet_chores_reloaded/src/core/app_export.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
+import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
 
 class SlideActionCardHeader extends StatelessWidget {
@@ -33,8 +35,8 @@ class SlideActionCardHeader extends StatelessWidget {
     return Card(
       margin: EdgeInsets.zero,
       color: !isOverDue
-          ? Theme.of(context).colorScheme.tertiary
-          : SweetBoyThemeColors.overDue,
+          ? Theme.of(context).cardTheme.color
+          : context.watch<SweetPreferencesBloc>().state.themeColors.overDue,
       shadowColor: Colors.transparent,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -178,10 +180,10 @@ class _CheckBox extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color:
-              !active ? Colors.white : Theme.of(context).colorScheme.secondary,
+              !active ? Colors.white : Theme.of(context).colorScheme.tertiary,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: Theme.of(context).colorScheme.tertiary,
+            color: Theme.of(context).colorScheme.primary,
             width: 1.5,
           ),
         ),

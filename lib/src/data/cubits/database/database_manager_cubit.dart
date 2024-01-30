@@ -54,12 +54,11 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   void startManager() async {
     emit(state.copyWith(status: DatabaseStatus.loading));
-    final db = await _initDatabase();
     try {
+      final db = await _initDatabase();
       emit(state.copyWith(db: db, status: DatabaseStatus.ready));
     } catch (e) {
-      emit(state.copyWith(status: DatabaseStatus.error));
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.databaseSqlite(error: '$e');
     }
   }
 
@@ -112,7 +111,7 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
         DatabaseNotes.tbCategories,
         Categories(
           name: 'to-do',
-          color: SweetBoyThemeColors.primary,
+          color: sweetIconColors[0],
           iconData: Icons.category_sharp,
         ).toJson(),
       );

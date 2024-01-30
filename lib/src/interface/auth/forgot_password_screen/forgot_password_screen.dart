@@ -30,7 +30,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           resizeToAvoidBottomInset: false,
           body: DefaultTextStyle(
             style: TextStyle(
-              color: appTheme.blue100,
+              color: appAutoGeneraterTheme.blue100,
             ),
             child: SizedBox(
                 width: double.maxFinite,
@@ -119,8 +119,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                       CustomElevatedButton(
                           text: "lbl_submit".tr,
                           buttonStyle: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(appTheme.blue100)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  appAutoGeneraterTheme.blue100)),
                           buttonTextStyle: const TextStyle(color: Colors.white),
                           margin: EdgeInsets.only(
                               left: 40.h, top: 23.v, right: 41.h),
@@ -154,8 +154,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 Opacity(
                                     opacity: 0.7,
                                     child: CustomImageView(
-                                        imagePath:
-                                            ImageConstant.imgImg1124photoroom,
+                                        imagePath: ImageConstant
+                                            .forgotPasswordCinnamon,
                                         height: 270.v,
                                         width: 302.h,
                                         alignment: Alignment.topLeft)),

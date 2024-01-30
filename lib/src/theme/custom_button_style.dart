@@ -6,7 +6,7 @@ import 'package:sweet_chores_reloaded/src/theme/theme_helper.dart';
 class CustomButtonStyles {
   // Filled button style
   static ButtonStyle get fillBlue => ElevatedButton.styleFrom(
-        backgroundColor: appTheme.blue100,
+        backgroundColor: appAutoGeneraterTheme.blue100,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(27.h),
         ),

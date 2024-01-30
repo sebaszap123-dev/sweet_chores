@@ -102,7 +102,13 @@ class _SlidebarItemState extends State<SlidebarItem> {
                       color: Theme.of(context).colorScheme.secondary)
                   : null,
         ),
-        const Divider(color: Colors.black26)
+        Divider(
+            color: context
+                .watch<SweetPreferencesBloc>()
+                .state
+                .themeColors
+                .text
+                .withOpacity(0.3)),
       ],
     );
   }

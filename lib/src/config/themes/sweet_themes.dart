@@ -1,34 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
+import 'package:sweet_chores_reloaded/src/core/utils/color_tohex.dart';
 
-enum SweetChoresThemes { sweetboy, sweetgirl }
+Color backgroundColorFromTextColor(Color color) {
+  if (color.value == Colors.white.value) {
+    return '#121212'.toColor();
+  } else {
+    return Colors.white;
+  }
+}
+
+ColorScheme colorSchemeFromThemeColors(SweetThemeColors themeColors) {
+  // IF WHITE IS DARK MODE
+  if (themeColors.text.value == Colors.white.value) {
+    return ColorScheme.dark(
+      primary: themeColors.primary,
+      secondary: themeColors.secondary,
+      tertiary: themeColors.tertiary,
+    );
+  } else {
+    return ColorScheme.light(
+      primary: themeColors.primary,
+      secondary: themeColors.secondary,
+      tertiary: themeColors.tertiary,
+    );
+  }
+}
 
 mixin SweetThemes implements ThemeData {
-  static ThemeData sweetboy({bool darkMode = false}) {
+  static ThemeData sweetThemeData({required SweetThemeColors themeColors}) {
+    final textTheme =
+        GoogleFonts.robotoTextTheme().apply(bodyColor: themeColors.text);
     return ThemeData(
-      // textTheme: GoogleFonts.spicyRiceTextTheme(),
-      colorScheme: ColorScheme.light(
-        background: Colors.white,
-        primary: darkMode
-            ? SweetBoyThemeColors().primaryDark
-            : SweetBoyThemeColors.primary,
-        onPrimary: Colors.black,
-        secondary: darkMode
-            ? SweetBoyThemeColors().secondaryDark
-            : SweetBoyThemeColors.secondary,
-        onSecondary: Colors.white,
-        tertiary: darkMode
-            ? SweetBoyThemeColors().tertiaryDark
-            : SweetBoyThemeColors.tertiary,
-      ),
+      textTheme: textTheme,
+      colorScheme: colorSchemeFromThemeColors(themeColors),
       appBarTheme: AppBarTheme(
-        backgroundColor: darkMode
-            ? SweetBoyThemeColors().primaryDark
-            : SweetBoyThemeColors.primary,
-        elevation: 0,
+        backgroundColor: themeColors.primary,
+        foregroundColor: themeColors.primary,
+        shadowColor: themeColors.primary,
+        surfaceTintColor: themeColors.primary,
       ),
-      scaffoldBackgroundColor: Colors.white,
+      drawerTheme: DrawerThemeData(
+          backgroundColor: backgroundColorFromTextColor(themeColors.text)),
+      cardTheme: CardTheme(
+        color: themeColors.primary,
+      ),
+      scaffoldBackgroundColor: backgroundColorFromTextColor(themeColors.text),
       checkboxTheme: CheckboxThemeData(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -36,104 +55,28 @@ mixin SweetThemes implements ThemeData {
         fillColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
-            return darkMode
-                ? SweetBoyThemeColors().blueGrayDark
-                : SweetBoyThemeColors.blueGray;
+            return themeColors.grayly;
           }
           return Colors.white;
         }),
       ),
       iconTheme: IconThemeData(
-        color: darkMode
-            ? SweetBoyThemeColors().secondaryDark
-            : SweetBoyThemeColors.secondary,
+        color: themeColors.primary,
       ),
       iconButtonTheme: IconButtonThemeData(style: ButtonStyle(
         iconColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
-            return darkMode
-                ? SweetBoyThemeColors().secondaryDark
-                : SweetBoyThemeColors.secondary;
+            return themeColors.primary;
           }
           return Colors.white;
         }),
       )),
       listTileTheme: ListTileThemeData(
-        iconColor: darkMode
-            ? SweetBoyThemeColors().secondaryDark
-            : SweetBoyThemeColors.secondary,
+        iconColor: themeColors.primary,
         enableFeedback: true,
       ),
-      dividerColor: SweetBoyThemeColors.tertiary,
+      dividerColor: themeColors.tertiary,
     );
-  }
-
-  static ThemeData sweetgirl({bool darkMode = false}) {
-    return ThemeData(
-      colorScheme: ColorScheme.light(
-        background: Colors.white,
-        primary: darkMode
-            ? SweetGirlThemeColors().primaryDark
-            : SweetGirlThemeColors.primary,
-        onPrimary: Colors.black,
-        secondary: darkMode
-            ? SweetGirlThemeColors().secondaryDark
-            : SweetGirlThemeColors.secondary,
-        onSecondary: Colors.white,
-        tertiary: SweetGirlThemeColors.tertiary,
-      ),
-      appBarTheme: AppBarTheme(
-        backgroundColor: darkMode
-            ? SweetGirlThemeColors().primaryDark
-            : SweetGirlThemeColors.primary,
-      ),
-      scaffoldBackgroundColor: Colors.white,
-      checkboxTheme: CheckboxThemeData(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-        ),
-        fillColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.selected)) {
-            return darkMode
-                ? SweetGirlThemeColors().pinkGrayDark
-                : SweetGirlThemeColors.pinkGray;
-          }
-          return Colors.white;
-        }),
-      ),
-      iconTheme: IconThemeData(
-        color: darkMode
-            ? SweetGirlThemeColors().secondaryDark
-            : SweetGirlThemeColors.secondary,
-      ),
-      iconButtonTheme: IconButtonThemeData(style: ButtonStyle(
-        iconColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.selected)) {
-            return darkMode
-                ? SweetGirlThemeColors().secondaryDark
-                : SweetGirlThemeColors.secondary;
-          }
-          return Colors.white;
-        }),
-      )),
-      listTileTheme: ListTileThemeData(
-        iconColor: darkMode
-            ? SweetGirlThemeColors().secondaryDark
-            : SweetGirlThemeColors.secondary,
-      ),
-      dividerColor: SweetGirlThemeColors.tertiary,
-    );
-  }
-
-  static ThemeData themeByType(SweetChoresThemes theme,
-      {bool darkMode = false}) {
-    if (theme == SweetChoresThemes.sweetboy) {
-      return sweetboy(darkMode: darkMode);
-    } else {
-      return sweetgirl(darkMode: darkMode);
-    }
   }
 }

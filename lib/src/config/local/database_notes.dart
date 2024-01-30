@@ -7,7 +7,7 @@ abstract class DatabaseNotes {
   static const String _dbName = 'kawai_todo.db';
 
   /// Version of database change when you update the database
-  static const int version = 2;
+  static const int version = 1;
 
   /// Use CamelCase because is the name of the principal table
   static const String tbNotes = 'TodoNotes';
