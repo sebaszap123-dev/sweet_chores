@@ -26,7 +26,6 @@ class SweetChoresRouter extends $SweetChoresRouter {
         ]),
         AutoRoute(page: ConfigRouteLayout.page, children: [
           AutoRoute(page: SettingsRoute.page),
-          AutoRoute(page: BackUpRoute.page),
         ]),
         AutoRoute(page: CategoriesManagerRoute.page),
       ];
@@ -38,20 +37,8 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   }
   User? activeUser;
 
-  bool _hasUser({User? user}) {
-    if (user != null) {
-      return true;
-    }
-    return false;
-  }
-
   void goHome() {
-    final hasUser = _hasUser();
-    if (hasUser) {
-      state.replace(const HomeRoute());
-    } else {
-      goLogin();
-    }
+    state.replace(const HomeRoute());
   }
 
   void goLogin() => state.replace(const AuthLayout(children: [LoginRoute()]));

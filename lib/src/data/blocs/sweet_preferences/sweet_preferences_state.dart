@@ -2,29 +2,33 @@ part of 'sweet_preferences_bloc.dart';
 
 class SweetPreferencesState extends Equatable {
   final bool firstTimeApp;
-  final bool autoDeleteTask;
+  final bool isActiveAutoDelete;
+  final bool isDarkMode;
+  final bool isActiveBackup;
   final ThemeData themeData;
   final SweetThemeColors themeColors;
   final SweetTheme typeTheme;
-  final bool isDarkMode;
   final SweetChoresStatus status;
+
   const SweetPreferencesState({
     required this.themeColors,
     this.firstTimeApp = true,
-    this.autoDeleteTask = false,
+    this.isActiveAutoDelete = false,
     this.isDarkMode = false,
+    this.isActiveBackup = false,
     this.typeTheme = SweetTheme.cinnamon,
     required this.themeData,
     this.status = SweetChoresStatus.initial,
   });
   @override
   List<Object> get props =>
-      [firstTimeApp, themeData, isDarkMode, autoDeleteTask];
+      [firstTimeApp, themeData, isDarkMode, isActiveAutoDelete, isActiveBackup];
 
   SweetPreferencesState copyWith({
     bool? firstTimeApp,
-    bool? autoDeleteTask,
+    bool? isActiveAutoDelete,
     bool? isDarkMode,
+    bool? isActiveBackup,
     ThemeData? themeData,
     SweetChoresStatus? status,
     SweetTheme? typeTheme,
@@ -36,8 +40,9 @@ class SweetPreferencesState extends Equatable {
       status: status ?? this.status,
       typeTheme: typeTheme ?? this.typeTheme,
       isDarkMode: isDarkMode ?? this.isDarkMode,
-      autoDeleteTask: autoDeleteTask ?? this.autoDeleteTask,
+      isActiveAutoDelete: isActiveAutoDelete ?? this.isActiveAutoDelete,
       themeColors: themeColors ?? this.themeColors,
+      isActiveBackup: isActiveBackup ?? this.isActiveBackup,
     );
   }
 

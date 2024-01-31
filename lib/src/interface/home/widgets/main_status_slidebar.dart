@@ -114,15 +114,15 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                 leading: const Icon(Icons.settings_outlined),
                 title: const Text('Settings'),
               ),
-              ListTile(
-                onTap: () => getIt<SweetRouterCubit>()
-                    .state
-                    .push(const ConfigRouteLayout(children: [BackUpRoute()])),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                minLeadingWidth: minLeadingWidth,
-                leading: const Icon(Icons.cloud_outlined),
-                title: const Text('Backup'),
-              ),
+              // ListTile(
+              //   onTap: () => getIt<SweetRouterCubit>()
+              //       .state
+              //       .push(const ConfigRouteLayout(children: [BackUpRoute()])),
+              //   contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              //   minLeadingWidth: minLeadingWidth,
+              //   leading: const Icon(Icons.cloud_outlined),
+              //   title: const Text('Backup'),
+              // ),
               const ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 8),
                 minLeadingWidth: minLeadingWidth,

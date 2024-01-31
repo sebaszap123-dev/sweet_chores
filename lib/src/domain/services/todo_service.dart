@@ -9,24 +9,12 @@ class TodoService extends TodoRepository {
 
   @override
   Future<int> deleteAllTodos() async {
-    final network = await internetInfo.hasInternet;
-    if (network) {
-      // Internet DB
-      return 0;
-    } else {
-      return await localHelper.deleteAllTodos();
-    }
+    return await localHelper.deleteAllTodos();
   }
 
   @override
   Future<int> deleteTodoById(int id) async {
-    final network = await internetInfo.hasInternet;
-    if (network) {
-      // Internet DB
-      return 0;
-    } else {
-      return await localHelper.deleteTodoById(id);
-    }
+    return await localHelper.deleteTodoById(id);
   }
 
   @override
@@ -42,34 +30,16 @@ class TodoService extends TodoRepository {
 
   @override
   Future<Todo?> getTodoById(int id) async {
-    final network = await internetInfo.hasInternet;
-    if (network) {
-      // Internet DB
-      return null;
-    } else {
-      return await localHelper.getTodoById(id);
-    }
+    return await localHelper.getTodoById(id);
   }
 
   @override
   Future<int> addTodo(Todo todo) async {
-    final network = await internetInfo.hasInternet;
-    if (network) {
-      // Internet DB
-      return 0;
-    } else {
-      return await localHelper.addTodo(todo);
-    }
+    return await localHelper.addTodo(todo);
   }
 
   @override
   Future<int> updateTodo(Todo todo) async {
-    final network = await internetInfo.hasInternet;
-    if (network) {
-      // Internet DB
-      return 0;
-    } else {
-      return await localHelper.updateTodo(todo);
-    }
+    return await localHelper.updateTodo(todo);
   }
 }

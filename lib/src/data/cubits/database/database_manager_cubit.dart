@@ -5,8 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
 import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
 
 part 'database_manager_state.dart';
@@ -36,8 +34,8 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   // TODO: CREATE OR ADD TO REPOSITORY AND IMPLEMENT THERE NOT HERE!!!!
   static Future<void> _autoDeleteTask(Database db) async {
-    final isActive = await SweetSecurePreferences.autoDeleteTask;
-    final timeLapse = await SweetSecurePreferences.getTimeTask;
+    final isActive = await SweetSecurePreferences.isActiveAutoDelete;
+    final timeLapse = await SweetSecurePreferences.nextDeleteDate;
     final now = DateTime.now().millisecondsSinceEpoch;
     if (isActive &&
         timeLapse != null &&

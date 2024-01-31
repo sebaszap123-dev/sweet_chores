@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
 import 'package:sweet_chores_reloaded/src/core/app_export.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
 import 'package:sweet_chores_reloaded/src/data/data_source.dart';

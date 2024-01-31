@@ -11,9 +11,10 @@ class SweetPreferencesBloc
     extends Bloc<PreferencesEvent, SweetPreferencesState> {
   SweetPreferencesBloc() : super(SweetPreferencesState.instance) {
     on<InitalStatusSweetCh>(_initialState);
-    on<ChangeTheme>(_onUpdateTheme);
-    on<DarkMode>(_onDarkMode);
-    on<AutoDeleteTask>(_onUpdateAutoDeleteTask);
+    on<ChangeThemeEvent>(_onUpdateTheme);
+    on<ChangeDarkModeEvent>(_onDarkMode);
+    on<ChangeDeleteStatusEvent>(_onUpdateAutoDeleteTask);
+    on<ChangeBackupEvent>(_changeBackupEvent);
   }
 
   void _initialState(
@@ -24,22 +25,25 @@ class SweetPreferencesBloc
     final theme = await SweetSecurePreferences.getTheme;
     final firstOpen = await SweetSecurePreferences.isFirstOpen;
     final isDarkMode = await SweetSecurePreferences.isDarkMode;
-    final autoTask = await SweetSecurePreferences.autoDeleteTask;
-    final themeData = SweetThemes.sweetThemeData(
-        themeColors: SweetThemeColors.fromMode(
-            isDarkMode ? SweetMode.dark : SweetMode.light, theme));
+    final autoTask = await SweetSecurePreferences.isActiveAutoDelete;
+    final isActiveBackup = await SweetSecurePreferences.isActiveBackup;
+    final themeColors = SweetThemeColors.fromMode(
+        isDarkMode ? SweetMode.dark : SweetMode.light, theme);
+    final themeData = SweetThemes.sweetThemeData(themeColors: themeColors);
     emit(state.copyWith(
       themeData: themeData,
       typeTheme: theme,
       isDarkMode: isDarkMode,
       firstTimeApp: firstOpen,
-      autoDeleteTask: autoTask,
+      isActiveAutoDelete: autoTask,
+      isActiveBackup: isActiveBackup,
+      themeColors: themeColors,
       status: SweetChoresStatus.success,
     ));
   }
 
   void _onUpdateTheme(
-      ChangeTheme event, Emitter<SweetPreferencesState> emit) async {
+      ChangeThemeEvent event, Emitter<SweetPreferencesState> emit) async {
     final colors = SweetThemeColors.fromMode(
         state.isDarkMode ? SweetMode.dark : SweetMode.light, event.theme);
     final theme = SweetThemes.sweetThemeData(themeColors: colors);
@@ -51,7 +55,8 @@ class SweetPreferencesBloc
     ));
   }
 
-  void _onDarkMode(DarkMode event, Emitter<SweetPreferencesState> emit) async {
+  void _onDarkMode(
+      ChangeDarkModeEvent event, Emitter<SweetPreferencesState> emit) async {
     final colors = SweetThemeColors.fromMode(
         event.isDarkMode ? SweetMode.dark : SweetMode.light, state.typeTheme);
     final theme = SweetThemes.sweetThemeData(themeColors: colors);
@@ -63,10 +68,16 @@ class SweetPreferencesBloc
     ));
   }
 
-  void _onUpdateAutoDeleteTask(
-      AutoDeleteTask event, Emitter<SweetPreferencesState> emit) async {
-    emit(state.copyWith(autoDeleteTask: event.autoDeleTask));
+  void _onUpdateAutoDeleteTask(ChangeDeleteStatusEvent event,
+      Emitter<SweetPreferencesState> emit) async {
+    emit(state.copyWith(isActiveAutoDelete: event.autoDeleTask));
     await SweetSecurePreferences.toggleAutoDeleteTask(
         event.autoDeleTask, event.time);
+  }
+
+  void _changeBackupEvent(
+      ChangeBackupEvent event, Emitter<SweetPreferencesState> emit) async {
+    await SweetSecurePreferences.changeBackupStatus(event.isBackup, event.date);
+    emit(state.copyWith(isActiveBackup: event.isBackup));
   }
 }

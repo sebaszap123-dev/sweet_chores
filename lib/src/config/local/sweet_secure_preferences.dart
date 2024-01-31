@@ -19,11 +19,20 @@ abstract class SweetSecurePreferences {
   /// CONSTANT KEY darkmode
   static const String _darkmodeKey = 'sweet_darkmode';
 
-  /// CONSTANT KEY darkmode
+  /// CONSTANT KEY autodeleteTask
   static const String _autoTaskKey = 'sweet_delete_notes';
+
+  /// CONSTANT KEY autodeleteTask time
   static const String _autoTime = 'sweet_delete_notes_time';
 
+  /// status if firstOpen or not
   static final String _initialStatus = GlobalStatusApp.firstOpen.name;
+
+  /// Next backup date
+  static const String _nextBackupDate = 'sweet_firebase_backup';
+  static const String _activeBackup = 'sweet_firebase_backup_on';
+
+  // ? GETTERS
 
   static IOSOptions get _getIOSOptions {
     return const IOSOptions(
@@ -37,6 +46,22 @@ abstract class SweetSecurePreferences {
     );
   }
 
+  static Future<DateTime?> get nextBackupDate async {
+    final date = await _storage.read(key: _nextBackupDate);
+    if (date != null) {
+      return DateTime.tryParse(date);
+    }
+    return null;
+  }
+
+  static Future<bool> get isActiveBackup async {
+    final active = await _storage.read(key: _activeBackup);
+    if (active != null) {
+      return int.tryParse(active) == 1;
+    }
+    return false;
+  }
+
   static Future<bool> get isFirstOpen async {
     bool open = true;
     if (await _storage.containsKey(key: _statusKey)) {
@@ -48,64 +73,38 @@ abstract class SweetSecurePreferences {
     return open;
   }
 
-  static Future<void> toggleDarkMode(bool value) async {
-    await _storage.write(key: _darkmodeKey, value: value.toString());
-  }
-
-  static Future<void> toggleAutoDeleteTask(bool value, int time) async {
-    final now = DateTime.now();
-    final timeLapse = now.add(Duration(days: time));
-    await _storage.write(key: _autoTaskKey, value: value.toString());
-    await _storage.write(
-        key: _autoTime,
-        value: value ? timeLapse.millisecondsSinceEpoch.toString() : null);
-  }
-
-  static Future<void> toggleTheme(SweetTheme value) async {
-    await _storage.write(key: _themeKey, value: value.name);
-  }
-
   static Future<SweetTheme> get getTheme async {
     final currentTheme = await _storage.read(key: _themeKey);
-    bool orElse = false;
     if (currentTheme != null) {
-      final theme = SweetTheme.values.firstWhere(
+      return SweetTheme.values.firstWhere(
         (theme) => theme.name == currentTheme,
         orElse: () {
-          orElse = true;
           return SweetTheme.cinnamon;
         },
       );
-      if (orElse) {
-        await _storage.write(key: _themeKey, value: SweetTheme.cinnamon.name);
-      }
-      return theme;
     } else {
-      await _storage.write(key: _themeKey, value: SweetTheme.cinnamon.name);
       return SweetTheme.cinnamon;
     }
   }
 
   static Future<bool> get isDarkMode async {
-    if (await _storage.containsKey(key: _darkmodeKey)) {
-      final darkModeValue = await _storage.read(key: _darkmodeKey);
-      return darkModeValue?.toLowerCase() == 'true';
-    } else {
-      return false;
+    final darkModeValue = await _storage.read(key: _darkmodeKey);
+    if (darkModeValue != null) {
+      return int.tryParse(darkModeValue) == 1;
     }
+    return false;
   }
 
-  static Future<bool> get autoDeleteTask async {
-    if (await _storage.containsKey(key: _autoTaskKey)) {
-      final autoValue = await _storage.read(key: _autoTaskKey);
-      return autoValue?.toLowerCase() == 'true';
-    } else {
-      return false;
+  static Future<bool> get isActiveAutoDelete async {
+    final autoValue = await _storage.read(key: _autoTaskKey);
+    if (autoValue != null) {
+      return int.tryParse(autoValue) == 1;
     }
+    return false;
   }
 
-  static Future<DateTime?> get getTimeTask async {
-    final isActive = await autoDeleteTask;
+  static Future<DateTime?> get nextDeleteDate async {
+    final isActive = await isActiveAutoDelete;
 
     if (isActive) {
       if (await _storage.containsKey(key: _autoTime)) {
@@ -124,6 +123,46 @@ abstract class SweetSecurePreferences {
     }
 
     return null;
+  }
+
+  // ? SETTERS
+
+  static Future<void> toggleDarkMode(bool isDarkMode) async {
+    await _storage.write(key: _darkmodeKey, value: isDarkMode ? '1' : '0');
+  }
+
+  static Future<void> changeBackupStatus(bool active, String date) async {
+    final data = await _storage.read(key: _activeBackup);
+    if (data != null && int.tryParse(data) == 1 && active) {
+      return;
+    } else if (active) {
+      await _storage.write(key: _nextBackupDate, value: date);
+    }
+    await _storage.write(key: _activeBackup, value: active ? '1' : '0');
+  }
+
+  static Future<void> rollbackOnErrorBackup() async {
+    await _storage.write(key: _nextBackupDate, value: null);
+    await _storage.write(key: _activeBackup, value: null);
+  }
+
+  static Future<void> toggleAutoDeleteTask(bool isActive, int time) async {
+    await _storage.write(key: _autoTaskKey, value: isActive ? '1' : '0');
+    if (isActive) {
+      final now = DateTime.now();
+      final timeLapse = now.add(Duration(days: time));
+      await _storage.write(key: _autoTime, value: timeLapse.toIso8601String());
+    }
+  }
+
+  static Future<void> changeDateDeleteTasks(int time) async {
+    final now = DateTime.now();
+    final timeLapse = now.add(Duration(days: time));
+    await _storage.write(key: _autoTime, value: timeLapse.toIso8601String());
+  }
+
+  static Future<void> toggleTheme(SweetTheme value) async {
+    await _storage.write(key: _themeKey, value: value.name);
   }
 
   static Future<void> initializedApp() async {

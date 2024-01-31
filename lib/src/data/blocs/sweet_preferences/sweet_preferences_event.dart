@@ -17,9 +17,9 @@ class InitalStatusSweetCh extends PreferencesEvent {
   List<Object> get props => [status];
 }
 
-class ChangeTheme extends PreferencesEvent {
+class ChangeThemeEvent extends PreferencesEvent {
   final SweetTheme theme;
-  const ChangeTheme({
+  const ChangeThemeEvent({
     required this.theme,
   });
 
@@ -27,18 +27,28 @@ class ChangeTheme extends PreferencesEvent {
   List<Object> get props => [theme];
 }
 
-class DarkMode extends PreferencesEvent {
+class ChangeDarkModeEvent extends PreferencesEvent {
   final bool isDarkMode;
-  const DarkMode({required this.isDarkMode});
+  const ChangeDarkModeEvent({required this.isDarkMode});
 
   @override
   List<Object> get props => [isDarkMode];
 }
 
-class AutoDeleteTask extends PreferencesEvent {
+class ChangeBackupEvent extends PreferencesEvent {
+  final bool isBackup;
+  final String date;
+  const ChangeBackupEvent({required this.isBackup, required this.date});
+
+  @override
+  List<Object> get props => [isBackup];
+}
+
+class ChangeDeleteStatusEvent extends PreferencesEvent {
   final bool autoDeleTask;
   final int time;
-  const AutoDeleteTask({required this.autoDeleTask, this.time = 30});
+  const ChangeDeleteStatusEvent(
+      {required this.autoDeleTask, required this.time});
 
   @override
   List<Object> get props => [autoDeleTask, time];
