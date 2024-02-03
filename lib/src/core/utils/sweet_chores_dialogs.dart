@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
 
 abstract class SweetDialogs {
@@ -18,7 +17,7 @@ abstract class SweetDialogs {
         text:
             'We encountered an error while processing your request:\n$error\nPlease try again later or contact support for assistance.',
         onConfirm: () {
-          getIt<SweetRouterCubit>().goHome();
+          getIt<SweetRouterCubit>().popDialogs();
           // ? TODO: Handle error and send to a logger in backend
           // print('sending exception $error to backend');
         },
