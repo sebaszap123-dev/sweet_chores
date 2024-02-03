@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
 
 class FilterDialog extends StatefulWidget {
   const FilterDialog({super.key, required this.selectedFilter});

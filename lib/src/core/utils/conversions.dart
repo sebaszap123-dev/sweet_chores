@@ -1,4 +1,4 @@
-import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'package:sweet_chores/src/models/models.dart';
 
 enum TimeDates { today, tomorrow, yesterday, none }
 

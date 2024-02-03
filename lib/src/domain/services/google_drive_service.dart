@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart';
-import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
-import 'package:sweet_chores_reloaded/src/config/remote/drive_google_client.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
-import 'package:sweet_chores_reloaded/src/domain/services/services.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'package:sweet_chores/src/config/local/database_notes.dart';
+import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/services/services.dart';
 
 abstract class GoogleDriveService {
   static final _googleSignIn =
@@ -55,13 +56,7 @@ abstract class GoogleDriveService {
         if (value != null) {
           try {
             // Decodificar la cadena JSON a una lista de mapas
-            List<dynamic> rawTodos = jsonDecode(value);
-            print(rawTodos);
-
-            // Mapear la lista de mapas a una lista de objetos Todo
-            final todos = rawTodos.isNotEmpty
-                ? rawTodos.map((todo) => Todo.fromJson(todo))
-                : [];
+            getIt<DatabaseManagerCubit>().restoreBackup(value);
           } catch (e) {
             print('error $e');
           }

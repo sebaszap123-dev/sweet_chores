@@ -1,6 +1,6 @@
-import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
-import 'package:sweet_chores_reloaded/src/data/cubits/database/database_manager_cubit.dart';
-import 'package:sweet_chores_reloaded/src/models/categories.dart';
+import 'package:sweet_chores/src/config/local/database_notes.dart';
+import 'package:sweet_chores/src/data/cubits/database/database_manager_cubit.dart';
+import 'package:sweet_chores/src/models/categories.dart';
 
 abstract class CategoryRepository extends DatabaseNotes {
   DatabaseManagerCubit dbManager;

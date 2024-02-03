@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/domain/services/services.dart';
-import 'package:sweet_chores_reloaded/src/interface/common/common.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/services/services.dart';
+import 'package:sweet_chores/src/interface/common/common.dart';
 
 import 'bloc/login_bloc.dart';
 import 'models/login_model.dart';

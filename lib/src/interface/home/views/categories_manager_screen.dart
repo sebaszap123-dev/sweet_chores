@@ -1,10 +1,10 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
-import 'package:sweet_chores_reloaded/src/models/categories.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/models/categories.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()

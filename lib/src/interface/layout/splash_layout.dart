@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/image_constant.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
-import 'package:sweet_chores_reloaded/src/localization/app_localization.dart';
-import 'package:sweet_chores_reloaded/src/theme/theme_helper.dart';
-import 'package:sweet_chores_reloaded/src/widgets/custom_image_view.dart';
+import 'package:sweet_chores/src/core/utils/image_constant.dart';
+import 'package:sweet_chores/src/core/utils/size_utils.dart';
+import 'package:sweet_chores/src/localization/app_localization.dart';
+import 'package:sweet_chores/src/theme/theme_helper.dart';
+import 'package:sweet_chores/src/widgets/custom_image_view.dart';
 
 @RoutePage()
 class SplashLayout extends StatelessWidget {

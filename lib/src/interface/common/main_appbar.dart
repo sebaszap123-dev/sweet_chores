@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/interface/home/widgets/widgets.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
 
 class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppbar({

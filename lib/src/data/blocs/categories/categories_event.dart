@@ -45,3 +45,11 @@ class UpdateCategoryStatus extends CategoriesEvent {
   @override
   List<Object?> get props => [category];
 }
+
+class RestoreCategoriesBackup extends CategoriesEvent {
+  final List<Categories> categories;
+  const RestoreCategoriesBackup(this.categories);
+
+  @override
+  List<Object?> get props => [categories];
+}

@@ -1,8 +1,8 @@
-import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
-import 'package:sweet_chores_reloaded/src/data/cubits/cubits.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/domain/repository/repository.dart';
+import 'package:sweet_chores/src/config/local/database_notes.dart';
+import 'package:sweet_chores/src/data/cubits/cubits.dart';
+import 'package:sweet_chores/src/models/models.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/repository/repository.dart';
 
 class CategoriesService implements CategoryRepository {
   @override

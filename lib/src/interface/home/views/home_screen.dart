@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/interface/common/common.dart';
-import 'package:sweet_chores_reloaded/src/interface/home/widgets/widgets.dart';
+import 'package:sweet_chores/src/interface/common/common.dart';
+import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {

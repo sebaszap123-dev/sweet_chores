@@ -1,6 +1,5 @@
 import 'dart:io' as io;
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,7 +11,7 @@ import 'package:googleapis/drive/v3.dart' as gdrive_api;
 import 'package:googleapis_auth/googleapis_auth.dart' as g_auth;
 
 import "package:http/http.dart" as http;
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 
 // The saved file
 const fileName = 'privateFile';

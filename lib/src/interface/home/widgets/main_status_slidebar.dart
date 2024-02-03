@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/domain/domain.dart';
-import 'package:sweet_chores_reloaded/src/interface/common/profile_widget.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
-import 'package:sweet_chores_reloaded/src/interface/home/widgets/slidebar_item.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/domain.dart';
+import 'package:sweet_chores/src/interface/common/profile_widget.dart';
+import 'package:sweet_chores/src/models/models.dart';
+import 'package:sweet_chores/src/interface/home/widgets/slidebar_item.dart';
 
 class MainStatusSlideBar extends StatefulWidget {
   const MainStatusSlideBar({

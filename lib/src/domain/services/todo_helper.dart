@@ -1,7 +1,7 @@
-import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
-import 'package:sweet_chores_reloaded/src/data/cubits/cubits.dart';
-import 'package:sweet_chores_reloaded/src/models/todo.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/config/local/database_notes.dart';
+import 'package:sweet_chores/src/data/cubits/cubits.dart';
+import 'package:sweet_chores/src/models/todo.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 
 import '../repository/repository.dart';
 

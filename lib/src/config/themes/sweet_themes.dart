@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/color_tohex.dart';
+import 'package:sweet_chores/src/config/themes/theme_colors.dart';
+import 'package:sweet_chores/src/core/utils/color_tohex.dart';
 
 Color backgroundColorFromTextColor(Color color) {
   if (color.value == Colors.white.value) {

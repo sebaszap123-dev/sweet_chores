@@ -1,9 +1,9 @@
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 
 abstract class SweetDialogs {
   static BuildContext? context = getIt<SweetRouterCubit>().getContext();

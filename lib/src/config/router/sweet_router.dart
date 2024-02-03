@@ -2,11 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
-import 'package:sweet_chores_reloaded/src/config/router/guards/home_guard.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
+import 'package:sweet_chores/src/config/router/guards/home_guard.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 
 enum RouterStatus { initial, loading, success, error }
 

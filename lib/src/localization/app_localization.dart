@@ -1,5 +1,5 @@
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 
 import 'en_us/en_us_translations.dart';
 import 'package:flutter/foundation.dart';

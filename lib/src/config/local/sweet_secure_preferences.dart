@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 
 // Create storage
 

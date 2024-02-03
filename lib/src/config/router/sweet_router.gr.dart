@@ -10,34 +10,28 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i15;
 import 'package:flutter/material.dart' as _i16;
-import 'package:sweet_chores_reloaded/src/interface/auth/auth_router_screen.dart'
-    as _i3;
-import 'package:sweet_chores_reloaded/src/interface/auth/forgot_password_screen/forgot_password_screen.dart'
+import 'package:sweet_chores/src/interface/auth/auth_router_screen.dart' as _i3;
+import 'package:sweet_chores/src/interface/auth/forgot_password_screen/forgot_password_screen.dart'
     as _i6;
-import 'package:sweet_chores_reloaded/src/interface/auth/home/auth_home_screen.dart'
+import 'package:sweet_chores/src/interface/auth/home/auth_home_screen.dart'
     as _i1;
-import 'package:sweet_chores_reloaded/src/interface/auth/login_screen/login_screen.dart'
+import 'package:sweet_chores/src/interface/auth/login_screen/login_screen.dart'
     as _i10;
-import 'package:sweet_chores_reloaded/src/interface/auth/register_screen/register_screen.dart'
+import 'package:sweet_chores/src/interface/auth/register_screen/register_screen.dart'
     as _i11;
-import 'package:sweet_chores_reloaded/src/interface/config/layout/config_route_layout.dart'
+import 'package:sweet_chores/src/interface/config/layout/config_route_layout.dart'
     as _i5;
-import 'package:sweet_chores_reloaded/src/interface/config/views/settings_screen.dart'
+import 'package:sweet_chores/src/interface/config/views/settings_screen.dart'
     as _i12;
-import 'package:sweet_chores_reloaded/src/interface/home/home_router.dart'
-    as _i7;
-import 'package:sweet_chores_reloaded/src/interface/home/views/categories_manager_screen.dart'
+import 'package:sweet_chores/src/interface/home/home_router.dart' as _i7;
+import 'package:sweet_chores/src/interface/home/views/categories_manager_screen.dart'
     as _i4;
-import 'package:sweet_chores_reloaded/src/interface/home/views/home_screen.dart'
-    as _i8;
-import 'package:sweet_chores_reloaded/src/interface/layout/auth_layout.dart'
-    as _i2;
-import 'package:sweet_chores_reloaded/src/interface/layout/splash_layout.dart'
-    as _i13;
-import 'package:sweet_chores_reloaded/src/interface/layout/started_screen.dart'
-    as _i14;
-import 'package:sweet_chores_reloaded/src/interface/loading_screen.dart' as _i9;
-import 'package:sweet_chores_reloaded/src/models/categories.dart' as _i17;
+import 'package:sweet_chores/src/interface/home/views/home_screen.dart' as _i8;
+import 'package:sweet_chores/src/interface/layout/auth_layout.dart' as _i2;
+import 'package:sweet_chores/src/interface/layout/splash_layout.dart' as _i13;
+import 'package:sweet_chores/src/interface/layout/started_screen.dart' as _i14;
+import 'package:sweet_chores/src/interface/loading_screen.dart' as _i9;
+import 'package:sweet_chores/src/models/categories.dart' as _i17;
 
 abstract class $SweetChoresRouter extends _i15.RootStackRouter {
   $SweetChoresRouter({super.navigatorKey});

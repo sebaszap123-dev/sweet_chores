@@ -2,10 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
-import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'package:sweet_chores/src/config/local/database_notes.dart';
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
+import 'package:sweet_chores/src/config/themes/theme_colors.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/models/models.dart';
 import 'dart:convert' as convert;
 
 part 'database_manager_state.dart';
@@ -102,25 +104,34 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   static Future<void> _databaseVersion2(Database db) async {}
 
-  Future<void> restoreBackup(String backup, {bool isEncrypted = false}) async {
-    var dbs = db;
-
-    Batch batch = dbs.batch();
-
+  Future<void> restoreBackup(String backup) async {
+    final dbs = db;
+    final batch = dbs.batch();
+    List<Todo> todos = [];
+    List<Categories> categories = [];
+    // Eliminar todos los registros existentes
     batch.delete(DatabaseNotes.tbCategories);
     batch.delete(DatabaseNotes.tbNotes);
-    // var key = encrypt.Key.fromUtf8(SECRET_KEY);
-    // var iv = encrypt.IV.fromLength(16);
-    // var encrypter = encrypt.Encrypter(encrypt.AES(key));
+
     await batch.commit();
-    List json = convert.jsonDecode(backup);
 
-    for (var i = 0; i < json[0].length; i++) {
-      for (var k = 0; k < json[1][i].length; k++) {
-        batch.insert(json[0][i], json[1][i][k]);
+    // Decodificar el backup JSON
+    final Map<String, dynamic> backupData = convert.jsonDecode(backup);
+
+    // Insertar los nuevos registros
+    backupData.forEach((tableName, tableRecords) {
+      final data = convert.jsonDecode(tableRecords);
+      for (final record in data) {
+        batch.insert(tableName, record);
+        if (tableName == DatabaseNotes.tbNotes) {
+          todos.add(Todo.fromJson(record));
+        } else {
+          categories.add(Categories.fromJson(record));
+        }
       }
-    }
-
+    });
+    getIt<TodoBloc>().add(RestoreTodos(todos: todos));
+    getIt<CategoriesBloc>().add(RestoreCategoriesBackup(categories));
     await batch.commit(continueOnError: false, noResult: true);
 
     print('RESTORE BACKUP');

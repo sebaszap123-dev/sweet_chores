@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/core/utils/helpers.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/models/models.dart';
 
 class SlideActionCardHeader extends StatelessWidget {
   const SlideActionCardHeader({

@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
-import 'package:sweet_chores_reloaded/src/domain/services/categories_service.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/models/models.dart';
+import 'package:sweet_chores/src/domain/services/categories_service.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';
@@ -16,6 +16,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     on<AlterCategory>(_alterEvent);
     on<UpdateCategoryStatus>(_changeStatusEvent);
     on<RemoveCategory>(_removeEvent);
+    on<RestoreCategoriesBackup>(_restoreFromBackup);
   }
 
   _startedEvent(_, Emitter<CategoriesState> emit) async {
@@ -103,5 +104,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       emit(state.copyWith(status: CategoriesStatus.error));
       SweetDialogs.unhandleErros(error: '$e');
     }
+  }
+
+  _restoreFromBackup(
+      RestoreCategoriesBackup event, Emitter<CategoriesState> emit) async {
+    emit(state.copyWith(status: CategoriesStatus.loading));
+    emit(state.copyWith(
+        categories: event.categories, status: CategoriesStatus.success));
   }
 }

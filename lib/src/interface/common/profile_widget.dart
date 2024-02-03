@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/greetings.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/core/utils/greetings.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({super.key});

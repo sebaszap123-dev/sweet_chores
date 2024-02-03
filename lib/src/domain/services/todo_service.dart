@@ -1,6 +1,6 @@
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/domain/domain.dart';
-import 'package:sweet_chores_reloaded/src/models/todo.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/domain.dart';
+import 'package:sweet_chores/src/models/todo.dart';
 
 class TodoService extends TodoRepository {
   final TodoHelper localHelper;

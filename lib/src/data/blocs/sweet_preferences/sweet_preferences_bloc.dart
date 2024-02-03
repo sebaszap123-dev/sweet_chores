@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
 
 part 'sweet_preferences_event.dart';
 part 'sweet_preferences_state.dart';

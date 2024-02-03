@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/sweet_chores_icons.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
+import 'package:sweet_chores/src/config/themes/sweet_chores_icons.dart';
+import 'package:sweet_chores/src/core/utils/helpers.dart';
 
 class Categories {
   bool isActive;

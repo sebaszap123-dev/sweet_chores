@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/image_constant.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
+import 'package:sweet_chores/src/core/utils/image_constant.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
 
 // TODO: IMPLEMENT INTL for messages
 const Map<String, String> messages = {

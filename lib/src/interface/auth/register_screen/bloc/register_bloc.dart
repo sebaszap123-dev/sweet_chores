@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/interface/auth/register_screen/models/register_model.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/interface/auth/register_screen/models/register_model.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';

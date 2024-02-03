@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sweet_chores_reloaded/src/config/remote/drive_google_client.dart';
+import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
 
 part 'firebase_auth_event.dart';
 part 'firebase_auth_state.dart';
