@@ -35,9 +35,7 @@ abstract class GoogleDriveService {
 
   static Future<void> uploadFiles(GoogleDriveClient? client) async {
     try {
-      // TODO: ACTIVAR EL BACKUPREQUIRED
       if (client != null) {
-        // final resp = await SweetDialogs.backupRequired();
         final todos = await TodoHelper().getAllTodos();
         final ca = await CategoriesService().getAllCategory();
         final rawJson = todos.map((e) => e.toRawJson()).toList().toString();

@@ -44,23 +44,6 @@ abstract class FirebaseAuthService {
     }
   }
 
-  // TODO: IMPLEMENT
-  static Future<void> signInSilently() async {
-    final GoogleSignInAccount? googleSignInAccount =
-        await _googleSignIn.signInSilently();
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-      // final client = await GoogleDriveClient.create(
-      //     googleSignInAccount, credential.accessToken);
-      // GoogleDriveService.downloadBackup(client);
-    }
-  }
-
   static Future<void> signOut() async {
     try {
       await FirebaseAuth.instance.signOut();

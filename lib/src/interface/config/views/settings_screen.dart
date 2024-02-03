@@ -221,14 +221,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           trailing: TextButton(
                             child: const Text('Upload'),
                             onPressed: () async {
-                              setState(() {
-                                uploadingBackup = true;
-                              });
-                              await makeLogin();
-                              await GoogleDriveService.uploadFiles(driveClient);
-                              setState(() {
-                                uploadingBackup = false;
-                              });
+                              final resp = await SweetDialogs.backupRequired();
+                              if (resp) {
+                                setState(() {
+                                  uploadingBackup = true;
+                                });
+                                await makeLogin();
+                                await GoogleDriveService.uploadFiles(
+                                    driveClient);
+                                setState(() {
+                                  uploadingBackup = false;
+                                });
+                              }
                             },
                           ),
                         ),
@@ -241,18 +245,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             trailing: TextButton(
                               child: const Text('Dowload'),
                               onPressed: () async {
-                                setState(() {
-                                  uploadingBackup = true;
-                                });
-                                await makeLogin();
-                                final isRestored =
-                                    await GoogleDriveService.downloadBackup(
-                                        driveClient);
-                                setState(() {
-                                  uploadingBackup = false;
-                                });
-                                SweetDialogs.showRestoreResult(
-                                    restoreSuccess: isRestored);
+                                final resp =
+                                    await SweetDialogs.backupRequired();
+                                if (resp) {
+                                  setState(() {
+                                    uploadingBackup = true;
+                                  });
+                                  await makeLogin();
+                                  final isRestored =
+                                      await GoogleDriveService.downloadBackup(
+                                          driveClient);
+                                  setState(() {
+                                    uploadingBackup = false;
+                                  });
+                                  SweetDialogs.showRestoreResult(
+                                      restoreSuccess: isRestored);
+                                }
                               },
                             )),
                         if (uploadingBackup) const Loading()
