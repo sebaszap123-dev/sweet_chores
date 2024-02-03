@@ -4,7 +4,7 @@ enum DatabaseStatus { initial, ready, error, loading }
 
 class DatabaseManagerState extends Equatable implements DatabaseNotes {
   final DatabaseStatus status;
-  final Database? db;
+  final Database db;
   const DatabaseManagerState({
     this.status = DatabaseStatus.initial,
     required this.db,

@@ -1,13 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
+import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/services/google_drive_service.dart';
+import 'package:sweet_chores/src/interface/common/common.dart';
 
 @RoutePage()
 class SettingsScreen extends StatefulWidget {
@@ -20,13 +25,26 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   SweetTheme selectedOption = SweetTheme.cinnamon;
   bool isDarkMode = false;
-  bool autoDeleteTask = false;
+  bool isActiveAutoDelete = false;
+  int defaultDays = 7;
+  bool uploadingBackup = false;
+  GoogleDriveClient? driveClient;
   @override
   void initState() {
     isDarkMode = context.read<SweetPreferencesBloc>().state.isDarkMode;
     selectedOption = context.read<SweetPreferencesBloc>().state.typeTheme;
-    autoDeleteTask = context.read<SweetPreferencesBloc>().state.autoDeleteTask;
+    isActiveAutoDelete =
+        context.read<SweetPreferencesBloc>().state.isActiveAutoDelete;
     super.initState();
+  }
+
+  Future<void> makeLogin() async {
+    if (driveClient == null) {
+      final login = await GoogleDriveService.loginGoogleDrive();
+      setState(() {
+        driveClient = login;
+      });
+    }
   }
 
   void _updateTheme(SweetTheme? value) {
@@ -36,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         (theme) => theme == myTheme,
         orElse: () => SweetTheme.cinnamon,
       );
-      context.read<SweetPreferencesBloc>().add(ChangeTheme(theme: result));
+      context.read<SweetPreferencesBloc>().add(ChangeThemeEvent(theme: result));
       setState(() {
         selectedOption = value;
       });
@@ -44,7 +62,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _updateDarkMode(bool value) async {
-    context.read<SweetPreferencesBloc>().add(DarkMode(isDarkMode: value));
+    context
+        .read<SweetPreferencesBloc>()
+        .add(ChangeDarkModeEvent(isDarkMode: value));
     setState(() {
       isDarkMode = value;
     });
@@ -52,11 +72,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _updateAutoDeleteTask(bool value) async {
     setState(() {
-      autoDeleteTask = value;
+      isActiveAutoDelete = value;
     });
     context
         .read<SweetPreferencesBloc>()
-        .add(AutoDeleteTask(autoDeleTask: value));
+        .add(ChangeDeleteStatusEvent(autoDeleTask: value, time: defaultDays));
   }
 
   @override
@@ -79,85 +99,174 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            ListTile(
-              leading: const Icon(Icons.dark_mode),
-              title: const Text('Dark mode'),
-              trailing: Switch(value: isDarkMode, onChanged: _updateDarkMode),
-            ),
-            ListTile(
-              leading: const Icon(Icons.notes),
-              title: const Text('Auto-delete completed tasks'),
-              trailing: Switch(
-                value: autoDeleteTask,
-                onChanged: _updateAutoDeleteTask,
-              ),
-            ),
-            ListTile(
-              enabled: autoDeleteTask,
-              leading: const Icon(Icons.access_time),
-              title: const Text('Each:'),
-              trailing: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.tertiary,
-                ),
-                child: DropdownButton<int>(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  iconEnabledColor: Colors.white,
-                  dropdownColor: Theme.of(context).colorScheme.tertiary,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  value: 7,
-                  underline: Container(),
-                  items: [7, 14, 30, 60, 120]
-                      .map((e) => DropdownMenuItem<int>(
-                            value: e,
-                            // ? TODO: PARSE WEEK, MONTH string instead days
-                            child: Text('$e days'),
-                          ))
-                      .toList(),
-                  // TODO: CHANGE AUTO DELETE TIME
-                  onChanged: autoDeleteTask ? (value) {} : null,
-                ),
-              ),
-            ),
-            Card(
-              color: Theme.of(context).cardColor,
-              shadowColor: Theme.of(context).colorScheme.tertiary,
-              elevation: 2,
+      body: BlocBuilder<FirebaseAuthBloc, FirebaseState>(
+        builder: (context, state) {
+          if (state is FirebaseAuthState) {
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  Text(
-                    'My theme',
-                    style: GoogleFonts.spicyRice(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 20,
+                  const SizedBox(height: 10),
+                  cardStyled(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Settings',
+                          style: GoogleFonts.spicyRice(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 20,
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.dark_mode),
+                          title: const Text('Dark mode'),
+                          trailing: Switch(
+                              value: isDarkMode, onChanged: _updateDarkMode),
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.notes),
+                          title: const Text('Auto-delete completed tasks'),
+                          trailing: Switch(
+                            value: isActiveAutoDelete,
+                            onChanged: _updateAutoDeleteTask,
+                          ),
+                        ),
+                        ListTile(
+                          enabled: isActiveAutoDelete,
+                          leading: const Icon(Icons.access_time),
+                          title: const Text('Each:'),
+                          trailing: DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            child: DropdownButton<int>(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              iconEnabledColor: Colors.white,
+                              dropdownColor:
+                                  Theme.of(context).colorScheme.tertiary,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              value: defaultDays,
+                              underline: Container(),
+                              items: [7, 14, 30, 60, 120]
+                                  .map((e) => DropdownMenuItem<int>(
+                                        value: e,
+                                        // ? TODO: PARSE WEEK, MONTH string instead days
+                                        child: Text('$e days'),
+                                      ))
+                                  .toList(),
+                              onChanged: isActiveAutoDelete
+                                  ? (value) async {
+                                      if (value != null) {
+                                        await SweetSecurePreferences
+                                            .changeDateDeleteTasks(value);
+                                        setState(() {
+                                          defaultDays = defaultDays;
+                                        });
+                                      }
+                                    }
+                                  : null,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  _buildThemeOption(
-                    Icons.person,
-                    'Cinnamon',
-                    SweetTheme.cinnamon,
+                  const SizedBox(height: 15),
+                  cardStyled(
+                    child: Column(
+                      children: [
+                        Text(
+                          'My theme',
+                          style: GoogleFonts.spicyRice(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 20,
+                          ),
+                        ),
+                        _buildThemeOption(
+                          Icons.person,
+                          'Cinnamon',
+                          SweetTheme.cinnamon,
+                        ),
+                        _buildThemeOption(
+                          Icons.person_outline,
+                          'Strawberry',
+                          SweetTheme.strawberry,
+                          color: Colors.pink.shade100,
+                        ),
+                      ],
+                    ),
                   ),
-                  _buildThemeOption(
-                    Icons.person_outline,
-                    'Strawberry',
-                    SweetTheme.strawberry,
-                    color: Colors.pink.shade100,
+                  const SizedBox(height: 15),
+                  cardStyled(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Backup',
+                          style: GoogleFonts.spicyRice(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 20,
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.cloud_upload_outlined,
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                          title: const Text('Backup chores'),
+                          trailing: TextButton(
+                            child: const Text('Upload'),
+                            onPressed: () async {
+                              setState(() {
+                                uploadingBackup = true;
+                              });
+                              await makeLogin();
+                              await GoogleDriveService.uploadFiles(driveClient);
+                              setState(() {
+                                uploadingBackup = false;
+                              });
+                            },
+                          ),
+                        ),
+                        ListTile(
+                            leading: Icon(
+                              Icons.cloud_download_outlined,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            title: const Text('Restore chores'),
+                            trailing: TextButton(
+                              child: const Text('Dowload'),
+                              onPressed: () async {
+                                await makeLogin();
+                                await GoogleDriveService.downloadBackup(
+                                    driveClient);
+                              },
+                            )),
+                        if (uploadingBackup) const Loading()
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
+    );
+  }
+
+  Widget cardStyled({required Widget child}) {
+    return Card(
+      color: Theme.of(context).cardColor,
+      shadowColor: Theme.of(context).colorScheme.tertiary,
+      elevation: 2,
+      child: child,
     );
   }
 

@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
-import 'package:sweet_chores_reloaded/src/domain/services/todo_service.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
-import 'package:sweet_chores_reloaded/src/domain/services/todo_helper.dart';
+import 'package:sweet_chores/src/core/utils/helpers.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/domain/services/todo_service.dart';
+import 'package:sweet_chores/src/models/models.dart';
+import 'package:sweet_chores/src/domain/services/todo_helper.dart';
 
 part 'todo_event.dart';
 part 'todo_state.dart';
@@ -20,10 +20,16 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<FilterTodos>(_filtersTodos);
     on<EditTodo>(_onEditTodo);
     on<AddCategoriesIds>(_updateCategoriesIds);
+    on<RestoreTodos>(_todosBackup);
   }
 
   _updateCategoriesIds(AddCategoriesIds event, Emitter<TodoState> emit) {
     emit(state.copyWith(categoryIds: event.ids));
+  }
+
+  _todosBackup(RestoreTodos event, Emitter<TodoState> emit) {
+    emit(state.copyWith(status: TodoStatus.loading));
+    emit(state.copyWith(todos: event.todos, status: TodoStatus.success));
   }
 
   _onStarted(_, Emitter<TodoState> emit) async {

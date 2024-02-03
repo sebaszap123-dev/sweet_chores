@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 
 abstract class FirebaseAuthService {
-  static final GoogleSignIn _googleSignIn =
-      GoogleSignIn(signInOption: SignInOption.standard);
+  static final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   static Future<bool> loginWithGoogle() async {
     try {

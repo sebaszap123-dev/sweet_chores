@@ -1,6 +1,6 @@
 {
-    "name": "sweet_chores_reloaded",
-    "short_name": "sweet_chores_reloaded",
+    "name": "sweet_chores",
+    "short_name": "sweet_chores",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

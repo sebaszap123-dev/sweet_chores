@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/image_constant.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/localization/app_localization.dart';
-import 'package:sweet_chores_reloaded/src/theme/custom_text_style.dart';
-import 'package:sweet_chores_reloaded/src/theme/theme_helper.dart';
-import 'package:sweet_chores_reloaded/src/widgets/custom_elevated_button.dart';
-import 'package:sweet_chores_reloaded/src/widgets/custom_image_view.dart';
-import 'package:sweet_chores_reloaded/src/widgets/custom_text_form_field.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/core/utils/image_constant.dart';
+import 'package:sweet_chores/src/core/utils/size_utils.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/localization/app_localization.dart';
+import 'package:sweet_chores/src/theme/custom_text_style.dart';
+import 'package:sweet_chores/src/theme/theme_helper.dart';
+import 'package:sweet_chores/src/widgets/custom_elevated_button.dart';
+import 'package:sweet_chores/src/widgets/custom_image_view.dart';
+import 'package:sweet_chores/src/widgets/custom_text_form_field.dart';
 
 import 'bloc/forgot_password_bloc.dart';
 import 'models/forgot_password_model.dart';

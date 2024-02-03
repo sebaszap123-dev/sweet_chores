@@ -1,19 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/localization/app_localization.dart';
-
-import 'src/config/remote/firebase_database.dart';
+import 'package:sweet_chores/firebase_options.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/localization/app_localization.dart';
 
 final globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FirebaseDatabase.initFirebase();
-  serviceLocator();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await serviceLocator();
   Future.wait([
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -45,6 +47,9 @@ class MyBlocApp extends StatelessWidget {
         ),
         BlocProvider<SweetRouterCubit>(
           create: (_) => getIt<SweetRouterCubit>(),
+        ),
+        BlocProvider<FirebaseAuthBloc>(
+          create: (_) => getIt<FirebaseAuthBloc>(),
         ),
       ],
       child: const SweetChoresApp(),

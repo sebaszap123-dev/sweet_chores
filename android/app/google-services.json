@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "855392154485",
-    "project_id": "sweet-chores-e8144",
-    "storage_bucket": "sweet-chores-e8144.appspot.com"
+    "project_number": "1013481572810",
+    "project_id": "sweet-chores-ab84c",
+    "storage_bucket": "sweet-chores-ab84c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:855392154485:android:76a096647e5a77d654d93c",
+        "mobilesdk_app_id": "1:1013481572810:android:995ea83fdb280690c3a733",
         "android_client_info": {
-          "package_name": "com.example.sweet_chores_reloaded"
+          "package_name": "com.example.sweet_chores"
         }
       },
       "oauth_client": [
         {
-          "client_id": "855392154485-m8j2uksls2194voiq3dltu9ibvc5tc07.apps.googleusercontent.com",
+          "client_id": "1013481572810-r5ln9n1vrjj3qdp8dmtp4pghfligbka5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.sweet_chores_reloaded",
+            "package_name": "com.example.sweet_chores",
             "certificate_hash": "78bcf922ddba388a06d8c7c60a0b371fb6eb0fdf"
           }
         },
         {
-          "client_id": "855392154485-kjhhe8tsmja558ctrb07q1bt4a74qedo.apps.googleusercontent.com",
+          "client_id": "1013481572810-k813rord0anm63f6hgb37oflv5gicmib.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB3J-bsz2w3Gyn0bQsGkBUS5-Pyym7tqIY"
+          "current_key": "AIzaSyCyiAFmlne5ADNueBsljmOkLpGEjEki_VM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "855392154485-kjhhe8tsmja558ctrb07q1bt4a74qedo.apps.googleusercontent.com",
+              "client_id": "1013481572810-k813rord0anm63f6hgb37oflv5gicmib.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "855392154485-6k3elfe3r0hecif0e1tsoahuck82aeg7.apps.googleusercontent.com",
+              "client_id": "1013481572810-s5etu6dn8524l5kidmdtrim0pnn59dj7.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.sweetChoresReloaded"
+                "bundle_id": "com.example.sweetChores"
               }
             }
           ]

@@ -72,3 +72,10 @@ class FilterTodos extends TodoEvent {
   @override
   List<Object> get props => [filterStatus];
 }
+
+class RestoreTodos extends TodoEvent {
+  final List<Todo> todos;
+  const RestoreTodos({required this.todos});
+  @override
+  List<Object> get props => [todos];
+}

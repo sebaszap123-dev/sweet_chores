@@ -7,12 +7,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sweet_chores_reloaded/main.dart';
+
+import 'package:sweet_chores/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const SweetChoresApp());
+    await tester.pumpWidget(const MyBlocApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sweet_chores_reloaded/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
 
 class AuthGuard extends AutoRouteGuard {
   @override

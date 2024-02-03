@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/main.dart';
+import 'package:sweet_chores/main.dart';
 
 class ServerException implements Exception {}
 

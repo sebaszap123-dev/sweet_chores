@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/models/models.dart';
 
 import 'date_time_picker/sweet_due_date_picker.dart';
 

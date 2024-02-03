@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/data/data_source.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 
 class PrimaryColors {
   // Amber

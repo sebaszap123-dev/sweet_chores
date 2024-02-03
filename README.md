@@ -1,4 +1,4 @@
-# sweet_chores_reloaded
+# sweet_chores
 
 A new Flutter project.
 

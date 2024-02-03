@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/size_utils.dart';
-import 'package:sweet_chores_reloaded/src/theme/theme_helper.dart';
+import 'package:sweet_chores/src/core/utils/size_utils.dart';
+import 'package:sweet_chores/src/theme/theme_helper.dart';
 
 /// A class that offers pre-defined button styles for customizing button appearance.
 class CustomButtonStyles {

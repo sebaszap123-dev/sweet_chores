@@ -1,8 +1,8 @@
-import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
-import 'package:sweet_chores_reloaded/src/data/cubits/cubits.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
-import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
-import 'package:sweet_chores_reloaded/src/domain/repository/repository.dart';
+import 'package:sweet_chores/src/config/local/database_notes.dart';
+import 'package:sweet_chores/src/data/cubits/cubits.dart';
+import 'package:sweet_chores/src/models/models.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
+import 'package:sweet_chores/src/domain/repository/repository.dart';
 
 class CategoriesService implements CategoryRepository {
   @override
@@ -10,21 +10,21 @@ class CategoriesService implements CategoryRepository {
 
   @override
   Future<int> newCategory(Categories category) async {
-    final resp = dbManager.database
+    final resp = dbManager.state.db
         .insert(DatabaseNotes.tbCategories, category.toJson());
     return resp;
   }
 
   @override
   Future<int> deleteCategory(int id) {
-    final resp = dbManager.database
+    final resp = dbManager.state.db
         .delete(DatabaseNotes.tbCategories, where: 'id = ?', whereArgs: [id]);
     return resp;
   }
 
   @override
   Future<List<Categories>> getAllCategory() async {
-    final resp = await dbManager.database.query(DatabaseNotes.tbCategories);
+    final resp = await dbManager.state.db.query(DatabaseNotes.tbCategories);
     return resp.isNotEmpty
         ? resp.map((todo) => Categories.fromJson(todo)).toList()
         : <Categories>[];
@@ -32,14 +32,14 @@ class CategoriesService implements CategoryRepository {
 
   @override
   Future<Categories?> getByIdCategory(int id) async {
-    final resp = await dbManager.database
+    final resp = await dbManager.state.db
         .query(DatabaseNotes.tbCategories, where: 'id = ?', whereArgs: [id]);
     return resp.isNotEmpty ? Categories.fromJson(resp.first) : null;
   }
 
   @override
   Future<int> updateCategory(Categories category) async {
-    final resp = await dbManager.database.update(
+    final resp = await dbManager.state.db.update(
         DatabaseNotes.tbCategories, category.toJson(),
         where: 'id = ?', whereArgs: [category.id]);
     return resp;

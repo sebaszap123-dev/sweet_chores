@@ -4,8 +4,8 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/core/utils/helpers.dart';
+import 'package:sweet_chores/src/data/blocs/blocs.dart';
 
 part 'card_date_time_picker.dart';
 part 'calendar_picker.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/interface/home/widgets/widgets.dart';
+import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
 
 class AddTodoButton extends StatelessWidget {
   const AddTodoButton({

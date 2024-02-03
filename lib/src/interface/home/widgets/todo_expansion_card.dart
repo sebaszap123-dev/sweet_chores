@@ -1,12 +1,12 @@
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
 
 import '../../../models/todo.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/helpers.dart';
-import 'package:sweet_chores_reloaded/src/interface/home/widgets/edit_todo_dialog.dart';
-import 'package:sweet_chores_reloaded/src/interface/home/widgets/widgets.dart';
-import 'package:sweet_chores_reloaded/src/models/categories.dart';
+import 'package:sweet_chores/src/core/utils/helpers.dart';
+import 'package:sweet_chores/src/interface/home/widgets/edit_todo_dialog.dart';
+import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
+import 'package:sweet_chores/src/models/categories.dart';
 
 class TodoExpansionCard extends StatefulWidget {
   const TodoExpansionCard({

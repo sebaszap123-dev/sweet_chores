@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
-import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
-import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/models/models.dart';
 
 class EditTodoDialog extends StatefulWidget {
   final Todo todo;

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:sweet_chores_reloaded/src/core/app_export.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
 
 import 'bloc/register_bloc.dart';
 import 'models/register_model.dart';

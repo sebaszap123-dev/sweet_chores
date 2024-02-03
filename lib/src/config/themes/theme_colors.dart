@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sweet_chores_reloaded/src/core/utils/color_tohex.dart';
+import 'package:sweet_chores/src/core/utils/color_tohex.dart';
 
 enum SweetMode { light, dark }
 

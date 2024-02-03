@@ -8,138 +8,123 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i16;
-import 'package:flutter/material.dart' as _i17;
-import 'package:sweet_chores_reloaded/src/interface/auth/auth_router_screen.dart'
-    as _i3;
-import 'package:sweet_chores_reloaded/src/interface/auth/forgot_password_screen/forgot_password_screen.dart'
-    as _i7;
-import 'package:sweet_chores_reloaded/src/interface/auth/home/auth_home_screen.dart'
-    as _i1;
-import 'package:sweet_chores_reloaded/src/interface/auth/login_screen/login_screen.dart'
-    as _i11;
-import 'package:sweet_chores_reloaded/src/interface/auth/register_screen/register_screen.dart'
-    as _i12;
-import 'package:sweet_chores_reloaded/src/interface/config/layout/config_route_layout.dart'
+import 'package:auto_route/auto_route.dart' as _i15;
+import 'package:flutter/material.dart' as _i16;
+import 'package:sweet_chores/src/interface/auth/auth_router_screen.dart' as _i3;
+import 'package:sweet_chores/src/interface/auth/forgot_password_screen/forgot_password_screen.dart'
     as _i6;
-import 'package:sweet_chores_reloaded/src/interface/config/views/backup_screen.dart'
-    as _i4;
-import 'package:sweet_chores_reloaded/src/interface/config/views/settings_screen.dart'
-    as _i13;
-import 'package:sweet_chores_reloaded/src/interface/home/home_router.dart'
-    as _i8;
-import 'package:sweet_chores_reloaded/src/interface/home/views/categories_manager_screen.dart'
-    as _i5;
-import 'package:sweet_chores_reloaded/src/interface/home/views/home_screen.dart'
-    as _i9;
-import 'package:sweet_chores_reloaded/src/interface/layout/auth_layout.dart'
-    as _i2;
-import 'package:sweet_chores_reloaded/src/interface/layout/splash_layout.dart'
-    as _i14;
-import 'package:sweet_chores_reloaded/src/interface/layout/started_screen.dart'
-    as _i15;
-import 'package:sweet_chores_reloaded/src/interface/loading_screen.dart'
+import 'package:sweet_chores/src/interface/auth/home/auth_home_screen.dart'
+    as _i1;
+import 'package:sweet_chores/src/interface/auth/login_screen/login_screen.dart'
     as _i10;
-import 'package:sweet_chores_reloaded/src/models/categories.dart' as _i18;
+import 'package:sweet_chores/src/interface/auth/register_screen/register_screen.dart'
+    as _i11;
+import 'package:sweet_chores/src/interface/config/layout/config_route_layout.dart'
+    as _i5;
+import 'package:sweet_chores/src/interface/config/views/settings_screen.dart'
+    as _i12;
+import 'package:sweet_chores/src/interface/home/home_router.dart' as _i7;
+import 'package:sweet_chores/src/interface/home/views/categories_manager_screen.dart'
+    as _i4;
+import 'package:sweet_chores/src/interface/home/views/home_screen.dart' as _i8;
+import 'package:sweet_chores/src/interface/layout/auth_layout.dart' as _i2;
+import 'package:sweet_chores/src/interface/layout/splash_layout.dart' as _i13;
+import 'package:sweet_chores/src/interface/layout/started_screen.dart' as _i14;
+import 'package:sweet_chores/src/interface/loading_screen.dart' as _i9;
+import 'package:sweet_chores/src/models/categories.dart' as _i17;
 
-abstract class $SweetChoresRouter extends _i16.RootStackRouter {
+abstract class $SweetChoresRouter extends _i15.RootStackRouter {
   $SweetChoresRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i16.PageFactory> pagesMap = {
+  final Map<String, _i15.PageFactory> pagesMap = {
     AuthHomeRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.AuthHomeScreen(),
       );
     },
     AuthLayout.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i2.AuthLayout(),
       );
     },
     AuthRouterRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i3.AuthRouterScreen(),
-      );
-    },
-    BackUpRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.BackUpScreen(),
       );
     },
     CategoriesManagerRoute.name: (routeData) {
       final args = routeData.argsAs<CategoriesManagerRouteArgs>(
           orElse: () => const CategoriesManagerRouteArgs());
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i5.CategoriesManagerScreen(
+        child: _i4.CategoriesManagerScreen(
           key: args.key,
           category: args.category,
         ),
       );
     },
     ConfigRouteLayout.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.ConfigRouteLayout(),
+        child: const _i5.ConfigRouteLayout(),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.ForgotPasswordScreen(),
+        child: const _i6.ForgotPasswordScreen(),
       );
     },
     HomeRouterRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.HomeRouterScreen(),
+        child: const _i7.HomeRouterScreen(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.HomeScreen(),
+        child: const _i8.HomeScreen(),
       );
     },
     LoadingRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.LoadingScreen(),
+        child: const _i9.LoadingScreen(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.LoginScreen(),
+        child: const _i10.LoginScreen(),
       );
     },
     RegisterRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.RegisterScreen(),
+        child: const _i11.RegisterScreen(),
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.SettingsScreen(),
+        child: const _i12.SettingsScreen(),
       );
     },
     SplashLayout.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.SplashLayout(),
+        child: const _i13.SplashLayout(),
       );
     },
     StartedRoute.name: (routeData) {
-      return _i16.AutoRoutePage<dynamic>(
+      return _i15.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i15.StartedScreen(),
+        child: const _i14.StartedScreen(),
       );
     },
   };
@@ -147,8 +132,8 @@ abstract class $SweetChoresRouter extends _i16.RootStackRouter {
 
 /// generated route for
 /// [_i1.AuthHomeScreen]
-class AuthHomeRoute extends _i16.PageRouteInfo<void> {
-  const AuthHomeRoute({List<_i16.PageRouteInfo>? children})
+class AuthHomeRoute extends _i15.PageRouteInfo<void> {
+  const AuthHomeRoute({List<_i15.PageRouteInfo>? children})
       : super(
           AuthHomeRoute.name,
           initialChildren: children,
@@ -156,13 +141,13 @@ class AuthHomeRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'AuthHomeRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.AuthLayout]
-class AuthLayout extends _i16.PageRouteInfo<void> {
-  const AuthLayout({List<_i16.PageRouteInfo>? children})
+class AuthLayout extends _i15.PageRouteInfo<void> {
+  const AuthLayout({List<_i15.PageRouteInfo>? children})
       : super(
           AuthLayout.name,
           initialChildren: children,
@@ -170,13 +155,13 @@ class AuthLayout extends _i16.PageRouteInfo<void> {
 
   static const String name = 'AuthLayout';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i3.AuthRouterScreen]
-class AuthRouterRoute extends _i16.PageRouteInfo<void> {
-  const AuthRouterRoute({List<_i16.PageRouteInfo>? children})
+class AuthRouterRoute extends _i15.PageRouteInfo<void> {
+  const AuthRouterRoute({List<_i15.PageRouteInfo>? children})
       : super(
           AuthRouterRoute.name,
           initialChildren: children,
@@ -184,31 +169,17 @@ class AuthRouterRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'AuthRouterRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.BackUpScreen]
-class BackUpRoute extends _i16.PageRouteInfo<void> {
-  const BackUpRoute({List<_i16.PageRouteInfo>? children})
-      : super(
-          BackUpRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'BackUpRoute';
-
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i5.CategoriesManagerScreen]
+/// [_i4.CategoriesManagerScreen]
 class CategoriesManagerRoute
-    extends _i16.PageRouteInfo<CategoriesManagerRouteArgs> {
+    extends _i15.PageRouteInfo<CategoriesManagerRouteArgs> {
   CategoriesManagerRoute({
-    _i17.Key? key,
-    _i18.Categories? category,
-    List<_i16.PageRouteInfo>? children,
+    _i16.Key? key,
+    _i17.Categories? category,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           CategoriesManagerRoute.name,
           args: CategoriesManagerRouteArgs(
@@ -220,8 +191,8 @@ class CategoriesManagerRoute
 
   static const String name = 'CategoriesManagerRoute';
 
-  static const _i16.PageInfo<CategoriesManagerRouteArgs> page =
-      _i16.PageInfo<CategoriesManagerRouteArgs>(name);
+  static const _i15.PageInfo<CategoriesManagerRouteArgs> page =
+      _i15.PageInfo<CategoriesManagerRouteArgs>(name);
 }
 
 class CategoriesManagerRouteArgs {
@@ -230,9 +201,9 @@ class CategoriesManagerRouteArgs {
     this.category,
   });
 
-  final _i17.Key? key;
+  final _i16.Key? key;
 
-  final _i18.Categories? category;
+  final _i17.Categories? category;
 
   @override
   String toString() {
@@ -241,9 +212,9 @@ class CategoriesManagerRouteArgs {
 }
 
 /// generated route for
-/// [_i6.ConfigRouteLayout]
-class ConfigRouteLayout extends _i16.PageRouteInfo<void> {
-  const ConfigRouteLayout({List<_i16.PageRouteInfo>? children})
+/// [_i5.ConfigRouteLayout]
+class ConfigRouteLayout extends _i15.PageRouteInfo<void> {
+  const ConfigRouteLayout({List<_i15.PageRouteInfo>? children})
       : super(
           ConfigRouteLayout.name,
           initialChildren: children,
@@ -251,13 +222,13 @@ class ConfigRouteLayout extends _i16.PageRouteInfo<void> {
 
   static const String name = 'ConfigRouteLayout';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.ForgotPasswordScreen]
-class ForgotPasswordRoute extends _i16.PageRouteInfo<void> {
-  const ForgotPasswordRoute({List<_i16.PageRouteInfo>? children})
+/// [_i6.ForgotPasswordScreen]
+class ForgotPasswordRoute extends _i15.PageRouteInfo<void> {
+  const ForgotPasswordRoute({List<_i15.PageRouteInfo>? children})
       : super(
           ForgotPasswordRoute.name,
           initialChildren: children,
@@ -265,13 +236,13 @@ class ForgotPasswordRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.HomeRouterScreen]
-class HomeRouterRoute extends _i16.PageRouteInfo<void> {
-  const HomeRouterRoute({List<_i16.PageRouteInfo>? children})
+/// [_i7.HomeRouterScreen]
+class HomeRouterRoute extends _i15.PageRouteInfo<void> {
+  const HomeRouterRoute({List<_i15.PageRouteInfo>? children})
       : super(
           HomeRouterRoute.name,
           initialChildren: children,
@@ -279,13 +250,13 @@ class HomeRouterRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'HomeRouterRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.HomeScreen]
-class HomeRoute extends _i16.PageRouteInfo<void> {
-  const HomeRoute({List<_i16.PageRouteInfo>? children})
+/// [_i8.HomeScreen]
+class HomeRoute extends _i15.PageRouteInfo<void> {
+  const HomeRoute({List<_i15.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -293,13 +264,13 @@ class HomeRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.LoadingScreen]
-class LoadingRoute extends _i16.PageRouteInfo<void> {
-  const LoadingRoute({List<_i16.PageRouteInfo>? children})
+/// [_i9.LoadingScreen]
+class LoadingRoute extends _i15.PageRouteInfo<void> {
+  const LoadingRoute({List<_i15.PageRouteInfo>? children})
       : super(
           LoadingRoute.name,
           initialChildren: children,
@@ -307,13 +278,13 @@ class LoadingRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'LoadingRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.LoginScreen]
-class LoginRoute extends _i16.PageRouteInfo<void> {
-  const LoginRoute({List<_i16.PageRouteInfo>? children})
+/// [_i10.LoginScreen]
+class LoginRoute extends _i15.PageRouteInfo<void> {
+  const LoginRoute({List<_i15.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -321,13 +292,13 @@ class LoginRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i12.RegisterScreen]
-class RegisterRoute extends _i16.PageRouteInfo<void> {
-  const RegisterRoute({List<_i16.PageRouteInfo>? children})
+/// [_i11.RegisterScreen]
+class RegisterRoute extends _i15.PageRouteInfo<void> {
+  const RegisterRoute({List<_i15.PageRouteInfo>? children})
       : super(
           RegisterRoute.name,
           initialChildren: children,
@@ -335,13 +306,13 @@ class RegisterRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'RegisterRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i13.SettingsScreen]
-class SettingsRoute extends _i16.PageRouteInfo<void> {
-  const SettingsRoute({List<_i16.PageRouteInfo>? children})
+/// [_i12.SettingsScreen]
+class SettingsRoute extends _i15.PageRouteInfo<void> {
+  const SettingsRoute({List<_i15.PageRouteInfo>? children})
       : super(
           SettingsRoute.name,
           initialChildren: children,
@@ -349,13 +320,13 @@ class SettingsRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'SettingsRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i14.SplashLayout]
-class SplashLayout extends _i16.PageRouteInfo<void> {
-  const SplashLayout({List<_i16.PageRouteInfo>? children})
+/// [_i13.SplashLayout]
+class SplashLayout extends _i15.PageRouteInfo<void> {
+  const SplashLayout({List<_i15.PageRouteInfo>? children})
       : super(
           SplashLayout.name,
           initialChildren: children,
@@ -363,13 +334,13 @@ class SplashLayout extends _i16.PageRouteInfo<void> {
 
   static const String name = 'SplashLayout';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i15.StartedScreen]
-class StartedRoute extends _i16.PageRouteInfo<void> {
-  const StartedRoute({List<_i16.PageRouteInfo>? children})
+/// [_i14.StartedScreen]
+class StartedRoute extends _i15.PageRouteInfo<void> {
+  const StartedRoute({List<_i15.PageRouteInfo>? children})
       : super(
           StartedRoute.name,
           initialChildren: children,
@@ -377,5 +348,5 @@ class StartedRoute extends _i16.PageRouteInfo<void> {
 
   static const String name = 'StartedRoute';
 
-  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
 }
