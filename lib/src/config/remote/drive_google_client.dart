@@ -150,8 +150,6 @@ class GoogleDriveClient {
         message: 'unable to create file on Google Drive',
       );
     }
-
-    print("Created File ID: ${fileCreation.id} on RemoteStorage");
     return fileCreation.id!;
   }
 

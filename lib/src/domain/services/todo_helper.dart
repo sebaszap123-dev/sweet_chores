@@ -14,8 +14,8 @@ class TodoHelper implements TodoRepository {
     Todo todo,
   ) async {
     // Verificar db
-    final resp =
-        await dbManager.state.db.insert(DatabaseNotes.tbNotes, todo.toJson());
+    final resp = await dbManager.state.db
+        .insert(DatabaseNotes.tbNotes, todo.toJsonSql());
     return resp;
   }
 

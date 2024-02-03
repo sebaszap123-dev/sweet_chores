@@ -60,6 +60,13 @@ class Categories {
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'color': color?.toHex(),
+        'iconData': iconData?.codePoint,
+      };
+
+  Map<String, dynamic> toJsonSql() => {
         'name': name,
         'color': color?.toHex(),
         'iconData': iconData?.codePoint,

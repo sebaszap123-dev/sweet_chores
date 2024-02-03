@@ -11,7 +11,7 @@ class CategoriesService implements CategoryRepository {
   @override
   Future<int> newCategory(Categories category) async {
     final resp = dbManager.state.db
-        .insert(DatabaseNotes.tbCategories, category.toJson());
+        .insert(DatabaseNotes.tbCategories, category.toJsonSql());
     return resp;
   }
 

@@ -54,6 +54,7 @@ dependencies:
   googleapis_auth: ^1.4.1
   http: ^1.2.0
   intl: ^0.18.1
+  path_provider: ^2.1.2
   share_extend: ^2.0.0
   sqflite: ^2.3.0
 

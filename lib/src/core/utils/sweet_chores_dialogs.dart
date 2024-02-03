@@ -59,6 +59,27 @@ abstract class SweetDialogs {
     );
   }
 
+  static showRestoreResult({bool restoreSuccess = false}) {
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.info,
+        title: restoreSuccess
+            ? 'Yay! Restore Completed Successfully'
+            : 'Oops! Cinnamon Needs a Break',
+        confirmButtonText: restoreSuccess ? 'Gotcha' : 'OK',
+        text: restoreSuccess
+            ? 'Your sweet chores have been successfully restored!'
+            : 'Oops! Something went wrong while restoring your sweet chores. Please try again in a few minutes.',
+        onConfirm: () async {
+          if (!restoreSuccess) {
+            await SweetSecurePreferences.rollbackOnErrorBackup();
+          }
+        },
+      ),
+    );
+  }
+
   static Future<bool> backupRequired() async {
     final nextDate = await SweetSecurePreferences.nextBackupDate;
     final ArtDialogResponse? resp = await ArtSweetAlert.show(

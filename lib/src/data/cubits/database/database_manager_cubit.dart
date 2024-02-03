@@ -104,36 +104,47 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   static Future<void> _databaseVersion2(Database db) async {}
 
-  Future<void> restoreBackup(String backup) async {
+  Future<void> onLogOut() async {
     final dbs = db;
     final batch = dbs.batch();
-    List<Todo> todos = [];
-    List<Categories> categories = [];
-    // Eliminar todos los registros existentes
-    batch.delete(DatabaseNotes.tbCategories);
     batch.delete(DatabaseNotes.tbNotes);
-
+    batch.delete(DatabaseNotes.tbCategories);
     await batch.commit();
+  }
 
-    // Decodificar el backup JSON
-    final Map<String, dynamic> backupData = convert.jsonDecode(backup);
+  Future<bool> restoreBackup(String backup) async {
+    try {
+      final dbs = db;
+      final batch = dbs.batch();
+      List<Todo> todos = [];
+      List<Categories> categories = [];
+      // Eliminar todos los registros existentes
+      batch.delete(DatabaseNotes.tbCategories);
+      batch.delete(DatabaseNotes.tbNotes);
 
-    // Insertar los nuevos registros
-    backupData.forEach((tableName, tableRecords) {
-      final data = convert.jsonDecode(tableRecords);
-      for (final record in data) {
-        batch.insert(tableName, record);
-        if (tableName == DatabaseNotes.tbNotes) {
-          todos.add(Todo.fromJson(record));
-        } else {
-          categories.add(Categories.fromJson(record));
+      await batch.commit();
+
+      // Decodificar el backup JSON
+      final Map<String, dynamic> backupData = convert.jsonDecode(backup);
+
+      // Insertar los nuevos registros
+      backupData.forEach((tableName, tableRecords) {
+        final data = convert.jsonDecode(tableRecords);
+        for (final record in data) {
+          batch.insert(tableName, record);
+          if (tableName == DatabaseNotes.tbNotes) {
+            todos.add(Todo.fromJson(record));
+          } else {
+            categories.add(Categories.fromJson(record));
+          }
         }
-      }
-    });
-    getIt<TodoBloc>().add(RestoreTodos(todos: todos));
-    getIt<CategoriesBloc>().add(RestoreCategoriesBackup(categories));
-    await batch.commit(continueOnError: false, noResult: true);
-
-    print('RESTORE BACKUP');
+      });
+      getIt<TodoBloc>().add(RestoreTodos(todos: todos));
+      getIt<CategoriesBloc>().add(RestoreCategoriesBackup(categories));
+      await batch.commit(continueOnError: false, noResult: true);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

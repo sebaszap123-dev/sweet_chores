@@ -34,34 +34,39 @@ abstract class GoogleDriveService {
   }
 
   static Future<void> uploadFiles(GoogleDriveClient? client) async {
-    if (client != null) {
-      final resp = await SweetDialogs.backupRequired();
-      if (resp) {
+    try {
+      // TODO: ACTIVAR EL BACKUPREQUIRED
+      if (client != null) {
+        // final resp = await SweetDialogs.backupRequired();
         final todos = await TodoHelper().getAllTodos();
+        final ca = await CategoriesService().getAllCategory();
         final rawJson = todos.map((e) => e.toRawJson()).toList().toString();
+        final rawCategories = ca.map((e) => e.toRawJson()).toList().toString();
         final Map<String, String> map = {
           DatabaseNotes.tbNotes: rawJson,
-          DatabaseNotes.tbCategories: rawJson
+          DatabaseNotes.tbCategories: rawCategories
         };
         final dbBackup = json.encode(map);
         await client.uploadFile(dbBackup);
       }
+    } catch (e) {
+      print(e);
     }
   }
 
-  static Future<void> downloadBackup(GoogleDriveClient? driveClient) async {
+  static Future<bool> downloadBackup(GoogleDriveClient? driveClient) async {
     if (driveClient != null) {
-      final file = driveClient.downloadFile();
-      file.then((value) {
-        if (value != null) {
-          try {
-            // Decodificar la cadena JSON a una lista de mapas
-            getIt<DatabaseManagerCubit>().restoreBackup(value);
-          } catch (e) {
-            print('error $e');
-          }
+      final file = await driveClient.downloadFile();
+      if (file != null) {
+        try {
+          // Decodificar la cadena JSON a una lista de mapas
+          return getIt<DatabaseManagerCubit>().restoreBackup(file);
+        } catch (e) {
+          SweetDialogs.unhandleErros(error: e.toString());
+          return false;
         }
-      });
+      }
     }
+    return false;
   }
 }

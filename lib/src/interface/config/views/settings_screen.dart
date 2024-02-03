@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +8,7 @@ import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores/src/data/blocs/blocs.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/domain/services/google_drive_service.dart';
@@ -241,9 +241,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             trailing: TextButton(
                               child: const Text('Dowload'),
                               onPressed: () async {
+                                setState(() {
+                                  uploadingBackup = true;
+                                });
                                 await makeLogin();
-                                await GoogleDriveService.downloadBackup(
-                                    driveClient);
+                                final isRestored =
+                                    await GoogleDriveService.downloadBackup(
+                                        driveClient);
+                                setState(() {
+                                  uploadingBackup = false;
+                                });
+                                SweetDialogs.showRestoreResult(
+                                    restoreSuccess: isRestored);
                               },
                             )),
                         if (uploadingBackup) const Loading()
