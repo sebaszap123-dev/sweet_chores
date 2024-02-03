@@ -246,7 +246,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: const Text('Dowload'),
                               onPressed: () async {
                                 final resp =
-                                    await SweetDialogs.backupRequired();
+                                    await SweetDialogs.wantRestoreFromBackup();
                                 if (resp) {
                                   setState(() {
                                     uploadingBackup = true;

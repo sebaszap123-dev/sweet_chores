@@ -71,13 +71,27 @@ abstract class SweetDialogs {
         text: restoreSuccess
             ? 'Your sweet chores have been successfully restored!'
             : 'Oops! Something went wrong while restoring your sweet chores. Please try again in a few minutes.',
-        onConfirm: () async {
-          if (!restoreSuccess) {
-            await SweetSecurePreferences.rollbackOnErrorBackup();
-          }
-        },
       ),
     );
+  }
+
+  static Future<bool> wantRestoreFromBackup() async {
+    final ArtDialogResponse? resp = await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.info,
+        title: 'Do you want to restore from backup?',
+        confirmButtonText: 'Yes',
+        text:
+            'You are going to restore a cloud backup you will miss your not saved data',
+        showCancelBtn: true,
+      ),
+    );
+    if (resp == null) {
+      return false;
+    } else {
+      return resp.isTapConfirmButton;
+    }
   }
 
   static Future<bool> backupRequired() async {
