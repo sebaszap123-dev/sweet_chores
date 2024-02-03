@@ -30,7 +30,6 @@ abstract class SweetSecurePreferences {
 
   /// Next backup date
   static const String _nextBackupDate = 'sweet_firebase_backup';
-  static const String _activeBackup = 'sweet_firebase_backup_on';
 
   // ? GETTERS
 
@@ -52,14 +51,6 @@ abstract class SweetSecurePreferences {
       return DateTime.tryParse(date);
     }
     return null;
-  }
-
-  static Future<bool> get isActiveBackup async {
-    final active = await _storage.read(key: _activeBackup);
-    if (active != null) {
-      return int.tryParse(active) == 1;
-    }
-    return false;
   }
 
   static Future<bool> get isFirstOpen async {
@@ -131,19 +122,12 @@ abstract class SweetSecurePreferences {
     await _storage.write(key: _darkmodeKey, value: isDarkMode ? '1' : '0');
   }
 
-  static Future<void> changeBackupStatus(bool active, String date) async {
-    final data = await _storage.read(key: _activeBackup);
-    if (data != null && int.tryParse(data) == 1 && active) {
-      return;
-    } else if (active) {
-      await _storage.write(key: _nextBackupDate, value: date);
-    }
-    await _storage.write(key: _activeBackup, value: active ? '1' : '0');
+  static Future<void> updateBackupDate({required String date}) async {
+    await _storage.write(key: _nextBackupDate, value: date);
   }
 
   static Future<void> rollbackOnErrorBackup() async {
     await _storage.write(key: _nextBackupDate, value: null);
-    await _storage.write(key: _activeBackup, value: null);
   }
 
   static Future<void> toggleAutoDeleteTask(bool isActive, int time) async {

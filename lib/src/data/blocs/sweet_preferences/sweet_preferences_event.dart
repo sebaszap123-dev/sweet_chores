@@ -35,15 +35,6 @@ class ChangeDarkModeEvent extends PreferencesEvent {
   List<Object> get props => [isDarkMode];
 }
 
-class ChangeBackupEvent extends PreferencesEvent {
-  final bool isBackup;
-  final String date;
-  const ChangeBackupEvent({required this.isBackup, required this.date});
-
-  @override
-  List<Object> get props => [isBackup];
-}
-
 class ChangeDeleteStatusEvent extends PreferencesEvent {
   final bool autoDeleTask;
   final int time;

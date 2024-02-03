@@ -1,16 +1,23 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
 import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
+import 'package:sweet_chores_reloaded/src/config/remote/drive_google_client.dart';
 import 'package:sweet_chores_reloaded/src/config/router/sweet_router.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/themes.dart';
 import 'package:sweet_chores_reloaded/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores_reloaded/src/data/blocs/blocs.dart';
 import 'package:sweet_chores_reloaded/src/data/servicelocator.dart';
+import 'package:sweet_chores_reloaded/src/domain/services/google_drive_service.dart';
+import 'package:sweet_chores_reloaded/src/domain/services/todo_helper.dart';
 import 'package:sweet_chores_reloaded/src/interface/common/common.dart';
+import 'package:sweet_chores_reloaded/src/models/models.dart';
 
 @RoutePage()
 class SettingsScreen extends StatefulWidget {
@@ -24,17 +31,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
   SweetTheme selectedOption = SweetTheme.cinnamon;
   bool isDarkMode = false;
   bool isActiveAutoDelete = false;
-  bool backup = false;
   int defaultDays = 7;
   bool uploadingBackup = false;
+  GoogleDriveClient? driveClient;
   @override
   void initState() {
     isDarkMode = context.read<SweetPreferencesBloc>().state.isDarkMode;
     selectedOption = context.read<SweetPreferencesBloc>().state.typeTheme;
     isActiveAutoDelete =
         context.read<SweetPreferencesBloc>().state.isActiveAutoDelete;
-    backup = context.read<SweetPreferencesBloc>().state.isActiveBackup;
     super.initState();
+  }
+
+  Future<void> makeLogin() async {
+    if (driveClient == null) {
+      final login = await GoogleDriveService.loginGoogleDrive();
+      setState(() {
+        driveClient = login;
+      });
+    }
   }
 
   void _updateTheme(SweetTheme? value) {
@@ -208,47 +223,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: Theme.of(context).colorScheme.tertiary,
                           ),
                           title: const Text('Backup chores'),
-                          trailing: Switch(
-                              value: backup,
-                              onChanged: (value) async {
-                                if (value) {
-                                  final resp =
-                                      await SweetDialogs.backupRequired();
-                                  setState(() {
-                                    backup = resp;
-                                    uploadingBackup = resp;
-                                  });
-                                  if (resp) {
-                                    // TODO: IMPLEMENT ELSEWHERE
-                                    // final now = DateTime.timestamp();
-                                    // final date = now
-                                    //     .add(const Duration(days: 30))
-                                    //     .toIso8601String();
-                                    // getIt<SweetPreferencesBloc>().add(
-                                    //     ChangeBackupEvent(
-                                    //         isBackup: resp, date: date));
-                                    // final lastDate =
-                                    //     await SweetSecurePreferences
-                                    //         .nextBackupDate;
-                                    // await DriveGoogleHelper.backupTodos(
-                                    //   state.userFirebase.uid,
-                                    //   lastDate?.toIso8601String(),
-                                    //   date,
-                                    // );
-                                  }
-                                  setState(() {
-                                    uploadingBackup = false;
-                                  });
-                                } else {
-                                  getIt<SweetPreferencesBloc>().add(
-                                      const ChangeBackupEvent(
-                                          isBackup: false, date: '--'));
-                                  setState(() {
-                                    backup = false;
-                                  });
-                                }
-                              }),
+                          trailing: TextButton(
+                            child: const Text('Upload'),
+                            onPressed: () async {
+                              setState(() {
+                                uploadingBackup = true;
+                              });
+                              await makeLogin();
+                              await GoogleDriveService.uploadFiles(driveClient);
+                              setState(() {
+                                uploadingBackup = false;
+                              });
+                            },
+                          ),
                         ),
+                        ListTile(
+                            leading: Icon(
+                              Icons.cloud_download_outlined,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            title: const Text('Restore chores'),
+                            trailing: TextButton(
+                              child: const Text('Dowload'),
+                              onPressed: () async {
+                                await makeLogin();
+                                await GoogleDriveService.downloadBackup(
+                                    driveClient);
+                              },
+                            )),
                         if (uploadingBackup) const Loading()
                       ],
                     ),

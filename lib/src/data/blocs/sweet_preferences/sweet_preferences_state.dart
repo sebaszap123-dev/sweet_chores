@@ -4,7 +4,6 @@ class SweetPreferencesState extends Equatable {
   final bool firstTimeApp;
   final bool isActiveAutoDelete;
   final bool isDarkMode;
-  final bool isActiveBackup;
   final ThemeData themeData;
   final SweetThemeColors themeColors;
   final SweetTheme typeTheme;
@@ -15,20 +14,18 @@ class SweetPreferencesState extends Equatable {
     this.firstTimeApp = true,
     this.isActiveAutoDelete = false,
     this.isDarkMode = false,
-    this.isActiveBackup = false,
     this.typeTheme = SweetTheme.cinnamon,
     required this.themeData,
     this.status = SweetChoresStatus.initial,
   });
   @override
   List<Object> get props =>
-      [firstTimeApp, themeData, isDarkMode, isActiveAutoDelete, isActiveBackup];
+      [firstTimeApp, themeData, isDarkMode, isActiveAutoDelete];
 
   SweetPreferencesState copyWith({
     bool? firstTimeApp,
     bool? isActiveAutoDelete,
     bool? isDarkMode,
-    bool? isActiveBackup,
     ThemeData? themeData,
     SweetChoresStatus? status,
     SweetTheme? typeTheme,
@@ -42,7 +39,6 @@ class SweetPreferencesState extends Equatable {
       isDarkMode: isDarkMode ?? this.isDarkMode,
       isActiveAutoDelete: isActiveAutoDelete ?? this.isActiveAutoDelete,
       themeColors: themeColors ?? this.themeColors,
-      isActiveBackup: isActiveBackup ?? this.isActiveBackup,
     );
   }
 

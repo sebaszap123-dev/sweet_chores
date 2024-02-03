@@ -6,6 +6,7 @@ import 'package:sweet_chores_reloaded/src/config/local/database_notes.dart';
 import 'package:sweet_chores_reloaded/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores_reloaded/src/config/themes/theme_colors.dart';
 import 'package:sweet_chores_reloaded/src/models/models.dart';
+import 'dart:convert' as convert;
 
 part 'database_manager_state.dart';
 
@@ -100,4 +101,28 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
   }
 
   static Future<void> _databaseVersion2(Database db) async {}
+
+  Future<void> restoreBackup(String backup, {bool isEncrypted = false}) async {
+    var dbs = db;
+
+    Batch batch = dbs.batch();
+
+    batch.delete(DatabaseNotes.tbCategories);
+    batch.delete(DatabaseNotes.tbNotes);
+    // var key = encrypt.Key.fromUtf8(SECRET_KEY);
+    // var iv = encrypt.IV.fromLength(16);
+    // var encrypter = encrypt.Encrypter(encrypt.AES(key));
+    await batch.commit();
+    List json = convert.jsonDecode(backup);
+
+    for (var i = 0; i < json[0].length; i++) {
+      for (var k = 0; k < json[1][i].length; k++) {
+        batch.insert(json[0][i], json[1][i][k]);
+      }
+    }
+
+    await batch.commit(continueOnError: false, noResult: true);
+
+    print('RESTORE BACKUP');
+  }
 }
