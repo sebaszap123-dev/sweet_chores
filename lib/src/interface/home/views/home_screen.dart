@@ -30,6 +30,12 @@ class HomeScreen extends StatelessWidget {
             return MainStatusSlideBar(
               myKey: homeKey,
             );
+          } else if (state.status == CategoriesStatus.error) {
+            return const Drawer(
+              child: Center(
+                child: Text('We trying to fix and error'),
+              ),
+            );
           } else {
             return const Loading();
           }

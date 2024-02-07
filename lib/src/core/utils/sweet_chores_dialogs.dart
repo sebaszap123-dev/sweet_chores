@@ -59,6 +59,41 @@ abstract class SweetDialogs {
     );
   }
 
+  static showRestoreResult({bool restoreSuccess = false}) {
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.info,
+        title: restoreSuccess
+            ? 'Yay! Restore Completed Successfully'
+            : 'Oops! Cinnamon Needs a Break',
+        confirmButtonText: restoreSuccess ? 'Gotcha' : 'OK',
+        text: restoreSuccess
+            ? 'Your sweet chores have been successfully restored!'
+            : 'Oops! Something went wrong while restoring your sweet chores. Please try again in a few minutes.',
+      ),
+    );
+  }
+
+  static Future<bool> wantRestoreFromBackup() async {
+    final ArtDialogResponse? resp = await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.info,
+        title: 'Do you want to restore from backup?',
+        confirmButtonText: 'Yes',
+        text:
+            'You are going to restore a cloud backup you will miss your not saved data',
+        showCancelBtn: true,
+      ),
+    );
+    if (resp == null) {
+      return false;
+    } else {
+      return resp.isTapConfirmButton;
+    }
+  }
+
   static Future<bool> backupRequired() async {
     final nextDate = await SweetSecurePreferences.nextBackupDate;
     final ArtDialogResponse? resp = await ArtSweetAlert.show(
@@ -98,12 +133,17 @@ abstract class SweetDialogs {
         showCancelBtn: nextDate == null,
       ),
     );
+    final newDate = DateTime.timestamp().add(const Duration(days: 30));
     if (resp != null &&
         resp.isTapConfirmButton &&
         nextDate != null &&
         nextDate.isBefore(DateTime.timestamp())) {
       await SweetSecurePreferences.updateBackupDate(
-          date: DateTime.timestamp().toIso8601String());
+          date: newDate.toIso8601String());
+      return true;
+    } else if (resp != null && nextDate == null && resp.isTapConfirmButton) {
+      await SweetSecurePreferences.updateBackupDate(
+          date: newDate.toIso8601String());
       return true;
     }
     return false;
