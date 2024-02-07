@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 abstract class DatabaseNotes {
   /// Name of the db
   static const String _dbName = 'kawai_todo.db';
+  static const String defaultCategory = 'chores';
 
   /// Version of database change when you update the database
   static const int version = 1;

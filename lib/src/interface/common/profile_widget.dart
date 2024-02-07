@@ -5,8 +5,8 @@ import 'package:sweet_chores/src/core/utils/greetings.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({super.key});
-
+  const ProfileWidget({super.key, required this.greetings});
+  final String greetings;
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -52,7 +52,7 @@ class ProfileWidget extends StatelessWidget {
                         ),
                   ),
                   subtitle: Text(
-                    getGreeting(),
+                    greetings,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.normal,

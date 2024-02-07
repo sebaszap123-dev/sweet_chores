@@ -52,18 +52,34 @@ abstract class GoogleDriveService {
     }
   }
 
-  static Future<bool> downloadBackup(GoogleDriveClient? driveClient) async {
+  static Future<bool?> downloadBackup(GoogleDriveClient? driveClient) async {
     if (driveClient != null) {
-      final file = await driveClient.downloadFile();
-      if (file != null) {
-        try {
-          // Decodificar la cadena JSON a una lista de mapas
-          return getIt<DatabaseManagerCubit>().restoreBackup(file);
-        } catch (e) {
-          SweetDialogs.unhandleErros(error: e.toString());
-          return false;
+      final hasFile = await driveClient.hasBackupFile();
+      if (hasFile) {
+        final file = await driveClient.downloadFile();
+        if (file != null) {
+          try {
+            // Decodificar la cadena JSON a una lista de mapas
+            return getIt<DatabaseManagerCubit>().restoreBackup(file);
+          } catch (e) {
+            SweetDialogs.unhandleErros(error: e.toString());
+            return false;
+          }
         }
+      } else {
+        SweetDialogs.alertInfo(
+            info:
+                "It seems you haven't created a backup yet. Please create one first.",
+            title: "Oops! Cinnamon couldn't find a backup");
+        return null;
       }
+    }
+    return false;
+  }
+
+  static Future<bool> hasBackupFile(GoogleDriveClient? driveClient) async {
+    if (driveClient != null) {
+      return await driveClient.hasBackupFile();
     }
     return false;
   }

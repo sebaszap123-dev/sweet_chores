@@ -19,8 +19,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     on<RestoreCategoriesBackup>(_restoreFromBackup);
   }
 
-  _startedEvent(_, Emitter<CategoriesState> emit) async {
-    if (state.status == CategoriesStatus.success) return;
+  _startedEvent(CategoryStarted event, Emitter<CategoriesState> emit) async {
+    if (!event.forceReload && state.status == CategoriesStatus.success) return;
     emit(state.copyWith(status: CategoriesStatus.loading));
     try {
       final categories = await state.categoryService.getAllCategory();

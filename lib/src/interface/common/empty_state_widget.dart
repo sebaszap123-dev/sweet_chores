@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sweet_chores/src/core/utils/image_constant.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/interface/common/common.dart';
 
 // TODO: IMPLEMENT INTL for messages
 const Map<String, String> messages = {
@@ -25,33 +26,37 @@ class EmptyStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SweetPreferencesBloc, SweetPreferencesState>(
       builder: (context, state) {
-        return Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                _getAssetImage(state.firstTimeApp),
-                width: MediaQuery.of(context).size.width * 0.7,
-                filterQuality: FilterQuality.high,
-              ),
-              const SizedBox(height: 10),
-              Container(
-                constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.6),
-                child: Text(
-                  messages[status.name]!,
-                  style: GoogleFonts.spicyRice(
-                      fontSize: 22,
-                      color: Theme.of(context).colorScheme.primary),
-                  textAlign: TextAlign.center,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
+        if (state.status == SweetChoresStatus.success) {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  _getAssetImage(state.firstTimeApp),
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  filterQuality: FilterQuality.high,
                 ),
-              ),
-            ],
-          ),
-        );
+                const SizedBox(height: 10),
+                Container(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.6),
+                  child: Text(
+                    messages[status.name]!,
+                    style: GoogleFonts.spicyRice(
+                        fontSize: 22,
+                        color: Theme.of(context).colorScheme.primary),
+                    textAlign: TextAlign.center,
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return const Loading();
+        }
       },
     );
   }

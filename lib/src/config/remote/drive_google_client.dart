@@ -167,6 +167,14 @@ class GoogleDriveClient {
     }
   }
 
+  Future<bool> hasBackupFile() async {
+    var fileId = await _getFileIdFromGoogleDrive(fileName);
+    if (fileId != null) {
+      return true;
+    }
+    return false;
+  }
+
   Future<String?> downloadFile() async {
     try {
       var fileId = await _getFileIdFromGoogleDrive(fileName);
@@ -175,8 +183,6 @@ class GoogleDriveClient {
         final fileContent = await _downloadFileToDevice(fileId);
         return fileContent;
       }
-      SweetDialogs.unhandleErros(error: "File not found on storage");
-
       return null;
     } catch (e) {
       SweetDialogs.unhandleErros(error: "$e");

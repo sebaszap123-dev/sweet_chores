@@ -8,10 +8,10 @@ abstract class CategoriesEvent extends Equatable {
 }
 
 class CategoryStarted extends CategoriesEvent {
-  final List<Categories> categories;
-  const CategoryStarted({this.categories = const []});
+  final bool forceReload;
+  const CategoryStarted({this.forceReload = false});
   @override
-  List<Object> get props => [categories];
+  List<Object> get props => [forceReload];
 }
 
 class AddCategory extends CategoriesEvent {

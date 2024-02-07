@@ -1,6 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
-import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 
 // Create storage
 
@@ -102,12 +101,11 @@ abstract class SweetSecurePreferences {
         final autoValue = await _storage.read(key: _autoTime);
         if (autoValue != null) {
           try {
-            final timestamp = int.parse(autoValue);
-            final dateTimeValue =
-                DateTime.fromMillisecondsSinceEpoch(timestamp);
+            final dateTimeValue = DateTime.tryParse(autoValue);
             return dateTimeValue;
           } catch (e) {
-            SweetDialogs.unhandleErros(error: '$e');
+            // Catch errors in a different way here
+            // SweetDialogs.unhandleErros(error: '$e');
           }
         }
       }

@@ -80,6 +80,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   @override
+  void dispose() {
+    isDarkMode = false;
+    isActiveAutoDelete = false;
+    defaultDays = 7;
+    uploadingBackup = false;
+    driveClient = null;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -258,8 +268,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   setState(() {
                                     uploadingBackup = false;
                                   });
-                                  SweetDialogs.showRestoreResult(
-                                      restoreSuccess: isRestored);
+                                  if (isRestored != null) {
+                                    SweetDialogs.showRestoreResult(
+                                        restoreSuccess: isRestored);
+                                  }
                                 }
                               },
                             )),

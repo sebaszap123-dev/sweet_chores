@@ -29,9 +29,22 @@ abstract class FirebaseAuthService {
         if (hasUser) {
           final token = googleSignInAuthentication.accessToken;
           if (token != null) {
+            await Future.delayed(const Duration(milliseconds: 200));
             final client =
                 await GoogleDriveClient.create(googleSignInAccount, token);
-            GoogleDriveService.downloadBackup(client);
+            final hasBackupFile =
+                await GoogleDriveService.hasBackupFile(client);
+            if (!hasBackupFile) {
+              _extraActionsLogin();
+              return true;
+            }
+            final resp = await SweetDialogs.wantRestoreFromBackup();
+            if (resp) {
+              GoogleDriveService.downloadBackup(client);
+            } else {
+              _extraActionsLogin();
+            }
+            return true;
           }
         }
         return userCredential.user != null;
@@ -42,6 +55,11 @@ abstract class FirebaseAuthService {
       SweetDialogs.unhandleErros(error: '$e');
       return false;
     }
+  }
+
+  static Future<void> _extraActionsLogin() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    getIt<DatabaseManagerCubit>().toDefaults();
   }
 
   static Future<void> signOut() async {
