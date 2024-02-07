@@ -23,11 +23,11 @@ class FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       title: Text(
-        'Filter To-do',
+        'Filter chores',
         style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
       ),
       content: SizedBox(
@@ -55,16 +55,16 @@ class FilterDialogState extends State<FilterDialog> {
           },
           child: Text(
             'Apply',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
           ),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(
+          child: const Text(
             'Cancel',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(color: Colors.grey),
           ),
         ),
       ],
@@ -77,17 +77,18 @@ class FilterDialogState extends State<FilterDialog> {
         children: [
           Icon(
             icon,
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.tertiary,
           ),
           const SizedBox(width: 8),
           Text(
             label,
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
           ),
         ],
       ),
       value: filter,
       groupValue: selectedFilter,
+      activeColor: Theme.of(context).colorScheme.tertiary,
       onChanged: (value) {
         setState(() {
           selectedFilter = value!;

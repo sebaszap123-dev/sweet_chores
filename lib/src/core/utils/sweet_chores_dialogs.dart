@@ -75,6 +75,18 @@ abstract class SweetDialogs {
     );
   }
 
+  static alertInfo({required String info, required String title}) {
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.info,
+        title: title,
+        confirmButtonText: 'OK',
+        text: info,
+      ),
+    );
+  }
+
   static Future<bool> wantRestoreFromBackup() async {
     final ArtDialogResponse? resp = await ArtSweetAlert.show(
       context: context!,

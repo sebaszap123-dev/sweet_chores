@@ -1,5 +1,9 @@
 import 'dart:math';
 
+class Greetings {
+  final String greeting = getGreeting();
+}
+
 String getGreeting() {
   Map<String, List<String>> greetings = {
     'morning': [

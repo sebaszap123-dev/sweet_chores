@@ -16,11 +16,12 @@ class MainStatusSlideBar extends StatefulWidget {
     required this.myKey,
     this.username,
     this.urlProfileImage,
+    required this.greetings,
   });
   final GlobalKey<ScaffoldState> myKey;
   final String? username;
   final String? urlProfileImage;
-
+  final String greetings;
   @override
   State<MainStatusSlideBar> createState() => _MainStatusSlideBarState();
 }
@@ -51,7 +52,9 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.zero,
             children: [
-              const ProfileWidget(),
+              ProfileWidget(
+                greetings: widget.greetings,
+              ),
               const SizedBox(height: 10),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 8, right: 0),
@@ -114,21 +117,13 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                 leading: const Icon(Icons.settings_outlined),
                 title: const Text('Settings'),
               ),
-              // ListTile(
-              //   onTap: () => getIt<SweetRouterCubit>()
-              //       .state
-              //       .push(const ConfigRouteLayout(children: [BackUpRoute()])),
-              //   contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              // * TODO-FEATURE: Add premium version
+              // const ListTile(
+              //   contentPadding: EdgeInsets.symmetric(horizontal: 8),
               //   minLeadingWidth: minLeadingWidth,
-              //   leading: const Icon(Icons.cloud_outlined),
-              //   title: const Text('Backup'),
+              //   leading: Icon(Icons.star_outline),
+              //   title: Text('Premium'),
               // ),
-              const ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                minLeadingWidth: minLeadingWidth,
-                leading: Icon(Icons.star_outline),
-                title: Text('Premium'),
-              ),
               // ? TODO: OPEN DIALOG TO SEND A MESSAGE
               ListTile(
                 onTap: () {},

@@ -238,9 +238,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       final resp =
                                                           await FirebaseAuthService
                                                               .loginWithGoogle();
-                                                      setState(() {
-                                                        isLoading = resp;
-                                                      });
+                                                      if (mounted) {
+                                                        setState(() {
+                                                          isLoading = resp;
+                                                        });
+                                                      }
                                                     },
                                                     child: CustomImageView(
                                                         svgPath: ImageConstant

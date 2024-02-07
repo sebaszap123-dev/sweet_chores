@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/core/utils/greetings.dart';
 import 'package:sweet_chores/src/domain/services/internet_info.dart';
 import 'data_source.dart';
 
@@ -9,12 +10,12 @@ final router = SweetChoresRouter();
 
 Future<void> serviceLocator() async {
   getIt.registerSingleton(SweetPreferencesBloc());
+  getIt.registerSingleton(Greetings());
   final dbManager = await DatabaseManagerCubit.startManager();
-
+  getIt.registerSingleton(SweetRouterCubit(router));
   getIt.registerSingleton(FirebaseAuthBloc());
   getIt.registerSingleton(InternetInfo());
   getIt.registerSingleton(dbManager);
   getIt.registerSingleton(TodoBloc());
   getIt.registerSingleton(CategoriesBloc());
-  getIt.registerSingleton(SweetRouterCubit(router));
 }

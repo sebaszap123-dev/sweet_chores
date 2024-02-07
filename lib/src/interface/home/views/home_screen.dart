@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sweet_chores/src/core/utils/greetings.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/interface/common/common.dart';
 import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
 
@@ -29,6 +31,7 @@ class HomeScreen extends StatelessWidget {
           if (state.status == CategoriesStatus.success) {
             return MainStatusSlideBar(
               myKey: homeKey,
+              greetings: getIt<Greetings>().greeting,
             );
           } else if (state.status == CategoriesStatus.error) {
             return const Drawer(

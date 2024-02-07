@@ -92,7 +92,7 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
       await db.insert(
         DatabaseNotes.tbCategories,
         Categories(
-          name: 'to-do',
+          name: DatabaseNotes.defaultCategory,
           color: sweetIconColors[0],
           iconData: Icons.category_sharp,
         ).toJson(),
@@ -110,6 +110,25 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
     batch.delete(DatabaseNotes.tbNotes);
     batch.delete(DatabaseNotes.tbCategories);
     await batch.commit();
+  }
+
+  Future<void> toDefaults() async {
+    final dbs = db;
+    final batch = dbs.batch();
+    batch.delete(DatabaseNotes.tbNotes);
+    batch.delete(DatabaseNotes.tbCategories);
+    final category = Categories(
+      name: DatabaseNotes.defaultCategory,
+      color: sweetIconColors[0],
+      iconData: Icons.category_sharp,
+    );
+    batch.insert(
+      DatabaseNotes.tbCategories,
+      category.toJson(),
+    );
+
+    await batch.commit();
+    getIt<CategoriesBloc>().add(const CategoryStarted(forceReload: true));
   }
 
   Future<bool> restoreBackup(String backup) async {
