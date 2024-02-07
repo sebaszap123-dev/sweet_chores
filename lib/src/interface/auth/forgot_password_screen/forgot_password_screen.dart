@@ -192,6 +192,6 @@ class ForgotPasswordScreen extends StatelessWidget {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the loginScreen.
   onTapSubmit(BuildContext context) {
-    // TODO AUTH: DO THE RESET OF PASSWORD
+    // TODO AUTH-reset-pw: DO THE RESET OF PASSWORD
   }
 }

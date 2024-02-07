@@ -31,8 +31,15 @@ ColorScheme colorSchemeFromThemeColors(SweetThemeColors themeColors) {
 
 mixin SweetThemes implements ThemeData {
   static ThemeData sweetThemeData({required SweetThemeColors themeColors}) {
-    final textTheme =
-        GoogleFonts.robotoTextTheme().apply(bodyColor: themeColors.text);
+    final textTheme = GoogleFonts.robotoTextTheme()
+        .apply(bodyColor: themeColors.text)
+        .copyWith(
+          displayLarge: GoogleFonts.spicyRice().copyWith(
+            color: Colors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.w500,
+          ),
+        );
     return ThemeData(
       textTheme: textTheme,
       colorScheme: colorSchemeFromThemeColors(themeColors),

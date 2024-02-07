@@ -48,7 +48,7 @@ abstract class GoogleDriveService {
         await client.uploadFile(dbBackup);
       }
     } catch (e) {
-      print(e);
+      SweetDialogs.unhandleErros(error: e.toString());
     }
   }
 

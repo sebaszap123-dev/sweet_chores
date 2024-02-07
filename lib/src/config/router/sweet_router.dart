@@ -38,14 +38,14 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   User? activeUser;
 
   void goHome() {
-    state.replace(const HomeRoute());
+    if (FirebaseAuth.instance.currentUser != null) {
+      state.replace(const HomeRoute());
+    } else {
+      goLogin();
+    }
   }
 
   void goLogin() => state.replace(const AuthLayout(children: [LoginRoute()]));
-
-  void goWithOutAccount() {
-    state.replace(const HomeRoute());
-  }
 
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
@@ -56,7 +56,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
       } else if (event == null) {
         state.replace(const AuthLayout(children: [LoginRoute()]));
       } else {
-        // ? TODO: HANDLE PREMIUM DATA
+        // * TODO-FEATURE: HANDLE PREMIUM DATA
         getIt<FirebaseAuthBloc>()
             .add(AuthLoginEvent(user: event, premium: false));
         getIt<TodoBloc>().add(TodoStarted());

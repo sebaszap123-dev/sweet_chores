@@ -29,6 +29,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int defaultDays = 7;
   bool uploadingBackup = false;
   GoogleDriveClient? driveClient;
+  TextStyle get styleCardTitle {
+    return GoogleFonts.roboto(
+      color: Theme.of(context).colorScheme.secondary,
+      fontSize: 20,
+    );
+  }
+
   @override
   void initState() {
     isDarkMode = context.read<SweetPreferencesBloc>().state.isDarkMode;
@@ -102,10 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         title: Text(
           'Settings',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.displayLarge,
         ),
         centerTitle: true,
       ),
@@ -121,11 +125,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Column(
                       children: [
                         Text(
-                          'Settings',
-                          style: GoogleFonts.spicyRice(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontSize: 20,
-                          ),
+                          'Preferences',
+                          style: styleCardTitle,
                         ),
                         ListTile(
                           leading: const Icon(Icons.dark_mode),
@@ -191,11 +192,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Column(
                       children: [
                         Text(
-                          'My theme',
-                          style: GoogleFonts.spicyRice(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontSize: 20,
-                          ),
+                          'Themes',
+                          style: styleCardTitle,
                         ),
                         _buildThemeOption(
                           Icons.person,
@@ -217,10 +215,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: [
                         Text(
                           'Backup',
-                          style: GoogleFonts.spicyRice(
-                            color: Theme.of(context).colorScheme.secondary,
-                            fontSize: 20,
-                          ),
+                          style: styleCardTitle,
                         ),
                         ListTile(
                           leading: Icon(

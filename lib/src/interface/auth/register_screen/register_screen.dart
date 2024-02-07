@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 
 import 'bloc/register_bloc.dart';
 import 'models/register_model.dart';
@@ -108,7 +111,11 @@ class RegisterScreen extends StatelessWidget {
                               obscureText: true);
                         }),
                     Padding(
-                        padding: EdgeInsets.only(left: 39.h, top: 30.v),
+                        padding: EdgeInsets.only(left: 39.h, top: 20.v),
+                        child: Text('Or register with',
+                            style: CustomTextStyles.labelLargeSFProText)),
+                    Padding(
+                        padding: EdgeInsets.only(left: 39.h, top: 10.v),
                         child: Row(children: [
                           CustomIconButton(
                               height: 45.adaptSize,
@@ -200,30 +207,19 @@ class RegisterScreen extends StatelessWidget {
   }
 
   /// Navigates to the previous screen.
-  ///
-  /// This function takes a [BuildContext] object as a parameter, which is
-  /// used to build the navigation stack. When the action is triggered, this
-  /// function uses the [NavigatorService] to navigate to the previous screen
-  /// in the navigation stack.
-  onTapImgArrowleftone(BuildContext context) {
-    // AUTH: NAVIGATION WHEN IMPLEMENT
+  onTapImgArrowleftone(_) {
+    getIt<SweetRouterCubit>().backPage();
   }
 
   /// Navigates to the loginScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the loginScreen.
   onTapRegister(BuildContext context) {
-    // AUTH: NAVIGATION WHEN IMPLEMENT
+    // TODO: AUTH: NAVIGATION WHEN IMPLEMENT
   }
 
   /// Navigates to the loginScreen when the action is triggered.
-  ///
-  /// The [BuildContext] parameter is used to build the navigation stack.
-  /// When the action is triggered, this function uses the [NavigatorService]
-  /// to push the named route for the loginScreen.
-  onTapTxtAlreadymember(BuildContext context) {
-    // AUTH: NAVIGATION WHEN IMPLEMENT
+  onTapTxtAlreadymember(_) {
+    getIt<SweetRouterCubit>()
+        .state
+        .push(const AuthLayout(children: [LoginRoute()]));
   }
 }

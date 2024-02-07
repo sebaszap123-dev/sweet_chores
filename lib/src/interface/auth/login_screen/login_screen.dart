@@ -247,7 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     child: CustomImageView(
                                                         svgPath: ImageConstant
                                                             .imgFlatcoloriconsgoogle)),
-                                                // TODO: ADD LOGIN APPLE
+                                                // * TODO-feature: ADD LOGIN APPLE
                                                 // CustomIconButton(
                                                 //     height: 45.adaptSize,
                                                 //     width: 45.adaptSize,
@@ -293,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Align(
                                         alignment: Alignment.topCenter,
                                         child: Container(
-                                            height: 150.adaptSize,
+                                            height: 165.adaptSize,
                                             width: 150.adaptSize,
                                             decoration: BoxDecoration(
                                                 color: appAutoGeneraterTheme
@@ -305,16 +305,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ])))
                   ]))),
     ));
-  }
-
-  /// Navigates to the previous screen.
-  ///
-  /// This function takes a [BuildContext] object as a parameter, which is
-  /// used to build the navigation stack. When the action is triggered, this
-  /// function uses the [NavigatorService] to navigate to the previous screen
-  /// in the navigation stack.
-  onTapImgArrowleftone(BuildContext context) {
-    // AUTH: NAVIGATION WHEN IMPLEMENT
   }
 
   /// Navigates to the forgotPasswordScreen when the action is triggered.
@@ -334,6 +324,8 @@ class _LoginScreenState extends State<LoginScreen> {
   /// When the action is triggered, this function uses the [NavigatorService]
   /// to push the named route for the registerScreen.
   onTapTxtNewhereregister(BuildContext context) {
-    // AUTH: NAVIGATION WHEN IMPLEMENT
+    getIt<SweetRouterCubit>()
+        .state
+        .push(const AuthLayout(children: [RegisterRoute()]));
   }
 }

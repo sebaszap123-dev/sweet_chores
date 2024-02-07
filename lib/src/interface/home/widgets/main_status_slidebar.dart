@@ -124,7 +124,7 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
               //   leading: Icon(Icons.star_outline),
               //   title: Text('Premium'),
               // ),
-              // ? TODO: OPEN DIALOG TO SEND A MESSAGE
+              // ? TODO-CONTACT-US: OPEN DIALOG TO SEND A MESSAGE
               ListTile(
                 onTap: () {},
                 contentPadding: const EdgeInsets.symmetric(horizontal: 8),
