@@ -8,6 +8,7 @@ import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
+import 'package:sweet_chores/src/core/utils/checker_wifi.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores/src/data/blocs/blocs.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   SweetTheme selectedOption = SweetTheme.cinnamon;
   bool isDarkMode = false;
   bool isActiveAutoDelete = false;
@@ -86,6 +88,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
         .add(ChangeDeleteStatusEvent(autoDeleTask: value, time: defaultDays));
   }
 
+  void _uploadBackup() async {
+    final hasInternet = await checkInternetState(scaffoldKey, context);
+    if (hasInternet) {
+      final resp = await SweetDialogs.backupRequired();
+      if (resp) {
+        setState(() {
+          uploadingBackup = true;
+        });
+        await makeLogin();
+        await GoogleDriveService.uploadFiles(driveClient);
+        setState(() {
+          uploadingBackup = false;
+        });
+      }
+    }
+  }
+
+  void _downloadBackup() async {
+    final hasInternet = await checkInternetState(scaffoldKey, context);
+    if (hasInternet) {
+      final resp = await SweetDialogs.wantRestoreFromBackup();
+      if (resp) {
+        setState(() {
+          uploadingBackup = true;
+        });
+        await makeLogin();
+        final isRestored = await GoogleDriveService.downloadBackup(driveClient);
+        setState(() {
+          uploadingBackup = false;
+        });
+        if (isRestored != null) {
+          SweetDialogs.showRestoreResult(restoreSuccess: isRestored);
+        }
+      }
+    }
+  }
+
   @override
   void dispose() {
     isDarkMode = false;
@@ -99,6 +138,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -224,21 +264,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           title: const Text('Backup chores'),
                           trailing: TextButton(
+                            onPressed: _uploadBackup,
                             child: const Text('Upload'),
-                            onPressed: () async {
-                              final resp = await SweetDialogs.backupRequired();
-                              if (resp) {
-                                setState(() {
-                                  uploadingBackup = true;
-                                });
-                                await makeLogin();
-                                await GoogleDriveService.uploadFiles(
-                                    driveClient);
-                                setState(() {
-                                  uploadingBackup = false;
-                                });
-                              }
-                            },
                           ),
                         ),
                         ListTile(
@@ -248,27 +275,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             title: const Text('Restore chores'),
                             trailing: TextButton(
+                              onPressed: _downloadBackup,
                               child: const Text('Dowload'),
-                              onPressed: () async {
-                                final resp =
-                                    await SweetDialogs.wantRestoreFromBackup();
-                                if (resp) {
-                                  setState(() {
-                                    uploadingBackup = true;
-                                  });
-                                  await makeLogin();
-                                  final isRestored =
-                                      await GoogleDriveService.downloadBackup(
-                                          driveClient);
-                                  setState(() {
-                                    uploadingBackup = false;
-                                  });
-                                  if (isRestored != null) {
-                                    SweetDialogs.showRestoreResult(
-                                        restoreSuccess: isRestored);
-                                  }
-                                }
-                              },
                             )),
                         if (uploadingBackup) const Loading()
                       ],

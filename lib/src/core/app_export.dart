@@ -1,3 +1,4 @@
+export 'package:sweet_chores/src/core/network/network_info.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:sweet_chores/src/core/utils/image_constant.dart';

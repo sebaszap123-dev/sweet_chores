@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           } else {
-            return const Loading();
+            return const Drawer(child: Loading());
           }
         },
       ),

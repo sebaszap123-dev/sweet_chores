@@ -75,11 +75,26 @@ abstract class SweetDialogs {
     );
   }
 
-  static alertInfo({required String info, required String title}) {
+  static void alertInfo({required String info, required String title}) {
     ArtSweetAlert.show(
       context: context!,
       artDialogArgs: ArtDialogArgs(
         type: ArtSweetAlertType.info,
+        title: title,
+        confirmButtonText: 'OK',
+        text: info,
+      ),
+    );
+  }
+
+  static void deleteLastCategory() {
+    String title = "Attention!";
+    String info =
+        "If you delete this category, you'll need to create a new one to add notes.";
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.warning,
         title: title,
         confirmButtonText: 'OK',
         text: info,

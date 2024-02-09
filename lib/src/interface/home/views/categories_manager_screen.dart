@@ -36,7 +36,7 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
   _addCategory(Categories category) {
     if (textController.text.isNotEmpty) {
       context.read<CategoriesBloc>().add(AddCategory(category));
-      context.router.replace(const HomeRoute());
+      context.router.pop(category);
     }
   }
 
