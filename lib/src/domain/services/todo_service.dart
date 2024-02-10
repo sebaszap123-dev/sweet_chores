@@ -3,6 +3,7 @@ import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/domain/domain.dart';
 import 'package:sweet_chores/src/models/todo.dart';
 
+// TODO: CHECKAR ESTO DEL INTERNET
 class TodoService extends TodoRepository {
   final TodoHelper localHelper;
   final NetworkInfo internetInfo = getIt<NetworkInfo>();

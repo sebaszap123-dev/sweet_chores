@@ -23,11 +23,14 @@ class SweetChoresRouter extends $SweetChoresRouter {
           AutoRoute(page: LoginRoute.page),
           AutoRoute(page: RegisterRoute.page),
           AutoRoute(page: ForgotPasswordRoute.page),
+          AutoRoute(page: DeleteAccountRoute.page),
         ]),
-        AutoRoute(page: ConfigRouteLayout.page, children: [
+        AutoRoute(page: ConfigRouteLayout.page, guards: [
+          AuthGuard()
+        ], children: [
           AutoRoute(page: SettingsRoute.page),
         ]),
-        AutoRoute(page: CategoriesManagerRoute.page),
+        AutoRoute(page: CategoriesManagerRoute.page, guards: [AuthGuard()]),
       ];
 }
 
@@ -46,6 +49,10 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   }
 
   void goLogin() => state.replace(const AuthLayout(children: [LoginRoute()]));
+
+  void deleteAccount() => state.popAndPushAll([
+        const AuthLayout(children: [LoginRoute()])
+      ]);
 
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));

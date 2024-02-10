@@ -34,7 +34,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   _onStarted(_, Emitter<TodoState> emit) async {
     if (state.status == TodoStatus.success) return;
-    // TODO: DELETE DONES TODOS IF DATE IS BEFORE THAN TODAY (SWEET_PREFERENCES)
+
     try {
       final todoList = await state.todoServices.getAllTodos();
       emit(state.copyWith(

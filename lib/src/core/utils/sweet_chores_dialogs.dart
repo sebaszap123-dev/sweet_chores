@@ -190,4 +190,26 @@ abstract class SweetDialogs {
     }
     return false;
   }
+
+  static Future<bool> showDeleteAccountAlert() async {
+    final ArtDialogResponse? resp = await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.warning,
+        title: 'Are you sure you want to delete your account?',
+        confirmButtonText: 'Yes, delete it',
+        text:
+            'This action cannot be undone. All your data will be permanently deleted.',
+        showCancelBtn: true,
+      ),
+    );
+
+    if (resp == null) {
+      // Si el usuario cancela la acción o cierra la alerta, devuelve false
+      return false;
+    } else {
+      // Si el usuario confirma la acción, devuelve true
+      return resp.isTapConfirmButton;
+    }
+  }
 }

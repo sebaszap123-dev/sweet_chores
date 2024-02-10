@@ -77,6 +77,17 @@ abstract class GoogleDriveService {
     return false;
   }
 
+  static Future<bool> deleteAllData(GoogleDriveClient? driveClient) async {
+    if (driveClient != null) {
+      final hasFile = await driveClient.hasBackupFile();
+      if (hasFile) {
+        await driveClient.deleteBackupFile();
+        return true;
+      }
+    }
+    return false;
+  }
+
   static Future<bool> hasBackupFile(GoogleDriveClient? driveClient) async {
     if (driveClient != null) {
       return await driveClient.hasBackupFile();

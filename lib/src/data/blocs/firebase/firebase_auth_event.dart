@@ -15,3 +15,10 @@ class AuthLoginEvent extends FirebaseAuthEvent {
 }
 
 class AuthLogOut extends FirebaseAuthEvent {}
+
+class AuthDeleteAccount extends FirebaseAuthEvent {
+  final bool hasUser;
+  final bool deleteConfirmed;
+  const AuthDeleteAccount(
+      {required this.hasUser, required this.deleteConfirmed});
+}

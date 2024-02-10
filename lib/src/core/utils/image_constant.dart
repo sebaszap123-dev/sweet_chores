@@ -49,5 +49,6 @@ class ImageConstant {
   // Home Screen
   static const String noTasks = '$imagePath/surprise_no_tasks.png';
   static const String doneTasks = '$imagePath/done_task.png';
-  // ? TODO: DELETE ACCOUNT - GOODBYE ('$imagePath/goodbye.png')
+
+  static const String deleteAccountGoodBye = '$imagePath/goodbye.png';
 }

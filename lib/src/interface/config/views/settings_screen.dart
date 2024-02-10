@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
 import 'package:sweet_chores/src/core/utils/checker_wifi.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
@@ -314,8 +316,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           title: const Text('Delete account'),
                           trailing: TextButton(
-                            // TODO: DELETE ACCOUNT (and backups)
-                            onPressed: () {},
+                            onPressed: () async {
+                              final delete =
+                                  await SweetDialogs.showDeleteAccountAlert();
+                              final hasUser =
+                                  FirebaseAuth.instance.currentUser != null;
+                              getIt<FirebaseAuthBloc>().add(AuthDeleteAccount(
+                                  hasUser: hasUser, deleteConfirmed: delete));
+                            },
                             child: Text(
                               'Delete',
                               style: TextStyle(
