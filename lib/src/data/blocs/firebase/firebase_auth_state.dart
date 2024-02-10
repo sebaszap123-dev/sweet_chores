@@ -2,15 +2,21 @@ part of 'firebase_auth_bloc.dart';
 
 enum FirebaseStatus { initial, success, loading }
 
-sealed class FirebaseState extends Equatable {
-  const FirebaseState({this.status = FirebaseStatus.initial});
+abstract class FirebaseState extends Equatable {
+  const FirebaseState(this.status);
   final FirebaseStatus status;
 
   @override
   List<Object?> get props => [status];
 }
 
-class FirebaseInitial extends FirebaseState {}
+class FirebaseInitial extends FirebaseState {
+  const FirebaseInitial() : super(FirebaseStatus.initial);
+}
+
+class FirebaseNoAuthState extends FirebaseState {
+  const FirebaseNoAuthState() : super(FirebaseStatus.success);
+}
 
 class FirebaseAuthState extends FirebaseState {
   final User userFirebase;
@@ -23,7 +29,7 @@ class FirebaseAuthState extends FirebaseState {
     this.clientDrive,
     FirebaseStatus status = FirebaseStatus
         .success, // Puedes establecer un valor predeterminado aquí
-  }) : super(status: status);
+  }) : super(status);
 
   FirebaseAuthState copyWith({
     User? userFirebase,

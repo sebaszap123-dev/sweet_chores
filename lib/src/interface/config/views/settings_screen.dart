@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +29,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   SweetTheme selectedOption = SweetTheme.cinnamon;
   bool isDarkMode = false;
   bool isActiveAutoDelete = false;
-  int defaultDays = 7;
+  int currentDeleteDays = 7;
   bool uploadingBackup = false;
   GoogleDriveClient? driveClient;
   TextStyle get styleCardTitle {
@@ -44,6 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     selectedOption = context.read<SweetPreferencesBloc>().state.typeTheme;
     isActiveAutoDelete =
         context.read<SweetPreferencesBloc>().state.isActiveAutoDelete;
+    currentDeleteDays = context.read<SweetPreferencesBloc>().state.deleteDays;
     super.initState();
   }
 
@@ -83,9 +85,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       isActiveAutoDelete = value;
     });
-    context
-        .read<SweetPreferencesBloc>()
-        .add(ChangeDeleteStatusEvent(autoDeleTask: value, time: defaultDays));
+    context.read<SweetPreferencesBloc>().add(
+        ChangeDeleteStatusEvent(autoDeleTask: value, time: currentDeleteDays));
   }
 
   void _uploadBackup() async {
@@ -125,11 +126,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  String _getDurationText(int days) {
+    if (days == 7) {
+      return '1 week';
+    } else if (days == 14) {
+      return '2 weeks';
+    } else if (days == 30) {
+      return '1 month';
+    } else if (days == 60) {
+      return '2 months';
+    } else if (days == 120) {
+      return '4 months';
+    } else {
+      // Si deseas manejar otros valores de días, puedes agregar lógica aquí
+      return '$days days';
+    }
+  }
+
   @override
   void dispose() {
     isDarkMode = false;
     isActiveAutoDelete = false;
-    defaultDays = 7;
+    currentDeleteDays = 7;
     uploadingBackup = false;
     driveClient = null;
     super.dispose();
@@ -201,13 +219,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
-                              value: defaultDays,
+                              value: currentDeleteDays,
                               underline: Container(),
                               items: [7, 14, 30, 60, 120]
                                   .map((e) => DropdownMenuItem<int>(
                                         value: e,
-                                        // ? TODO: PARSE WEEK, MONTH string instead days
-                                        child: Text('$e days'),
+                                        child: Text(_getDurationText(e)),
                                       ))
                                   .toList(),
                               onChanged: isActiveAutoDelete
@@ -216,7 +233,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         await SweetSecurePreferences
                                             .changeDateDeleteTasks(value);
                                         setState(() {
-                                          defaultDays = defaultDays;
+                                          currentDeleteDays = value;
                                         });
                                       }
                                     }
@@ -279,6 +296,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: const Text('Dowload'),
                             )),
                         if (uploadingBackup) const Loading()
+                      ],
+                    ),
+                  ),
+                  cardStyled(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Danger Zone',
+                          style: styleCardTitle.copyWith(
+                              color: Colors.amberAccent.shade700),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            CupertinoIcons.delete_right_fill,
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                          title: const Text('Delete account'),
+                          trailing: TextButton(
+                            // TODO: DELETE ACCOUNT (and backups)
+                            onPressed: () {},
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                color: Colors.redAccent.shade700,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

@@ -14,8 +14,4 @@ class AuthLoginEvent extends FirebaseAuthEvent {
   const AuthLoginEvent({required this.user, required this.premium});
 }
 
-class AuthResetPassword extends FirebaseAuthEvent {
-  final String newPassword;
-
-  const AuthResetPassword({required this.newPassword});
-}
+class AuthLogOut extends FirebaseAuthEvent {}

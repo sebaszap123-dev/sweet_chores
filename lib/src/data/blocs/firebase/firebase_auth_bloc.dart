@@ -7,18 +7,15 @@ part 'firebase_auth_event.dart';
 part 'firebase_auth_state.dart';
 
 class FirebaseAuthBloc extends Bloc<FirebaseAuthEvent, FirebaseState> {
-  FirebaseAuthBloc() : super(FirebaseInitial()) {
+  FirebaseAuthBloc() : super(const FirebaseInitial()) {
     on<AuthLoginEvent>(_authLogin);
-    on<AuthResetPassword>(_authResetPassword);
+    on<AuthLogOut>(_authLogout);
   }
   void _authLogin(AuthLoginEvent event, Emitter<FirebaseState> emit) {
     emit(FirebaseAuthState(userFirebase: event.user, premium: event.premium));
   }
 
-  void _authResetPassword(
-      AuthResetPassword event, Emitter<FirebaseState> emit) {
-    if (state is FirebaseAuthState) {
-      // TODO AUTH-reset-pw: DO THE RESET OF PASSWORD
-    }
+  void _authLogout(AuthLogOut event, Emitter<FirebaseState> emit) {
+    emit(const FirebaseNoAuthState());
   }
 }

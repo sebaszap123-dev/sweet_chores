@@ -19,8 +19,6 @@ abstract class SweetDialogs {
             'We encountered an error while processing your request:\n$error\nPlease try again later or contact support for assistance.',
         onConfirm: () {
           getIt<SweetRouterCubit>().popDialogs();
-          // ? TODO: Handle error and send to a logger in backend
-          // print('sending exception $error to backend');
         },
       ),
     );
@@ -37,8 +35,6 @@ abstract class SweetDialogs {
             'Oopsie-doodle! Our sweet cinnamon roll is taking a break and having a bit of trouble with some tasks $error. Thanks for your patience!',
         onConfirm: () {
           getIt<SweetRouterCubit>().goHome();
-          // ? TODO: Handle error and send to a logger in backend
-          // print('sending exception $error to backend');
         },
       ),
     );
