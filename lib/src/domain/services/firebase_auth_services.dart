@@ -26,7 +26,9 @@ abstract class FirebaseAuthService {
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
         final hasUser = userCredential.user != null;
-        if (hasUser) {
+        if (hasUser &&
+            userCredential.additionalUserInfo != null &&
+            userCredential.additionalUserInfo!.isNewUser) {
           final token = googleSignInAuthentication.accessToken;
           if (token != null) {
             await Future.delayed(const Duration(milliseconds: 200));
@@ -57,13 +59,84 @@ abstract class FirebaseAuthService {
     }
   }
 
+  static Future<void> loginWithEmailAndPw(
+      {required String email, required String password}) async {
+    try {
+      final credentials = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      credentials;
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'invalid-email':
+          SweetDialogs.alertInfo(
+            info: 'The email address provided is not valid.',
+            title: 'Invalid Email',
+          );
+          break;
+        case 'user-disabled':
+          SweetDialogs.alertInfo(
+            info:
+                'The user corresponding to the given email has been disabled.',
+            title: 'User Disabled',
+          );
+          break;
+        case 'user-not-found':
+          SweetDialogs.alertInfo(
+            info: 'There is no user corresponding to the given email.',
+            title: 'User Not Found',
+          );
+          break;
+        case 'wrong-password':
+          SweetDialogs.alertInfo(
+            info: 'The password is invalid for the given email.',
+            title: 'Wrong Password',
+          );
+          break;
+        case "invalid-credential":
+          SweetDialogs.alertInfo(
+            info: "Your credentials don't match our records.",
+            title: 'Wrong credentials',
+          );
+          break;
+        default:
+          SweetDialogs.alertInfo(
+            info: 'An error occurred: ${e.message}',
+            title: 'Error',
+          );
+      }
+    } catch (e) {
+      // Captura otros tipos de excepciones
+      SweetDialogs.alertInfo(
+        info: 'An unexpected error occurred: $e',
+        title: 'Error',
+      );
+    }
+  }
+
+  static Future<void> registerWithEmailAndPw(
+      {required String email,
+      required String password,
+      required String fullName}) async {
+    try {
+      final credentials = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await credentials.user?.updateDisplayName(fullName);
+      await credentials.user?.reload();
+    } on FirebaseAuthException catch (e) {
+      SweetDialogs.alertInfo(
+          info: 'Registration failed: ${e.message}',
+          title: 'Oops! Cinnamon encountered an issue');
+    } catch (e) {
+      SweetDialogs.unhandleErros(error: '$e');
+    }
+  }
+
   static Future<void> _extraActionsLogin() async {
     await Future.delayed(const Duration(milliseconds: 300));
     getIt<DatabaseManagerCubit>().toDefaults();
   }
 
-  // TODO AUTH-reset-pw: use for reset
-  static Future<void> sendResetPassowrd({required String email}) async {
+  static Future<void> sendResetPassword({required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
@@ -114,12 +187,12 @@ abstract class FirebaseAuthService {
     }
   }
 
-  // TODO AUTH-reset-pw: use for reset
-  static Future<void> confirmPasswordReset(
+  static Future<bool> confirmPasswordReset(
       {required String code, required String password}) async {
     try {
       await FirebaseAuth.instance
           .confirmPasswordReset(code: code, newPassword: password);
+      return true;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'expired-action-code':
@@ -156,6 +229,7 @@ abstract class FirebaseAuthService {
     } catch (e) {
       SweetDialogs.unhandleErros(error: e.toString());
     }
+    return false;
   }
 
   static Future<void> signOut() async {

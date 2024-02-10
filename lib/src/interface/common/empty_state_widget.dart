@@ -5,7 +5,7 @@ import 'package:sweet_chores/src/core/utils/image_constant.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
 import 'package:sweet_chores/src/interface/common/common.dart';
 
-// TODO-FEATURE: IMPLEMENT INTL for messages
+// TODO-FEATURE-INTL: IMPLEMENT INTL for messages
 const Map<String, String> messages = {
   'firstTime': 'Oh! It seems you have no reminders yet :c',
   'today': "You've done for today Go for a snack, you deserve it",

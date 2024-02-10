@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sweet_chores/src/interface/auth/login_screen/models/login_model.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -16,7 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     emit(state.copyWith(
-        edittextController: TextEditingController(),
+        editEmailController: TextEditingController(),
         passwordController: TextEditingController()));
   }
 }

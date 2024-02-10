@@ -103,7 +103,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
     );
   }
 
-  // TODO: CHANGE THIS AZAP WITH DESIGN FOR IOS
+  // TODO-FEATURE-IOS: CHANGE THIS WITH DESIGN FOR IOS
   Widget _chooseListWidget(CategoriesBloc categoryBloc) {
     return ListTile(
       leading: Icon(

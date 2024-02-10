@@ -19,7 +19,8 @@ class AddTodoButton extends StatelessWidget {
     );
   }
 
-  // TODO-feature: use for IOS VERSION
+  // TODO-FEATURE-IOS: use for IOS VERSION
+  // ignore: unused_element
   Future<dynamic> _modalIOSAddTodo(BuildContext context) {
     return showModalBottomSheet(
       context: context,

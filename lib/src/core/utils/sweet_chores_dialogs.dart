@@ -2,6 +2,7 @@ import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 
@@ -59,6 +60,23 @@ abstract class SweetDialogs {
     );
   }
 
+  static showPasswordResetSuccess() {
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.success,
+          title: 'Password Reset Successful!',
+          confirmButtonText: 'Got it',
+          text:
+              'Your password has been reset successfully. You can now log in with your new password.',
+          onConfirm: () {
+            getIt<SweetRouterCubit>()
+                .state
+                .replace(const AuthLayout(children: [LoginRoute()]));
+          }),
+    );
+  }
+
   static showRestoreResult({bool restoreSuccess = false}) {
     ArtSweetAlert.show(
       context: context!,
@@ -75,15 +93,16 @@ abstract class SweetDialogs {
     );
   }
 
-  static void alertInfo({required String info, required String title}) {
+  static void alertInfo(
+      {required String info, required String title, Function? onConfirm}) {
     ArtSweetAlert.show(
       context: context!,
       artDialogArgs: ArtDialogArgs(
-        type: ArtSweetAlertType.info,
-        title: title,
-        confirmButtonText: 'OK',
-        text: info,
-      ),
+          type: ArtSweetAlertType.info,
+          title: title,
+          confirmButtonText: 'OK',
+          text: info,
+          onConfirm: onConfirm),
     );
   }
 
