@@ -36,12 +36,10 @@ class MyBlocApp extends StatelessWidget {
           create: (_) => getIt<DatabaseManagerCubit>(),
         ),
         BlocProvider<TodoBloc>(
-          create: (_) => getIt<TodoBloc>()..add(TodoStarted()),
-          lazy: false,
+          create: (_) => getIt<TodoBloc>(),
         ),
         BlocProvider<CategoriesBloc>(
-          create: (_) => getIt<CategoriesBloc>()..add(const CategoryStarted()),
-          lazy: false,
+          create: (_) => getIt<CategoriesBloc>(),
         ),
         BlocProvider<SweetPreferencesBloc>(
           create: (_) =>

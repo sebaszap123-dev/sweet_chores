@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
@@ -24,11 +25,15 @@ class AddTodoDialogState extends State<AddTodoDialog> {
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   Categories? currentCategory;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+    currentCategory = context.read<CategoriesBloc>().state.categories.isNotEmpty
+        ? context.read<CategoriesBloc>().state.categories.first
+        : null;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -44,6 +49,10 @@ class AddTodoDialogState extends State<AddTodoDialog> {
         selectedDate = picked;
       });
     }
+  }
+
+  bool get _validateForm {
+    return formKey.currentState?.validate() ?? false;
   }
 
   Future<void> _selectTime(BuildContext context) async {
@@ -76,119 +85,129 @@ class AddTodoDialogState extends State<AddTodoDialog> {
         ],
       ),
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 8),
-            TextField(
-              controller: titleController,
-              decoration: ThemeDecorations.kawaiBorder(
-                context: context,
-                // color: Colors.white,
-                label: 'Title',
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8),
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: titleController,
+                validator:
+                    RequiredValidator(errorText: 'This field is required'),
+                decoration: ThemeDecorations.kawaiBorder(
+                  context: context,
+                  // color: Colors.white,
+                  label: 'Title',
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: descriptionController,
-              decoration: ThemeDecorations.kawaiBorder(
-                context: context,
-                // color: Colors.white,
-                label: 'Description',
+              const SizedBox(height: 16),
+              TextField(
+                controller: descriptionController,
+                decoration: ThemeDecorations.kawaiBorder(
+                  context: context,
+                  // color: Colors.white,
+                  label: 'Description',
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                const Icon(Icons.calendar_today),
-                const SizedBox(width: 8),
-                Text(
-                  selectedDate != null
-                      ? DateFormat('MMM dd, yyyy').format(selectedDate!)
-                      : 'Select Date',
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () => _selectDate(context),
-                  child: const Text('Choose Date'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                const Icon(Icons.access_time),
-                const SizedBox(width: 8),
-                Text(
-                  selectedTime != null
-                      ? selectedTime!.format(context)
-                      : 'Select Time',
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () => _selectTime(context),
-                  child: const Text('Choose Time'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text('Select your list',
-                style: GoogleFonts.roboto().copyWith(
-                  color:
-                      getIt<SweetPreferencesBloc>().state.themeColors.secondary,
-                  fontSize: 18,
-                )),
-            const SizedBox(height: 5),
-            BlocBuilder<CategoriesBloc, CategoriesState>(
-              builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DropdownButton<Categories>(
-                      value: currentCategory,
-                      padding: EdgeInsets.zero,
-                      underline: Container(),
-                      borderRadius: BorderRadius.circular(12),
-                      dropdownColor: Theme.of(context).colorScheme.primary,
-                      items: state.categories.isNotEmpty
-                          ? state.categories
-                              .map((e) => DropdownMenuItem<Categories>(
-                                    value: e,
-                                    child: Text(e.name),
-                                  ))
-                              .toList()
-                          : [],
-                      onChanged: (category) {
-                        if (category != null) {
-                          setState(() {
-                            currentCategory = category;
-                          });
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton.icon(
-                      onPressed: () => getIt<SweetRouterCubit>().state.push(
-                            CategoriesManagerRoute(),
-                          ),
-                      icon: const Icon(Icons.add_rounded, color: Colors.white),
-                      label: const Text(
-                        "Add new category",
-                        style: TextStyle(color: Colors.white),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Icon(Icons.calendar_today),
+                  const SizedBox(width: 8),
+                  Text(
+                    selectedDate != null
+                        ? DateFormat('MMM dd, yyyy').format(selectedDate!)
+                        : 'Select Date',
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => _selectDate(context),
+                    child: const Text('Choose Date'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Icon(Icons.access_time),
+                  const SizedBox(width: 8),
+                  Text(
+                    selectedTime != null
+                        ? selectedTime!.format(context)
+                        : 'Select Time',
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => _selectTime(context),
+                    child: const Text('Choose Time'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Text('Select your list',
+                  style: GoogleFonts.roboto().copyWith(
+                    color: getIt<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .secondary,
+                    fontSize: 18,
+                  )),
+              const SizedBox(height: 5),
+              BlocBuilder<CategoriesBloc, CategoriesState>(
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DropdownButton<Categories>(
+                        value: currentCategory,
+                        padding: EdgeInsets.zero,
+                        underline: Container(),
+                        borderRadius: BorderRadius.circular(12),
+                        dropdownColor: Theme.of(context).colorScheme.primary,
+                        items: state.categories.isNotEmpty
+                            ? state.categories
+                                .map((e) => DropdownMenuItem<Categories>(
+                                      value: e,
+                                      child: Text(e.name),
+                                    ))
+                                .toList()
+                            : [],
+                        onChanged: (category) {
+                          if (category != null) {
+                            setState(() {
+                              currentCategory = category;
+                            });
+                          }
+                        },
                       ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                      const SizedBox(height: 10),
+                      ElevatedButton.icon(
+                        onPressed: () => getIt<SweetRouterCubit>().state.push(
+                              CategoriesManagerRoute(),
+                            ),
+                        icon:
+                            const Icon(Icons.add_rounded, color: Colors.white),
+                        label: const Text(
+                          "Add new category",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
@@ -200,10 +219,11 @@ class AddTodoDialogState extends State<AddTodoDialog> {
         ),
         TextButton(
           onPressed: () {
-            if (titleController.text.isEmpty || currentCategory == null) {
+            if (!_validateForm) return;
+            if (currentCategory == null) {
               SweetDialogs.alertInfo(
                   info:
-                      'Before proceeding, please make sure to add a title and select a category for your entry.',
+                      'Before proceeding, please make sure to add a category for your entry.',
                   title: 'Oops! Looks like something is missing.');
             } else {
               final newTodo = Todo(

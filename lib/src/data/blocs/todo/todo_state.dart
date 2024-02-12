@@ -11,6 +11,7 @@ enum FilterCategoryStatus { filtered, all }
 // ignore: must_be_immutable
 class TodoState extends Equatable {
   final List<Todo> todos;
+  final List<Todo> doneTodos;
   final TodoStatus status;
   final String? errorMessage;
   final FilterStatus filterStatus;
@@ -25,6 +26,7 @@ class TodoState extends Equatable {
 
   TodoState({
     this.todos = const [],
+    this.doneTodos = const [],
     this.filterTodos = const [],
     this.categoryIds = const [],
     this.status = TodoStatus.initial,
@@ -68,6 +70,9 @@ class TodoState extends Equatable {
   }
 
   List<Todo> get currentTodos {
+    if (!isFiltered || filterStatus == FilterStatus.all) {
+      return todos.where((todo) => !todo.isDone).toList();
+    }
     return isFiltered ? [...filterTodos] : [...todos];
   }
 

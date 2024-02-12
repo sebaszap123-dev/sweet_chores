@@ -68,6 +68,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
         getIt<FirebaseAuthBloc>()
             .add(AuthLoginEvent(user: event, premium: false));
         getIt<TodoBloc>().add(TodoStarted());
+        getIt<CategoriesBloc>().add(const CategoryStarted());
         state.replace(const HomeRoute());
       }
     });

@@ -108,9 +108,11 @@ class _CardDateTimePickerState extends State<_CardDateTimePicker> {
                   }
                 });
               }
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
+              if (mounted) {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
               }
             },
           )

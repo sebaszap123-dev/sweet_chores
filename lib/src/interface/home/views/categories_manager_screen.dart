@@ -56,7 +56,7 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
     selectedIcon = widget.category?.iconData;
     selectedColor = widget.category?.color ?? Colors.black87;
     cardExpandable.addListener(() {
-      if (cardExpandable.expanded) {
+      if (cardExpandable.expanded && mounted) {
         FocusScopeNode currentFocus = FocusScope.of(context);
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();

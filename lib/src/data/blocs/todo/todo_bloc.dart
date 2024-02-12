@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/core/utils/helpers.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores/src/domain/services/todo_service.dart';
@@ -34,8 +35,15 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   _onStarted(_, Emitter<TodoState> emit) async {
     if (state.status == TodoStatus.success) return;
-
     try {
+      final deleteTasks = await SweetSecurePreferences.isActiveAutoDelete;
+      if (deleteTasks) {
+        final date = await SweetSecurePreferences.nextDeleteDate;
+        final now = DateTime.timestamp();
+        if (date != null && (date.isSameDay(now) || !now.isBefore(date))) {
+          state.todoServices.deleteDonesTodos();
+        }
+      }
       final todoList = await state.todoServices.getAllTodos();
       emit(state.copyWith(
         todos: todoList,
@@ -149,10 +157,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     try {
       todos[event.index].isDone = !todos[event.index].isDone;
       await state.todoServices.updateTodo(todos[event.index]);
-      todos.sort((todo, other) => todo.isDone && !other.isDone ? 1 : -1);
       emit(state.copyWith(
-        todos: !state.isFiltered ? todos : state.todos,
-        filterTodos: state.isFiltered ? todos : [],
+        filterTodos: todos,
         status: TodoStatus.success,
       ));
     } catch (e) {
