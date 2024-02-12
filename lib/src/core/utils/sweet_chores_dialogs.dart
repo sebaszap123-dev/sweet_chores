@@ -2,6 +2,7 @@ import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
+import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 
@@ -18,8 +19,6 @@ abstract class SweetDialogs {
             'We encountered an error while processing your request:\n$error\nPlease try again later or contact support for assistance.',
         onConfirm: () {
           getIt<SweetRouterCubit>().popDialogs();
-          // ? TODO: Handle error and send to a logger in backend
-          // print('sending exception $error to backend');
         },
       ),
     );
@@ -36,8 +35,6 @@ abstract class SweetDialogs {
             'Oopsie-doodle! Our sweet cinnamon roll is taking a break and having a bit of trouble with some tasks $error. Thanks for your patience!',
         onConfirm: () {
           getIt<SweetRouterCubit>().goHome();
-          // ? TODO: Handle error and send to a logger in backend
-          // print('sending exception $error to backend');
         },
       ),
     );
@@ -59,6 +56,23 @@ abstract class SweetDialogs {
     );
   }
 
+  static showPasswordResetSuccess() {
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.success,
+          title: 'Password Reset Successful!',
+          confirmButtonText: 'Got it',
+          text:
+              'Your password has been reset successfully. You can now log in with your new password.',
+          onConfirm: () {
+            getIt<SweetRouterCubit>()
+                .state
+                .replace(const AuthLayout(children: [LoginRoute()]));
+          }),
+    );
+  }
+
   static showRestoreResult({bool restoreSuccess = false}) {
     ArtSweetAlert.show(
       context: context!,
@@ -75,11 +89,27 @@ abstract class SweetDialogs {
     );
   }
 
-  static alertInfo({required String info, required String title}) {
+  static void alertInfo(
+      {required String info, required String title, Function? onConfirm}) {
     ArtSweetAlert.show(
       context: context!,
       artDialogArgs: ArtDialogArgs(
-        type: ArtSweetAlertType.info,
+          type: ArtSweetAlertType.info,
+          title: title,
+          confirmButtonText: 'OK',
+          text: info,
+          onConfirm: onConfirm),
+    );
+  }
+
+  static void deleteLastCategory() {
+    String title = "Attention!";
+    String info =
+        "If you delete this category, you'll need to create a new one to add notes.";
+    ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.warning,
         title: title,
         confirmButtonText: 'OK',
         text: info,
@@ -159,5 +189,50 @@ abstract class SweetDialogs {
       return true;
     }
     return false;
+  }
+
+  static Future<bool> showDeleteAccountAlert() async {
+    final ArtDialogResponse? resp = await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.warning,
+        title: 'Are you sure you want to delete your account?',
+        confirmButtonText: 'Yes, delete it',
+        text:
+            'This action cannot be undone. All your data will be permanently deleted.',
+        showCancelBtn: true,
+      ),
+    );
+
+    if (resp == null) {
+      // Si el usuario cancela la acción o cierra la alerta, devuelve false
+      return false;
+    } else {
+      // Si el usuario confirma la acción, devuelve true
+      return resp.isTapConfirmButton;
+    }
+  }
+
+  static Future<bool> showLogoutWarning() async {
+    final ArtDialogResponse? resp = await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.warning,
+        title: 'Logout Warning',
+        confirmButtonText: 'Logout',
+        cancelButtonText: 'Cancel',
+        text:
+            'Logging out will discard any unsaved chores in you drive backup. Are you sure you want to proceed?',
+        showCancelBtn: true,
+      ),
+    );
+
+    if (resp == null || !resp.isTapConfirmButton) {
+      // El usuario cancela la acción o cierra la alerta
+      return false;
+    } else {
+      // El usuario confirma la acción
+      return true;
+    }
   }
 }

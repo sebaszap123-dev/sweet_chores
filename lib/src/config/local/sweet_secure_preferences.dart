@@ -24,6 +24,9 @@ abstract class SweetSecurePreferences {
   /// CONSTANT KEY autodeleteTask time
   static const String _autoTime = 'sweet_delete_notes_time';
 
+  /// CONSTANT KEY autodeleteTask time
+  static const String _deleteDays = 'sweet_delete_notes_days';
+
   /// status if firstOpen or not
   static final String _initialStatus = GlobalStatusApp.firstOpen.name;
 
@@ -48,6 +51,14 @@ abstract class SweetSecurePreferences {
     final date = await _storage.read(key: _nextBackupDate);
     if (date != null) {
       return DateTime.tryParse(date);
+    }
+    return null;
+  }
+
+  static Future<int?> get deletDaysCurrent async {
+    final date = await _storage.read(key: _deleteDays);
+    if (date != null) {
+      return int.tryParse(date);
     }
     return null;
   }
@@ -141,6 +152,7 @@ abstract class SweetSecurePreferences {
     final now = DateTime.now();
     final timeLapse = now.add(Duration(days: time));
     await _storage.write(key: _autoTime, value: timeLapse.toIso8601String());
+    await _storage.write(key: _deleteDays, value: time.toString());
   }
 
   static Future<void> toggleTheme(SweetTheme value) async {

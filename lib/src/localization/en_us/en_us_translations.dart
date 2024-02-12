@@ -1,3 +1,4 @@
+// TODO-FEATURE-INTL: add all text of app here
 final Map<String, String> enUs = {
   // started_screen Screen
   "lbl_get_started": "Get started",

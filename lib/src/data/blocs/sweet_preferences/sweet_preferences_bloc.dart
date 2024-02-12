@@ -25,6 +25,7 @@ class SweetPreferencesBloc
     final firstOpen = await SweetSecurePreferences.isFirstOpen;
     final isDarkMode = await SweetSecurePreferences.isDarkMode;
     final autoTask = await SweetSecurePreferences.isActiveAutoDelete;
+    final deleteDays = await SweetSecurePreferences.deletDaysCurrent;
     final themeColors = SweetThemeColors.fromMode(
         isDarkMode ? SweetMode.dark : SweetMode.light, theme);
     final themeData = SweetThemes.sweetThemeData(themeColors: themeColors);
@@ -35,6 +36,7 @@ class SweetPreferencesBloc
       firstTimeApp: firstOpen,
       isActiveAutoDelete: autoTask,
       themeColors: themeColors,
+      deleteDays: deleteDays,
       status: SweetChoresStatus.success,
     ));
   }

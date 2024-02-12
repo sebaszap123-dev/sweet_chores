@@ -35,14 +35,6 @@ class TodoHelper implements TodoRepository {
         : <Todo>[];
 
     todos.sort((a, b) {
-      // Ordenar por isDone
-      if (a.isDone && !b.isDone) {
-        return 1;
-      } else if (!a.isDone && b.isDone) {
-        return -1;
-      }
-
-      // Si son iguales en isDone, ordenar por dueDate
       return (a.dueDate ?? 0).compareTo(b.dueDate ?? 0);
     });
 
@@ -70,5 +62,17 @@ class TodoHelper implements TodoRepository {
     final resp = await dbManager.state.db
         .delete(DatabaseNotes.tbNotes, where: 'id = ?', whereArgs: [id]);
     return resp;
+  }
+
+  @override
+  Future<bool> deleteDonesTodos() async {
+    try {
+      final resp = await dbManager.state.db
+          .delete(DatabaseNotes.tbNotes, where: 'isDone = ?', whereArgs: [1]);
+      return resp != 0;
+    } catch (e) {
+      // print('$e');
+      return false;
+    }
   }
 }

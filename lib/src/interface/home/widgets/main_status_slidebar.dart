@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores/src/data/blocs/blocs.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/domain/domain.dart';
@@ -66,10 +67,13 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
                 ),
                 trailing: TextButton(
                   onPressed: () {
-                    if (state.categories.length == 1) return;
-                    setState(() {
+                    if (mounted) {
                       isEditing = !isEditing;
-                    });
+                      if (state.categories.length == 1 && isEditing) {
+                        SweetDialogs.deleteLastCategory();
+                      }
+                      setState(() {});
+                    }
                   },
                   child: const Text('Edit'),
                 ),
@@ -124,7 +128,7 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
               //   leading: Icon(Icons.star_outline),
               //   title: Text('Premium'),
               // ),
-              // ? TODO: OPEN DIALOG TO SEND A MESSAGE
+              // ? TODO-CONTACT-US: OPEN DIALOG TO SEND A MESSAGE
               ListTile(
                 onTap: () {},
                 contentPadding: const EdgeInsets.symmetric(horizontal: 8),

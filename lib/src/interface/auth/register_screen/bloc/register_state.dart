@@ -8,7 +8,6 @@ class RegisterState extends Equatable {
     this.edittextController,
     this.emailController,
     this.passwordController,
-    this.registerModelObj,
   });
 
   TextEditingController? edittextController;
@@ -17,14 +16,11 @@ class RegisterState extends Equatable {
 
   TextEditingController? passwordController;
 
-  RegisterModel? registerModelObj;
-
   @override
   List<Object?> get props => [
         edittextController,
         emailController,
         passwordController,
-        registerModelObj,
       ];
   RegisterState copyWith({
     TextEditingController? edittextController,
@@ -36,7 +32,6 @@ class RegisterState extends Equatable {
       edittextController: edittextController ?? this.edittextController,
       emailController: emailController ?? this.emailController,
       passwordController: passwordController ?? this.passwordController,
-      registerModelObj: registerModelObj ?? this.registerModelObj,
     );
   }
 }

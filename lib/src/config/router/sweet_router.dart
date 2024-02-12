@@ -23,11 +23,14 @@ class SweetChoresRouter extends $SweetChoresRouter {
           AutoRoute(page: LoginRoute.page),
           AutoRoute(page: RegisterRoute.page),
           AutoRoute(page: ForgotPasswordRoute.page),
+          AutoRoute(page: DeleteAccountRoute.page),
         ]),
-        AutoRoute(page: ConfigRouteLayout.page, children: [
+        AutoRoute(page: ConfigRouteLayout.page, guards: [
+          AuthGuard()
+        ], children: [
           AutoRoute(page: SettingsRoute.page),
         ]),
-        AutoRoute(page: CategoriesManagerRoute.page),
+        AutoRoute(page: CategoriesManagerRoute.page, guards: [AuthGuard()]),
       ];
 }
 
@@ -38,14 +41,18 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
   User? activeUser;
 
   void goHome() {
-    state.replace(const HomeRoute());
+    if (FirebaseAuth.instance.currentUser != null) {
+      state.replace(const HomeRoute());
+    } else {
+      goLogin();
+    }
   }
 
   void goLogin() => state.replace(const AuthLayout(children: [LoginRoute()]));
 
-  void goWithOutAccount() {
-    state.replace(const HomeRoute());
-  }
+  void deleteAccount() => state.popAndPushAll([
+        const AuthLayout(children: [LoginRoute()])
+      ]);
 
   void redirect() async {
     await Future.delayed(const Duration(milliseconds: 300));
@@ -54,12 +61,16 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
       if (firstTime && event == null) {
         state.replace(const StartedRoute());
       } else if (event == null) {
+        getIt<FirebaseAuthBloc>().add(AuthLogOut());
         state.replace(const AuthLayout(children: [LoginRoute()]));
       } else {
-        // ? TODO: HANDLE PREMIUM DATA
-        getIt<FirebaseAuthBloc>()
-            .add(AuthLoginEvent(user: event, premium: false));
+        // * TODO-FEATURE: HANDLE PREMIUM DATA
+        getIt<FirebaseAuthBloc>().add(
+          AuthLoginEvent(
+              user: event, premium: false, isNew: firstTime, isRouting: true),
+        );
         getIt<TodoBloc>().add(TodoStarted());
+        getIt<CategoriesBloc>().add(const CategoryStarted());
         state.replace(const HomeRoute());
       }
     });

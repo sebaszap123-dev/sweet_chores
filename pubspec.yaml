@@ -34,6 +34,7 @@ dependencies:
   cached_network_image: ^3.3.1
   connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.2
+  email_validator: ^2.1.17
   equatable: ^2.0.5
   expandable: ^5.0.1
   file_picker: ^6.1.1
@@ -47,6 +48,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   flutter_slidable: ^3.0.1
   flutter_svg: ^2.0.9
+  form_field_validator: ^1.1.0
   get_it: ^7.6.7
   google_fonts: ^6.1.0
   google_sign_in: ^6.2.1

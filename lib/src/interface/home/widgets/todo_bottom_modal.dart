@@ -103,11 +103,16 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
     );
   }
 
+  // TODO-FEATURE-IOS: CHANGE THIS WITH DESIGN FOR IOS
   Widget _chooseListWidget(CategoriesBloc categoryBloc) {
     return ListTile(
       leading: Icon(
-        selectedCategory?.iconData ?? Icons.category,
-        color: selectedCategory?.color,
+        selectedCategory?.iconData ??
+            (categoryBloc.state.categories.isEmpty
+                ? Icons.add_rounded
+                : categoryBloc.state.categories.first.iconData),
+        color: selectedCategory?.color ??
+            categoryBloc.state.categories.first.color,
       ),
       minLeadingWidth: 185,
       title: DecoratedBox(
@@ -122,7 +127,8 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
           isExpanded: false,
           value: selectedCategory ??
               (categoryBloc.state.categories.isEmpty
-                  ? Categories(name: 'awa', id: 1)
+                  ? Categories(
+                      name: 'add category', id: 0, iconData: Icons.add_rounded)
                   : categoryBloc.state.categories.first),
           items: categoryBloc.state.categories
               .map((category) => DropdownMenuItem<Categories>(

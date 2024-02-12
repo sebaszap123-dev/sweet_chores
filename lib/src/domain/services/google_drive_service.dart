@@ -48,7 +48,7 @@ abstract class GoogleDriveService {
         await client.uploadFile(dbBackup);
       }
     } catch (e) {
-      print(e);
+      SweetDialogs.unhandleErros(error: e.toString());
     }
   }
 
@@ -72,6 +72,17 @@ abstract class GoogleDriveService {
                 "It seems you haven't created a backup yet. Please create one first.",
             title: "Oops! Cinnamon couldn't find a backup");
         return null;
+      }
+    }
+    return false;
+  }
+
+  static Future<bool> deleteAllData(GoogleDriveClient? driveClient) async {
+    if (driveClient != null) {
+      final hasFile = await driveClient.hasBackupFile();
+      if (hasFile) {
+        await driveClient.deleteBackupFile();
+        return true;
       }
     }
     return false;

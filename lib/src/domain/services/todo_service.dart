@@ -1,10 +1,12 @@
+import 'package:sweet_chores/src/core/network/network_info.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/domain/domain.dart';
 import 'package:sweet_chores/src/models/todo.dart';
 
+// TODO-FEATURE: DATABASE REALTIME WHEN PREMIUM
 class TodoService extends TodoRepository {
   final TodoHelper localHelper;
-  final InternetInfo internetInfo = getIt<InternetInfo>();
+  final NetworkInfo internetInfo = getIt<NetworkInfo>();
   TodoService(this.localHelper);
 
   @override
@@ -19,13 +21,14 @@ class TodoService extends TodoRepository {
 
   @override
   Future<List<Todo>> getAllTodos() async {
-    final network = await internetInfo.hasInternet;
-    if (network) {
-      // Internet DB
-      return [];
-    } else {
-      return await localHelper.getAllTodos();
-    }
+    // internetInfo.isConnected();
+    // if (network) {
+    //   // Internet DB
+    //   return [];
+    // } else {
+    //   return await localHelper.getAllTodos();
+    // }
+    return await localHelper.getAllTodos();
   }
 
   @override
@@ -41,5 +44,10 @@ class TodoService extends TodoRepository {
   @override
   Future<int> updateTodo(Todo todo) async {
     return await localHelper.updateTodo(todo);
+  }
+
+  @override
+  Future<bool> deleteDonesTodos() async {
+    return await localHelper.deleteDonesTodos();
   }
 }

@@ -35,7 +35,6 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
     return database;
   }
 
-  // TODO: CREATE OR ADD TO REPOSITORY AND IMPLEMENT THERE NOT HERE!!!!
   static Future<void> _autoDeleteTask(Database db) async {
     final isActive = await SweetSecurePreferences.isActiveAutoDelete;
     final timeLapse = await SweetSecurePreferences.nextDeleteDate;
