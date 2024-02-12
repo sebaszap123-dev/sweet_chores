@@ -71,7 +71,7 @@ class TodoHelper implements TodoRepository {
           .delete(DatabaseNotes.tbNotes, where: 'isDone = ?', whereArgs: [1]);
       return resp != 0;
     } catch (e) {
-      print('$e');
+      // print('$e');
       return false;
     }
   }

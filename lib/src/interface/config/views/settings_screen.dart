@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
-import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
 import 'package:sweet_chores/src/core/utils/checker_wifi.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
