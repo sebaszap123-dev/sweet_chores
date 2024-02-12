@@ -212,4 +212,27 @@ abstract class SweetDialogs {
       return resp.isTapConfirmButton;
     }
   }
+
+  static Future<bool> showLogoutWarning() async {
+    final ArtDialogResponse? resp = await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+        type: ArtSweetAlertType.warning,
+        title: 'Logout Warning',
+        confirmButtonText: 'Logout',
+        cancelButtonText: 'Cancel',
+        text:
+            'Logging out will discard any unsaved chores in you drive backup. Are you sure you want to proceed?',
+        showCancelBtn: true,
+      ),
+    );
+
+    if (resp == null || !resp.isTapConfirmButton) {
+      // El usuario cancela la acción o cierra la alerta
+      return false;
+    } else {
+      // El usuario confirma la acción
+      return true;
+    }
+  }
 }

@@ -27,9 +27,16 @@ abstract class FirebaseAuthService {
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
         final hasUser = userCredential.user != null;
+        if (hasUser) {
+          // * TODO-FEATURE: HANDLE PREMIUM DATA
+          getIt<FirebaseAuthBloc>().add(AuthLoginEvent(
+              user: userCredential.user!,
+              premium: false,
+              isNew: userCredential.additionalUserInfo?.isNewUser ?? false));
+        }
         if (hasUser &&
             userCredential.additionalUserInfo != null &&
-            userCredential.additionalUserInfo!.isNewUser) {
+            !userCredential.additionalUserInfo!.isNewUser) {
           final token = googleSignInAuthentication.accessToken;
           if (token != null) {
             await Future.delayed(const Duration(milliseconds: 200));
@@ -235,9 +242,12 @@ abstract class FirebaseAuthService {
 
   static Future<void> signOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
-      getIt<DatabaseManagerCubit>().onLogOut();
-      await _googleSignIn.signOut();
+      final accepted = await SweetDialogs.showLogoutWarning();
+      if (accepted) {
+        await FirebaseAuth.instance.signOut();
+        getIt<DatabaseManagerCubit>().onLogOut();
+        await _googleSignIn.signOut();
+      }
     } catch (e) {
       SweetDialogs.unhandleErros(error: '$e');
     }

@@ -18,7 +18,15 @@ class FirebaseAuthBloc extends Bloc<FirebaseAuthEvent, FirebaseState> {
     on<AuthDeleteAccount>(_deleteAccoutEvent);
   }
   void _authLoginEvent(AuthLoginEvent event, Emitter<FirebaseState> emit) {
-    emit(FirebaseAuthState(userFirebase: event.user, premium: event.premium));
+    if (state is FirebaseAuthState && event.isRouting) {
+      return;
+    } else {
+      emit(FirebaseAuthState(
+        userFirebase: event.user,
+        premium: event.premium,
+        isNew: event.isNew,
+      ));
+    }
   }
 
   void _authLogoutEvent(AuthLogOut event, Emitter<FirebaseState> emit) {

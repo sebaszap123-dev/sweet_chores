@@ -21,10 +21,12 @@ class FirebaseNoAuthState extends FirebaseState {
 class FirebaseAuthState extends FirebaseState {
   final User userFirebase;
   final bool premium;
+  final bool isNew;
   final GoogleDriveClient? clientDrive;
 
   const FirebaseAuthState({
     required this.userFirebase,
+    required this.isNew,
     this.premium = false,
     this.clientDrive,
     FirebaseStatus status = FirebaseStatus
@@ -34,15 +36,16 @@ class FirebaseAuthState extends FirebaseState {
   FirebaseAuthState copyWith({
     User? userFirebase,
     bool? premium,
+    bool? isNew,
     GoogleDriveClient? clientDrive,
     FirebaseStatus? status,
   }) {
     return FirebaseAuthState(
-      userFirebase: userFirebase ?? this.userFirebase,
-      premium: premium ?? this.premium,
-      clientDrive: clientDrive ?? this.clientDrive,
-      status: status ?? this.status,
-    );
+        userFirebase: userFirebase ?? this.userFirebase,
+        premium: premium ?? this.premium,
+        clientDrive: clientDrive ?? this.clientDrive,
+        status: status ?? this.status,
+        isNew: isNew ?? this.isNew);
   }
 
   @override

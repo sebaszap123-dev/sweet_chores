@@ -10,8 +10,13 @@ sealed class FirebaseAuthEvent extends Equatable {
 class AuthLoginEvent extends FirebaseAuthEvent {
   final User user;
   final bool premium;
-
-  const AuthLoginEvent({required this.user, required this.premium});
+  final bool isNew;
+  final bool isRouting;
+  const AuthLoginEvent(
+      {required this.user,
+      required this.premium,
+      required this.isNew,
+      this.isRouting = false});
 }
 
 class AuthLogOut extends FirebaseAuthEvent {}

@@ -51,15 +51,6 @@ class FilterDialogState extends State<FilterDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(selectedFilter);
-          },
-          child: Text(
-            'Apply',
-            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
             Navigator.of(context).pop();
           },
           child: const Text(
@@ -73,6 +64,7 @@ class FilterDialogState extends State<FilterDialog> {
 
   Widget _buildFilterRadio(FilterStatus filter, String label, IconData icon) {
     return RadioListTile<FilterStatus>(
+      enableFeedback: true,
       title: Row(
         children: [
           Icon(
@@ -93,6 +85,8 @@ class FilterDialogState extends State<FilterDialog> {
         setState(() {
           selectedFilter = value!;
         });
+        Future.delayed(const Duration(milliseconds: 300));
+        Navigator.of(context).pop(selectedFilter);
       },
     );
   }
