@@ -27,11 +27,11 @@ abstract class SweetSecurePreferences {
   /// CONSTANT KEY autodeleteTask time
   static const String _deleteDays = 'sweet_delete_notes_days';
 
-  /// status if firstOpen or not
-  static final String _initialStatus = GlobalStatusApp.firstOpen.name;
-
   /// Next backup date
   static const String _nextBackupDate = 'sweet_firebase_backup';
+
+  /// status if firstOpen or not
+  static final String _initialStatus = GlobalStatusApp.firstOpen.name;
 
   // ? GETTERS
 
@@ -45,6 +45,17 @@ abstract class SweetSecurePreferences {
     return const AndroidOptions(
       encryptedSharedPreferences: true,
     );
+  }
+
+  /// Resets all key values to null
+  static Future<void> resetAllKeys() async {
+    await _storage.delete(key: _themeKey);
+    await _storage.delete(key: _statusKey);
+    await _storage.delete(key: _darkmodeKey);
+    await _storage.delete(key: _autoTaskKey);
+    await _storage.delete(key: _autoTime);
+    await _storage.delete(key: _deleteDays);
+    await _storage.delete(key: _nextBackupDate);
   }
 
   static Future<DateTime?> get nextBackupDate async {

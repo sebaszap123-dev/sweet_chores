@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive3;
+import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/remote/drive_google_client.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
@@ -244,9 +245,10 @@ abstract class FirebaseAuthService {
     try {
       final accepted = await SweetDialogs.showLogoutWarning();
       if (accepted) {
+        _googleSignIn.signOut();
         await FirebaseAuth.instance.signOut();
         getIt<DatabaseManagerCubit>().onLogOut();
-        await _googleSignIn.signOut();
+        SweetSecurePreferences.resetAllKeys();
       }
     } catch (e) {
       SweetDialogs.unhandleErros(error: '$e');

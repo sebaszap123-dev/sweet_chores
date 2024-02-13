@@ -142,34 +142,28 @@ abstract class SweetDialogs {
       context: context!,
       artDialogArgs: ArtDialogArgs(
         customColumns: [
-          Column(
-            children: [
-              Text(
-                nextDate == null
-                    ? 'Yuju! You want to activate you backup'
-                    : 'Hey you already have a backup made. You need to wait till ${nextDate.toIso8601String()}',
-                textAlign: TextAlign.justify,
-                style: Theme.of(context!)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Theme.of(context!).colorScheme.tertiary),
-              ),
-              Positioned(
-                child: Image.asset(
-                  width: 200,
-                  height: 200,
-                  ImageConstant.noTasks,
-                ),
-              ),
-              if (nextDate == null)
-                const Text(
-                  "Activate cloud backup for instant and monthly backups. This minimizes app disruptions and ensures an ad-free basic version. Your understanding is appreciated; we prioritize your experience!",
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(color: Colors.black),
-                ),
-              const SizedBox(height: 10)
-            ],
+          Text(
+            nextDate == null
+                ? 'Yuju! You want to activate you backup'
+                : 'Hey you already have a backup made. You need to wait till ${nextDate.toIso8601String()}',
+            textAlign: TextAlign.justify,
+            style: Theme.of(context!)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: Theme.of(context!).colorScheme.tertiary),
           ),
+          Image.asset(
+            width: 200,
+            height: 200,
+            ImageConstant.noTasks,
+          ),
+          if (nextDate == null)
+            const Text(
+              "Activate cloud backup for instant and monthly backups. This minimizes app disruptions and ensures an ad-free basic version. Your understanding is appreciated; we prioritize your experience!",
+              textAlign: TextAlign.justify,
+              style: TextStyle(color: Colors.black),
+            ),
+          const SizedBox(height: 10)
         ],
         confirmButtonText: nextDate == null ? 'Confirm' : 'Okay :c',
         showCancelBtn: nextDate == null,
