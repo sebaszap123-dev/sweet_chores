@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
@@ -178,13 +179,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                               style: CustomTextStyles
                                                   .bodyMedium13_1),
                                           Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 41.h),
-                                              // TODO: SEND TO SUPPORT CENTER
-                                              child: Text(
-                                                  "lbl_support_center".tr,
-                                                  style: CustomTextStyles
-                                                      .bodyMedium13_1))
+                                            padding:
+                                                EdgeInsets.only(left: 41.h),
+                                            child: TextButton(
+                                                onPressed: SweetDialogs
+                                                    .sendSupportEmail,
+                                                child: Text(
+                                                    "lbl_support_center".tr,
+                                                    style: CustomTextStyles
+                                                        .bodyMedium13_1)),
+                                          ),
                                         ]))),
                             SizedBox(height: 68.v),
                             SizedBox(

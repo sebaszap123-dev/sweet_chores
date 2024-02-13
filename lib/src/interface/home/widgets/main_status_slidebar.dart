@@ -129,13 +129,12 @@ class _MainStatusSlideBarState extends State<MainStatusSlideBar> {
         //   leading: Icon(Icons.star_outline),
         //   title: Text('Premium'),
         // ),
-        // TODO: SEND TO SUPPORT CENTER
         ListTile(
-          onTap: () {},
+          onTap: () => getIt<SweetRouterCubit>().state.push(const HelpLayout()),
           contentPadding: const EdgeInsets.symmetric(horizontal: 8),
           minLeadingWidth: minLeadingWidth,
-          leading: const Icon(Icons.message_outlined),
-          title: const Text('Contac us'),
+          leading: const Icon(Icons.support_outlined),
+          title: const Text('Support Center'),
         ),
         ListTile(
           onTap: () => FirebaseAuthService.signOut(),

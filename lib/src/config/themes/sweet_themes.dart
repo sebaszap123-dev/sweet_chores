@@ -25,6 +25,7 @@ ColorScheme colorSchemeFromThemeColors(SweetThemeColors themeColors) {
       primary: themeColors.primary,
       secondary: themeColors.secondary,
       tertiary: themeColors.tertiary,
+      background: Colors.white,
     );
   }
 }
@@ -68,13 +69,13 @@ mixin SweetThemes implements ThemeData {
         }),
       ),
       iconTheme: IconThemeData(
-        color: themeColors.primary,
+        color: themeColors.secondary,
       ),
       iconButtonTheme: IconButtonThemeData(style: ButtonStyle(
         iconColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
           if (states.contains(MaterialState.selected)) {
-            return themeColors.primary;
+            return themeColors.secondary;
           }
           return Colors.white;
         }),

@@ -18,6 +18,10 @@ class SweetChoresRouter extends $SweetChoresRouter {
         AutoRoute(page: SplashLayout.page, initial: true),
         AutoRoute(page: LoadingRoute.page),
         AutoRoute(page: StartedRoute.page),
+        AutoRoute(page: HelpLayout.page, children: [
+          AutoRoute(page: FAQRoute.page),
+          AutoRoute(page: AboutUsRoute.page),
+        ]),
         AutoRoute(page: HomeRoute.page, guards: [AuthGuard()]),
         AutoRoute(page: AuthLayout.page, children: [
           AutoRoute(page: LoginRoute.page),
@@ -79,6 +83,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
 
   void backPage() => state.pop();
 
-  void popDialogs({bool? value}) =>
-      Navigator.of(state.navigatorKey.currentContext!).pop(value);
+  void popDialogs({bool? value}) => state.navigatorKey.currentContext != null
+      ? Navigator.of(state.navigatorKey.currentContext!).pop(value)
+      : state.pop();
 }

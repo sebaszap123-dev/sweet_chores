@@ -1,5 +1,6 @@
 import 'package:art_sweetalert/art_sweetalert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.gr.dart';
@@ -37,6 +38,59 @@ abstract class SweetDialogs {
           getIt<SweetRouterCubit>().goHome();
         },
       ),
+    );
+  }
+
+  static void sendSupportEmail() async {
+    final TextEditingController messageSupport = TextEditingController();
+    final TextEditingController emailComunication = TextEditingController();
+    await ArtSweetAlert.show(
+      context: context!,
+      artDialogArgs: ArtDialogArgs(
+          type: ArtSweetAlertType.info,
+          title: 'Support center',
+          customColumns: [
+            const Text(
+                'Please provide more information about yourself and an email address for communication.'),
+            TextField(
+              controller: emailComunication,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: 'Email for communication.',
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+              ),
+              maxLines: 1,
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              keyboardType: TextInputType.multiline,
+              controller: messageSupport,
+              decoration: const InputDecoration(
+                labelText: 'Describe your situation',
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+              ),
+            ),
+          ],
+          onConfirm: () async {
+            if (messageSupport.text.isNotEmpty &&
+                emailComunication.text.isNotEmpty) {
+              final Email email = Email(
+                body: messageSupport.text,
+                subject: 'EMAIL FORGOTTEN',
+                recipients: ['sebaszap123@gmail.com'],
+                cc: [emailComunication.text],
+              );
+
+              await FlutterEmailSender.send(email);
+              getIt<SweetRouterCubit>().popDialogs();
+            }
+          }),
     );
   }
 
