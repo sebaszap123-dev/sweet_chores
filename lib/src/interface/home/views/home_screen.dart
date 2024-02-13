@@ -25,6 +25,9 @@ class HomeScreen extends StatelessWidget {
           return state;
         },
         builder: (context, state) {
+          if (state.todoStatus == TodoStatus.loading) {
+            return const Loading();
+          }
           return TodoCardList(
             todos: state.currentTodos,
             isEmpty: state.currentTodos.isEmpty,
