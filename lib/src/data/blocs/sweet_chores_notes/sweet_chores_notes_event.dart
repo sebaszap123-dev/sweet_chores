@@ -9,6 +9,12 @@ sealed class SweetChoresNotesEvent extends Equatable {
 
 class StartedChoresEvent extends SweetChoresNotesEvent {}
 
+class RestoreChoresEvent extends SweetChoresNotesEvent {
+  final List<Todo> todos;
+  final List<Categories> categories;
+  const RestoreChoresEvent(this.todos, this.categories);
+}
+
 // * ChoresEvents
 
 class AddChoresEvent extends SweetChoresNotesEvent {

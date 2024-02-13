@@ -77,7 +77,9 @@ class SweetChoresNotesState extends Equatable {
           todos.where((element) => caIds.contains(element.categoryID)).toList();
       switch (filterStatus) {
         case FilterTime.all:
-          return [...filteredByCategory];
+          final undoneTodos =
+              filteredByCategory.where((element) => !element.isDone);
+          return [...undoneTodos];
         case FilterTime.today:
           final todayTodos = _filterAndSortByDueDate(
             todos: todos,

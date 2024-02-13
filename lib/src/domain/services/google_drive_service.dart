@@ -38,9 +38,9 @@ abstract class GoogleDriveService {
       if (client != null) {
         final todos = await TodoHelper().getAllTodos();
         final ca = await CategoriesService().getAllCategory();
-        final rawJson = todos.map((e) => e.toRawJson()).toList().toString();
-        final rawCategories = ca.map((e) => e.toRawJson()).toList().toString();
-        final Map<String, String> map = {
+        final rawJson = todos.map((e) => e.toRawJson()).toList();
+        final rawCategories = ca.map((e) => e.toRawJson()).toList();
+        final Map<String, dynamic> map = {
           DatabaseNotes.tbNotes: rawJson,
           DatabaseNotes.tbCategories: rawCategories
         };

@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/core/utils/helpers.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/domain/domain.dart';
 import 'package:sweet_chores/src/models/models.dart';
 
@@ -13,6 +15,7 @@ class SweetChoresNotesBloc
     extends Bloc<SweetChoresNotesEvent, SweetChoresNotesState> {
   SweetChoresNotesBloc() : super(SweetChoresNotesState()) {
     on<StartedChoresEvent>(_onStarted);
+    on<RestoreChoresEvent>(_onRestore);
     on<AddChoresEvent>(_onAddTodo);
     on<DateChoresEvent>(_onSaveRawDate);
     on<RemoveChoresEvent>(_onRemoveTodo);
@@ -26,7 +29,6 @@ class SweetChoresNotesBloc
   }
   _onStarted(_, Emitter<SweetChoresNotesState> emit) async {
     emit(state.copyWith(status: NotesStatus.loading));
-    if (state.status == NotesStatus.success) return;
     try {
       final deleteTasks = await SweetSecurePreferences.isActiveAutoDelete;
       if (deleteTasks) {
@@ -38,7 +40,12 @@ class SweetChoresNotesBloc
       }
 
       final todoList = await state.todoServices.getAllTodos();
-      final categories = await state.categoryService.getAllCategory();
+      List<Categories> categories =
+          await state.categoryService.getAllCategory();
+      if (categories.isEmpty) {
+        await getIt<DatabaseManagerCubit>().toDefaults();
+        categories = await state.categoryService.getAllCategory();
+      }
       emit(state.copyWith(
         todos: todoList,
         categories: categories,
@@ -49,6 +56,20 @@ class SweetChoresNotesBloc
     } catch (e) {
       SweetDialogs.unhandleErros(error: '$e');
     }
+  }
+
+  _onRestore(
+      RestoreChoresEvent event, Emitter<SweetChoresNotesState> emit) async {
+    emit(state.copyWith(
+        todoStatus: TodoStatus.loading,
+        categoryStatus: CategoryStatus.loading));
+    emit(state.copyWith(
+      status: NotesStatus.success,
+      todos: event.todos,
+      categories: event.categories,
+      todoStatus: TodoStatus.success,
+      categoryStatus: CategoryStatus.success,
+    ));
   }
 
   _onAddTodo(AddChoresEvent event, Emitter<SweetChoresNotesState> emit) async {

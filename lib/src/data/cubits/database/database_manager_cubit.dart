@@ -5,6 +5,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sweet_chores/src/config/local/database_notes.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/themes/theme_colors.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
+import 'package:sweet_chores/src/data/data_source.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/models/models.dart';
 import 'dart:convert' as convert;
 
@@ -112,57 +115,62 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
   }
 
   Future<void> toDefaults() async {
-    final dbs = db;
-    final batch = dbs.batch();
-    batch.delete(DatabaseNotes.tbNotes);
-    batch.delete(DatabaseNotes.tbCategories);
+    await db.delete(DatabaseNotes.tbNotes);
+    await db.delete(DatabaseNotes.tbCategories);
     final category = Categories(
       name: DatabaseNotes.defaultCategory,
       color: sweetIconColors[0],
       iconData: Icons.category_sharp,
     );
-    batch.insert(
+    await db.insert(
       DatabaseNotes.tbCategories,
       category.toJson(),
     );
-
-    await batch.commit();
-    // TODO: FORCE RELOAD OF DATA IN SweetChoresNotesBloc
-    // getIt<CategoriesBloc>().add(const CategoryStarted(forceReload: true));
   }
 
   Future<bool> restoreBackup(String backup) async {
     try {
       final dbs = db;
       final batch = dbs.batch();
+      backup;
       List<Todo> todos = [];
       List<Categories> categories = [];
+      // Decodificar el backup JSON
+      final Map<String, dynamic> backupData = convert.jsonDecode(backup);
+      backupData.forEach((key, value) {
+        // Comprueba si la clave es igual a la clave de notas de la base de datos
+        if (key == DatabaseNotes.tbNotes) {
+          // Si es así, convierte el valor JSON a un objeto Todo
+          for (var todo in value) {
+            todos.add(Todo.fromRawJson(todo));
+          }
+        } else {
+          for (var ca in value) {
+            categories.add(Categories.fromRawJson(ca));
+          }
+        }
+      });
       // Eliminar todos los registros existentes
       batch.delete(DatabaseNotes.tbCategories);
       batch.delete(DatabaseNotes.tbNotes);
 
       await batch.commit();
-
-      // Decodificar el backup JSON
-      final Map<String, dynamic> backupData = convert.jsonDecode(backup);
-
       // Insertar los nuevos registros
-      backupData.forEach((tableName, tableRecords) {
-        final data = convert.jsonDecode(tableRecords);
-        for (final record in data) {
-          batch.insert(tableName, record);
-          if (tableName == DatabaseNotes.tbNotes) {
-            todos.add(Todo.fromJson(record));
-          } else {
-            categories.add(Categories.fromJson(record));
-          }
+      if (todos.isNotEmpty) {
+        for (var todo in todos) {
+          batch.insert(DatabaseNotes.tbNotes, todo.toJson());
         }
-      });
-      // TODO: restore from SweetChoresNotesBloc
-      // getIt<SweetChoresNotesBloc>().add(RestoreTodos(todos: todos));
+      }
+      if (categories.isNotEmpty) {
+        for (var ca in categories) {
+          batch.insert(DatabaseNotes.tbCategories, ca.toJson());
+        }
+      }
       await batch.commit(continueOnError: false, noResult: true);
+      getIt<SweetChoresNotesBloc>().add(RestoreChoresEvent(todos, categories));
       return true;
     } catch (e) {
+      SweetDialogs.databaseSqlite(error: '$e');
       return false;
     }
   }

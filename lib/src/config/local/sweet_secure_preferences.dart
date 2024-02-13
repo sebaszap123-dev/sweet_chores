@@ -26,6 +26,7 @@ abstract class SweetSecurePreferences {
 
   /// CONSTANT KEY autodeleteTask time
   static const String _deleteDays = 'sweet_delete_notes_days';
+  // TODO-FEATURE: MEJORAR ESTA LOGICA YA QUE ASÍ NO SE SABE SI YA HAY UN NEXT DATE
 
   /// Next backup date
   static const String _nextBackupDate = 'sweet_firebase_backup';
