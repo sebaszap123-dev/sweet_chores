@@ -5,8 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sweet_chores/src/config/local/database_notes.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/themes/theme_colors.dart';
-import 'package:sweet_chores/src/data/data_source.dart';
-import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/models/models.dart';
 import 'dart:convert' as convert;
 
@@ -105,7 +103,9 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   Future<void> onLogOut() async {
     final dbs = db;
+
     final batch = dbs.batch();
+
     batch.delete(DatabaseNotes.tbNotes);
     batch.delete(DatabaseNotes.tbCategories);
     await batch.commit();

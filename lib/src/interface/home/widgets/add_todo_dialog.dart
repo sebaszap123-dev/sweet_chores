@@ -66,6 +66,7 @@ class AddTodoDialogState extends State<AddTodoDialog> {
       setState(() {
         selectedTime = picked;
       });
+      getIt<SweetChoresNotesBloc>().add(const DateChoresEvent(true));
     }
   }
 
@@ -227,11 +228,12 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                       'Before proceeding, please make sure to add a category for your entry.',
                   title: 'Oops! Looks like something is missing.');
             } else {
+              final date = myDateTime(date: selectedDate, time: selectedTime);
               final newTodo = Todo(
                 title: titleController.text,
                 categoryID: currentCategory!.id,
                 description: descriptionController.text,
-                dueDate: selectedDate?.millisecondsSinceEpoch,
+                dueDate: date?.millisecondsSinceEpoch,
                 hasTime: selectedTime != null,
               );
               getIt<SweetRouterCubit>().state.pop(newTodo);
@@ -241,6 +243,19 @@ class AddTodoDialogState extends State<AddTodoDialog> {
         ),
       ],
     );
+  }
+}
+
+DateTime? myDateTime({DateTime? date, TimeOfDay? time}) {
+  if (date != null && time != null) {
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
+  } else if (date != null && time == null) {
+    return date;
+  } else if (time != null && date == null) {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day, time.hour, time.minute);
+  } else {
+    return null;
   }
 }
 

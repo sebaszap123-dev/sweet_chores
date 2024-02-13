@@ -169,11 +169,11 @@ abstract class SweetDialogs {
         showCancelBtn: nextDate == null,
       ),
     );
-    final newDate = DateTime.timestamp().add(const Duration(days: 30));
+    final newDate = DateTime.now().add(const Duration(days: 30));
     if (resp != null &&
         resp.isTapConfirmButton &&
         nextDate != null &&
-        nextDate.isBefore(DateTime.timestamp())) {
+        nextDate.isBefore(DateTime.now())) {
       await SweetSecurePreferences.updateBackupDate(
           date: newDate.toIso8601String());
       return true;

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/models/models.dart';
 
 class EditChoresDialog extends StatefulWidget {
@@ -58,6 +59,7 @@ class EditChoresDialogState extends State<EditChoresDialog> {
       setState(() {
         selectedTime = picked;
       });
+      getIt<SweetChoresNotesBloc>().add(const DateChoresEvent(true));
     }
   }
 
@@ -142,15 +144,8 @@ class EditChoresDialogState extends State<EditChoresDialog> {
               description: descriptionController.text.isNotEmpty
                   ? descriptionController.text
                   : widget.todo.description,
-              dueDate: selectedDate != null
-                  ? DateTime(
-                          selectedDate!.year,
-                          selectedDate!.month,
-                          selectedDate!.day,
-                          selectedTime?.hour ?? 0,
-                          selectedTime?.minute ?? 0)
-                      .millisecondsSinceEpoch
-                  : null,
+              dueDate: myDateTime(date: selectedDate, time: selectedTime)
+                  ?.millisecondsSinceEpoch,
               hasTime: selectedTime != null,
             );
             Navigator.of(context).pop(editedTodo);
@@ -159,6 +154,19 @@ class EditChoresDialogState extends State<EditChoresDialog> {
         ),
       ],
     );
+  }
+}
+
+DateTime? myDateTime({DateTime? date, TimeOfDay? time}) {
+  if (date != null && time != null) {
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
+  } else if (date != null && time == null) {
+    return date;
+  } else if (time != null && date == null) {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day, time.hour, time.minute);
+  } else {
+    return null;
   }
 }
 

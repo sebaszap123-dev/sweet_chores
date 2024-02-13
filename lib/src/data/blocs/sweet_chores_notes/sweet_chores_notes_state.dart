@@ -63,11 +63,12 @@ class SweetChoresNotesState extends Equatable {
         categoryStatus,
         filterStatus,
         categories,
-        activeCategories
+        activeCategories,
+        dateStatus,
+        status
       ];
-  // TODO: IMPLEMENT
   List<Todo> get currentTodos {
-    final now = DateTime.timestamp();
+    final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day, 0, 0, 0);
     final todayEnd = DateTime(now.year, now.month, now.day, 23, 59, 0);
     if (activeCategories.isNotEmpty) {
@@ -121,7 +122,7 @@ class SweetChoresNotesState extends Equatable {
   }
 
   List<Categories> get activeCategories {
-    final acCategories = categories.where((ca) => ca.isActive).toList();
+    final acCategories = categories.where((ca) => ca.isActive == true).toList();
     return [...acCategories];
   }
 

@@ -24,7 +24,6 @@ class SweetChoresNotesBloc
     on<RemoveCategoryEvent>(_removeCategoryEvent);
     on<FilterTimeEvent>(_filterTimeEvent);
   }
-  // TODO: AGREGAR TODOS Y CATEGORIES
   _onStarted(_, Emitter<SweetChoresNotesState> emit) async {
     emit(state.copyWith(status: NotesStatus.loading));
     if (state.status == NotesStatus.success) return;
@@ -32,7 +31,7 @@ class SweetChoresNotesBloc
       final deleteTasks = await SweetSecurePreferences.isActiveAutoDelete;
       if (deleteTasks) {
         final date = await SweetSecurePreferences.nextDeleteDate;
-        final now = DateTime.timestamp();
+        final now = DateTime.now();
         if (date != null && (date.isSameDay(now) || !now.isBefore(date))) {
           state.todoServices.deleteDonesTodos();
         }
@@ -126,9 +125,6 @@ class SweetChoresNotesBloc
     DateChoresEvent event,
     Emitter<SweetChoresNotesState> emit,
   ) {
-    if (state.dateStatus == DateStatus.time) {
-      return;
-    }
     if (event.hasTime) {
       emit(state.copyWith(
         dateStatus: DateStatus.time,
@@ -207,7 +203,7 @@ class SweetChoresNotesBloc
           temp.indexWhere((category) => category.id == event.category.id);
 
       if (index != -1) {
-        temp[index].isActive = !temp[index].isActive;
+        temp[index] = event.category;
         final actives = temp.where((e) => e.isActive).toList();
 
         if (actives.isEmpty) {

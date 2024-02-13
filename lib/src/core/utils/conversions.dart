@@ -10,7 +10,7 @@ bool isOverDue(Todo todo) {
 
 String dateFormatted(DateTime date, TimeDates timeDates,
     {bool hasTime = false}) {
-  final now = DateTime.timestamp();
+  final now = DateTime.now();
   if (TimeDates.none == timeDates) {
     return '${_getWeekDay(date.weekday)}, ${date.day} ${_getMonth(date.month)}, ${now.year == date.year ? '' : '${date.year}'}${hasTime ? ', ${timeFormatted(date)}' : ''}';
   } else {

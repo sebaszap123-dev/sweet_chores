@@ -140,10 +140,8 @@ abstract class FirebaseAuthService {
     }
   }
 
-  static Future<void> _extraActionsLogin() async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    getIt<DatabaseManagerCubit>().toDefaults();
-  }
+  static void _extraActionsLogin() =>
+      getIt<DatabaseManagerCubit>().toDefaults();
 
   static Future<void> sendResetPassword({required String email}) async {
     try {
