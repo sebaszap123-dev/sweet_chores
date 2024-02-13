@@ -10,7 +10,8 @@ class ProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final grayly = Theme.of(context).colorScheme.tertiary;
     return BlocBuilder<FirebaseAuthBloc, FirebaseState>(
       builder: (context, state) {
         if (state is FirebaseAuthState) {
@@ -18,7 +19,7 @@ class ProfileWidget extends StatelessWidget {
               margin: EdgeInsets.zero,
               shape:
                   const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-              color: Theme.of(context).colorScheme.primary,
+              color: primaryColor,
               child: Padding(
                 padding: EdgeInsets.only(top: statusBarHeight),
                 child: ListTile(
@@ -41,13 +42,9 @@ class ProfileWidget extends StatelessWidget {
                           color: Colors.white,
                         )),
                   title: Text(
-                    state.userFirebase.displayName ?? 'Cinnamon',
+                    state.userFirebase.displayName ?? 'Kammon',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: context
-                              .watch<SweetPreferencesBloc>()
-                              .state
-                              .themeColors
-                              .grayly,
+                          color: grayly,
                           fontWeight: FontWeight.bold,
                         ),
                   ),

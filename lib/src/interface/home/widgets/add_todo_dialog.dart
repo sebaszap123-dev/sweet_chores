@@ -80,7 +80,11 @@ class AddTodoDialogState extends State<AddTodoDialog> {
           Text(
             'Add chore',
             style: GoogleFonts.spicyRice().copyWith(
-              color: getIt<SweetPreferencesBloc>().state.themeColors.primary,
+              color: context
+                  .read<SweetPreferencesBloc>()
+                  .state
+                  .themeColors
+                  .primary,
               fontSize: 28,
             ),
           ),
@@ -151,7 +155,8 @@ class AddTodoDialogState extends State<AddTodoDialog> {
               const SizedBox(height: 5),
               Text('Select your list',
                   style: GoogleFonts.roboto().copyWith(
-                    color: getIt<SweetPreferencesBloc>()
+                    color: context
+                        .read<SweetPreferencesBloc>()
                         .state
                         .themeColors
                         .secondary,

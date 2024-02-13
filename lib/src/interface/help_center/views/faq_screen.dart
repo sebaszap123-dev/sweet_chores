@@ -138,7 +138,7 @@ class ContactUsWidget extends StatelessWidget {
             //     size: 45,
             //   ),
             //   onPressed: () {
-            //     // TODO: Handle WhatsApp contact
+            //     // TODO-FEATURE: Handle WhatsApp contact
             //   },
             // ),
             // IconButton(
@@ -148,7 +148,7 @@ class ContactUsWidget extends StatelessWidget {
             //     size: 45,
             //   ),
             //   onPressed: () {
-            //     // TODO: Handle Telegram contact
+            //     // TODO-FEATURE: Handle Telegram contact
             //   },
             // ),
             IconButton(
