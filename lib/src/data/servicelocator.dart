@@ -16,6 +16,5 @@ Future<void> serviceLocator() async {
   getIt.registerSingleton(SweetRouterCubit(router));
   getIt.registerSingleton(FirebaseAuthBloc());
   getIt.registerSingleton(dbManager);
-  getIt.registerSingleton(TodoBloc());
-  getIt.registerSingleton(CategoriesBloc());
+  getIt.registerSingleton(SweetChoresNotesBloc());
 }

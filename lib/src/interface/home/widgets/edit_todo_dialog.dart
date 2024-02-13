@@ -5,16 +5,16 @@ import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/blocs/blocs.dart';
 import 'package:sweet_chores/src/models/models.dart';
 
-class EditTodoDialog extends StatefulWidget {
+class EditChoresDialog extends StatefulWidget {
   final Todo todo;
 
-  const EditTodoDialog({Key? key, required this.todo}) : super(key: key);
+  const EditChoresDialog({Key? key, required this.todo}) : super(key: key);
 
   @override
-  EditTodoDialogState createState() => EditTodoDialogState();
+  EditChoresDialogState createState() => EditChoresDialogState();
 }
 
-class EditTodoDialogState extends State<EditTodoDialog> {
+class EditChoresDialogState extends State<EditChoresDialog> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
   DateTime? selectedDate;
@@ -169,11 +169,11 @@ Future<void> showEditTodoDialog(BuildContext context,
     useSafeArea: true,
     context: context,
     builder: (context) {
-      return EditTodoDialog(todo: todo);
+      return EditChoresDialog(todo: todo);
     },
   );
   if (resp != null) {
     // ignore: use_build_context_synchronously
-    context.read<TodoBloc>().add(EditTodo(resp));
+    context.read<SweetChoresNotesBloc>().add(EditChoresEvent(resp));
   }
 }

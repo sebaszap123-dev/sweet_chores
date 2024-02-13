@@ -15,8 +15,8 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
   double get sizeIcons => 30;
   @override
   Widget build(BuildContext context) {
-    final FilterStatus statusFilter =
-        context.watch<TodoBloc>().state.filterStatus;
+    final FilterTime statusFilter =
+        context.watch<SweetChoresNotesBloc>().state.filterStatus;
     return AppBar(
       shadowColor: null,
       leading: IconButton(

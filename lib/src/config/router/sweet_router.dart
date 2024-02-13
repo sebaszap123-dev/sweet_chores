@@ -69,8 +69,7 @@ class SweetRouterCubit extends Cubit<SweetChoresRouter> {
           AuthLoginEvent(
               user: event, premium: false, isNew: firstTime, isRouting: true),
         );
-        getIt<TodoBloc>().add(TodoStarted());
-        getIt<CategoriesBloc>().add(const CategoryStarted());
+        getIt<SweetChoresNotesBloc>().add(StartedChoresEvent());
         state.replace(const HomeRoute());
       }
     });

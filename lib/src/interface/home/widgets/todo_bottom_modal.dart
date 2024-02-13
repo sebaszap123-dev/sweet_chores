@@ -27,14 +27,14 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
   }
 
   void _addTodo(Todo todo) {
-    context.read<TodoBloc>().add(AddTodo(todo));
+    context.read<SweetChoresNotesBloc>().add(AddChoresEvent(todo));
   }
 
   final EdgeInsets paddingFields = const EdgeInsets.symmetric(vertical: 10);
 
   @override
   Widget build(BuildContext context) {
-    final categoryBloc = context.watch<CategoriesBloc>();
+    final categoryBloc = context.watch<SweetChoresNotesBloc>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -104,7 +104,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
   }
 
   // TODO-FEATURE-IOS: CHANGE THIS WITH DESIGN FOR IOS
-  Widget _chooseListWidget(CategoriesBloc categoryBloc) {
+  Widget _chooseListWidget(SweetChoresNotesBloc categoryBloc) {
     return ListTile(
       leading: Icon(
         selectedCategory?.iconData ??
@@ -144,7 +144,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
     );
   }
 
-  void _onAdd(CategoriesBloc categoryBloc) {
+  void _onAdd(SweetChoresNotesBloc categoryBloc) {
     if (taskTitleController.text.isEmpty) {
       showDialog(
           context: context,

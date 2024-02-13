@@ -37,7 +37,7 @@ class _CardDateTimePickerState extends State<_CardDateTimePicker> {
   }
 
   _disableTime() {
-    context.read<TodoBloc>().add(const SaveRawDate(false));
+    context.read<SweetChoresNotesBloc>().add(const DateChoresEvent(false));
   }
 
   _updateInnerDateOrTime(DateTime value) {

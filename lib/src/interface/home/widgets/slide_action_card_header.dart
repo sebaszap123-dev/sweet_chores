@@ -22,7 +22,7 @@ class SlideActionCardHeader extends StatelessWidget {
   final int index;
   final Categories category;
   final void Function(Todo) removeTodo;
-  final void Function(int) alterTodo;
+  final void Function(Todo) alterTodo;
   final void Function() editTodo;
   final bool enableDescription;
   final bool isOverDue;
@@ -151,7 +151,7 @@ class SlideActionCardHeader extends StatelessWidget {
                 ),
           trailing: _CheckBox(
             active: todo.isDone,
-            onTap: () => alterTodo(index),
+            onTap: () => alterTodo(todo),
           ),
         ),
       ),

@@ -8,11 +8,11 @@ class FilterDialog extends StatefulWidget {
   @override
   FilterDialogState createState() => FilterDialogState();
 
-  final FilterStatus selectedFilter;
+  final FilterTime selectedFilter;
 }
 
 class FilterDialogState extends State<FilterDialog> {
-  late FilterStatus selectedFilter;
+  late FilterTime selectedFilter;
 
   @override
   void initState() {
@@ -36,15 +36,14 @@ class FilterDialogState extends State<FilterDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildFilterRadio(
-                FilterStatus.all, 'All', Icons.calendar_today), // Agrega icono
-            _buildFilterRadio(FilterStatus.today, 'Today', Icons.today),
+                FilterTime.all, 'All', Icons.calendar_today), // Agrega icono
+            _buildFilterRadio(FilterTime.today, 'Today', Icons.today),
             _buildFilterRadio(
-                FilterStatus.week, 'This week', Icons.calendar_month),
+                FilterTime.week, 'This week', Icons.calendar_month),
+            _buildFilterRadio(FilterTime.month, 'This Month', Icons.date_range),
             _buildFilterRadio(
-                FilterStatus.month, 'This Month', Icons.date_range),
-            _buildFilterRadio(
-                FilterStatus.overDue, 'Overdue', Icons.warning_amber),
-            _buildFilterRadio(FilterStatus.done, 'Done', Icons.check_circle),
+                FilterTime.overDue, 'Overdue', Icons.warning_amber),
+            _buildFilterRadio(FilterTime.done, 'Done', Icons.check_circle),
           ],
         ),
       ),
@@ -62,8 +61,8 @@ class FilterDialogState extends State<FilterDialog> {
     );
   }
 
-  Widget _buildFilterRadio(FilterStatus filter, String label, IconData icon) {
-    return RadioListTile<FilterStatus>(
+  Widget _buildFilterRadio(FilterTime filter, String label, IconData icon) {
+    return RadioListTile<FilterTime>(
       enableFeedback: true,
       title: Row(
         children: [
@@ -93,8 +92,8 @@ class FilterDialogState extends State<FilterDialog> {
 }
 
 void showFilterDialog(BuildContext context,
-    {FilterStatus lastFilter = FilterStatus.all}) async {
-  final FilterStatus? selectedFilter = await showDialog<FilterStatus>(
+    {FilterTime lastFilter = FilterTime.all}) async {
+  final FilterTime? selectedFilter = await showDialog<FilterTime>(
     barrierDismissible: true,
     useSafeArea: true,
     context: context,
@@ -107,6 +106,6 @@ void showFilterDialog(BuildContext context,
 
   if (selectedFilter != null) {
     // ignore: use_build_context_synchronously
-    context.read<TodoBloc>().add(FilterTodos(filterStatus: selectedFilter));
+    context.read<SweetChoresNotesBloc>().add(FilterTimeEvent(selectedFilter));
   }
 }

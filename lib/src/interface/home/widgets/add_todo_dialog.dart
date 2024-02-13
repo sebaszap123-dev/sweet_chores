@@ -31,9 +31,10 @@ class AddTodoDialogState extends State<AddTodoDialog> {
     super.initState();
     titleController = TextEditingController();
     descriptionController = TextEditingController();
-    currentCategory = context.read<CategoriesBloc>().state.categories.isNotEmpty
-        ? context.read<CategoriesBloc>().state.categories.first
-        : null;
+    currentCategory =
+        context.read<SweetChoresNotesBloc>().state.categories.isNotEmpty
+            ? context.read<SweetChoresNotesBloc>().state.categories.first
+            : null;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -156,7 +157,7 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                     fontSize: 18,
                   )),
               const SizedBox(height: 5),
-              BlocBuilder<CategoriesBloc, CategoriesState>(
+              BlocBuilder<SweetChoresNotesBloc, SweetChoresNotesState>(
                 builder: (context, state) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,6 +255,6 @@ Future<void> showAddTodoDialog(BuildContext context) async {
   );
   if (resp != null) {
     // ignore: use_build_context_synchronously
-    context.read<TodoBloc>().add(AddTodo(resp));
+    context.read<SweetChoresNotesBloc>().add(AddChoresEvent(resp));
   }
 }

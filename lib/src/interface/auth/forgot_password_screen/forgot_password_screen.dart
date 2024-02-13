@@ -12,14 +12,28 @@ import 'package:sweet_chores/src/interface/common/common.dart';
 
 enum ForgotStatus { initial, success, code, loading, error }
 
-final TextEditingController emailController = TextEditingController();
-final TextEditingController codeController = TextEditingController();
-final TextEditingController passwordController = TextEditingController();
-final controllerStream = StreamController<ForgotStatus>();
-
 @RoutePage()
-class ForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final controllerStream = StreamController<ForgotStatus>();
+
+  @override
+  void dispose() {
+    codeController.dispose();
+    controllerStream.close();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +180,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                           Padding(
                                               padding:
                                                   EdgeInsets.only(left: 41.h),
+                                              // TODO: SEND TO SUPPORT CENTER
                                               child: Text(
                                                   "lbl_support_center".tr,
                                                   style: CustomTextStyles

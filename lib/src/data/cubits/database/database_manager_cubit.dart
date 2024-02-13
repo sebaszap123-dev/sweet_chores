@@ -127,7 +127,8 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
     );
 
     await batch.commit();
-    getIt<CategoriesBloc>().add(const CategoryStarted(forceReload: true));
+    // TODO: FORCE RELOAD OF DATA IN SweetChoresNotesBloc
+    // getIt<CategoriesBloc>().add(const CategoryStarted(forceReload: true));
   }
 
   Future<bool> restoreBackup(String backup) async {
@@ -157,8 +158,8 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
           }
         }
       });
-      getIt<TodoBloc>().add(RestoreTodos(todos: todos));
-      getIt<CategoriesBloc>().add(RestoreCategoriesBackup(categories));
+      // TODO: restore from SweetChoresNotesBloc
+      // getIt<SweetChoresNotesBloc>().add(RestoreTodos(todos: todos));
       await batch.commit(continueOnError: false, noResult: true);
       return true;
     } catch (e) {

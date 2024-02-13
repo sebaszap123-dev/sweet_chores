@@ -35,14 +35,14 @@ class _CategoriesManagerScreenState extends State<CategoriesManagerScreen> {
 
   _addCategory(Categories category) {
     if (textController.text.isNotEmpty) {
-      context.read<CategoriesBloc>().add(AddCategory(category));
+      context.read<SweetChoresNotesBloc>().add(AddCategoryEvent(category));
       context.router.pop(category);
     }
   }
 
   _alterCategory(Categories category) {
     if (textController.text.isNotEmpty) {
-      context.read<CategoriesBloc>().add(AlterCategory(category));
+      context.read<SweetChoresNotesBloc>().add(AlterCategoryEvent(category));
       context.router.replace(const HomeRoute());
     }
   }

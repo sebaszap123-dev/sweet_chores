@@ -13,36 +13,28 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> homeKey = GlobalKey();
-    final todoList = context.watch<TodoBloc>().state.currentTodos;
-    final filter = context.watch<TodoBloc>().state.filterStatus;
     return Scaffold(
       key: homeKey,
       appBar: MainAppbar(
         openDrawer: () => homeKey.currentState?.openDrawer(),
       ),
       floatingActionButton: const AddTodoButton(),
-      body: TodoCardList(
-        todos: todoList,
-        isEmpty: todoList.isEmpty,
-        status: filter,
-      ),
-      drawer: BlocBuilder<CategoriesBloc, CategoriesState>(
-        builder: (context, state) {
-          if (state.status == CategoriesStatus.success) {
-            return MainStatusSlideBar(
-              myKey: homeKey,
-              greetings: getIt<Greetings>().greeting,
-            );
-          } else if (state.status == CategoriesStatus.error) {
-            return const Drawer(
-              child: Center(
-                child: Text('We trying to fix and error'),
-              ),
-            );
-          } else {
-            return const Drawer(child: Loading());
-          }
+      body: BlocSelector<SweetChoresNotesBloc, SweetChoresNotesState,
+          SweetChoresNotesState>(
+        selector: (state) {
+          return state;
         },
+        builder: (context, state) {
+          return TodoCardList(
+            todos: state.currentTodos,
+            isEmpty: state.currentTodos.isEmpty,
+            status: state.filterStatus,
+          );
+        },
+      ),
+      drawer: MainStatusSlideBar(
+        myKey: homeKey,
+        greetings: getIt<Greetings>().greeting,
       ),
     );
   }

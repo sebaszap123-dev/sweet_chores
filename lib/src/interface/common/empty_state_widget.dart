@@ -19,9 +19,9 @@ const Map<String, String> messages = {
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
     super.key,
-    this.status = FilterStatus.all,
+    this.status = FilterTime.all,
   });
-  final FilterStatus status;
+  final FilterTime status;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FirebaseAuthBloc, FirebaseState>(
