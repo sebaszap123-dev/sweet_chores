@@ -1,4 +1,4 @@
-package com.example.sweet_chores
+package com.starlight.sweet_chores
 
 import io.flutter.embedding.android.FlutterActivity
 

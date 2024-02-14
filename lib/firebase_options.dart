@@ -63,6 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1013481572810',
     projectId: 'sweet-chores-ab84c',
     storageBucket: 'sweet-chores-ab84c.appspot.com',
-    iosBundleId: 'com.example.sweetChores',
+    iosBundleId: 'com.starlight.sweetChores',
   );
 }
