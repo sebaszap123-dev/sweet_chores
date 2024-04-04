@@ -43,7 +43,6 @@ class SweetChoresNotesState extends Equatable {
     CategoryStatus? categoryStatus,
     FilterTime? filterStatus,
     List<Categories>? categories,
-    List<int>? activeCategories,
   }) {
     return SweetChoresNotesState(
       todos: todos ?? this.todos,
@@ -63,7 +62,6 @@ class SweetChoresNotesState extends Equatable {
         categoryStatus,
         filterStatus,
         categories,
-        activeCategories,
         dateStatus,
         status
       ];
@@ -74,7 +72,7 @@ class SweetChoresNotesState extends Equatable {
     if (activeCategories.isNotEmpty) {
       final caIds = activeCategories.map((category) => category.id).toSet();
       final filteredByCategory =
-          todos.where((element) => caIds.contains(element.categoryID)).toList();
+          todos.where((ca) => caIds.contains(ca.categoryID)).toList();
       switch (filterStatus) {
         case FilterTime.all:
           final undoneTodos =
