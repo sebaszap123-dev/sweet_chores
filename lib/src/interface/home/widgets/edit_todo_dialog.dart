@@ -163,7 +163,7 @@ class EditChoresDialogState extends State<EditChoresDialog> {
               style: TextStyle(
                 color: textButtonColor ??
                     context
-                        .read<SweetPreferencesBloc>()
+                        .watch<SweetPreferencesBloc>()
                         .state
                         .themeColors
                         .grayly,

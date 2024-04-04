@@ -43,12 +43,14 @@ class SweetPreferencesBloc
 
   void _onUpdateTheme(
       ChangeThemeEvent event, Emitter<SweetPreferencesState> emit) async {
+    emit(state.copyWith(status: SweetChoresStatus.loading));
     final colors = SweetThemeColors.fromMode(
         state.isDarkMode ? SweetMode.dark : SweetMode.light, event.theme);
     final theme = SweetThemes.sweetThemeData(themeColors: colors);
     await SweetSecurePreferences.toggleTheme(event.theme);
     emit(state.copyWith(
       themeData: theme,
+      themeColors: colors,
       typeTheme: event.theme,
       status: SweetChoresStatus.success,
     ));
