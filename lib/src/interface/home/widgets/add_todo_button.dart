@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/interface/home/widgets/add_todo_dialog.dart';
 import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
 
@@ -12,9 +13,17 @@ class AddTodoButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () => showAddTodoDialog(context),
       backgroundColor: Theme.of(context).colorScheme.primary,
-      child: const Icon(
+      child: Icon(
         Icons.add,
         color: Colors.white,
+        semanticLabel: 'Add Todo',
+        shadows: [
+          Shadow(
+            color: Theme.of(context).colorScheme.secondary,
+            blurRadius: 15,
+            offset: Offset.fromDirection(0, 0),
+          )
+        ],
       ),
     );
   }

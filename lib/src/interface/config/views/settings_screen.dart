@@ -179,8 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           strokeWidth: 4,
           letterSpacing: 2,
           textSize: 30,
-          strokeColor:
-              context.read<SweetPreferencesBloc>().state.themeColors.secondary,
+          strokeColor: Theme.of(context).colorScheme.secondary,
         ),
         centerTitle: true,
       ),
@@ -298,11 +297,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             child: Text(
                               'Upload',
                               style: TextStyle(
-                                  color: context
-                                      .read<SweetPreferencesBloc>()
-                                      .state
-                                      .themeColors
-                                      .secondary),
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
                             ),
                           ),
                         ),
@@ -317,11 +313,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: Text(
                                 'Download',
                                 style: TextStyle(
-                                    color: context
-                                        .read<SweetPreferencesBloc>()
-                                        .state
-                                        .themeColors
-                                        .secondary),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
                               ),
                             )),
                         if (uploadingBackup) const Loading()

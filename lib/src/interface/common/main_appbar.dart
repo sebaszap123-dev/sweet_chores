@@ -22,6 +22,7 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
       shadowColor: null,
       leading: IconButton(
         icon: Icon(
+          semanticLabel: 'App menú',
           Icons.menu_rounded,
           weight: 40,
           color: Colors.white,
@@ -34,6 +35,7 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () =>
                 showFilterDialog(context, lastFilter: statusFilter),
             icon: Icon(
+              semanticLabel: 'filter to-do',
               Icons.tune_rounded,
               color: Colors.white,
               size: sizeIcons,
@@ -44,8 +46,7 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
         strokeWidth: 4,
         letterSpacing: 2,
         textSize: 30,
-        strokeColor:
-            context.read<SweetPreferencesBloc>().state.themeColors.secondary,
+        strokeColor: Theme.of(context).colorScheme.secondary,
       ),
       centerTitle: true,
     );
