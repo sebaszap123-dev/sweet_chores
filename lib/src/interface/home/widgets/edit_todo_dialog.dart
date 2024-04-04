@@ -63,6 +63,13 @@ class EditChoresDialogState extends State<EditChoresDialog> {
     }
   }
 
+  Color? get textButtonColor {
+    if (context.watch<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.white;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -79,19 +86,21 @@ class EditChoresDialogState extends State<EditChoresDialog> {
           TextField(
             controller: titleController,
             decoration: ThemeDecorations.kawaiBorder(
-              context: context,
-              // color: Colors.white,
-              label: 'Title',
-            ),
+                context: context,
+                // color: Colors.white,
+                label: 'Title',
+                isDarkMode:
+                    context.read<SweetPreferencesBloc>().state.isDarkMode),
           ),
           const SizedBox(height: 16),
           TextField(
             controller: descriptionController,
             decoration: ThemeDecorations.kawaiBorder(
-              context: context,
-              // color: Colors.white,
-              label: 'Description',
-            ),
+                context: context,
+                // color: Colors.white,
+                label: 'Description',
+                isDarkMode:
+                    context.read<SweetPreferencesBloc>().state.isDarkMode),
           ),
           const SizedBox(height: 16),
           Row(
@@ -106,7 +115,15 @@ class EditChoresDialogState extends State<EditChoresDialog> {
               const Spacer(),
               TextButton(
                 onPressed: () => _selectDate(context),
-                child: const Text('Choose Date'),
+                child: Text('Choose Date',
+                    style: TextStyle(
+                      color: textButtonColor ??
+                          context
+                              .read<SweetPreferencesBloc>()
+                              .state
+                              .themeColors
+                              .grayly,
+                    )),
               ),
             ],
           ),
@@ -123,7 +140,15 @@ class EditChoresDialogState extends State<EditChoresDialog> {
               const Spacer(),
               TextButton(
                 onPressed: () => _selectTime(context),
-                child: const Text('Choose Time'),
+                child: Text('Choose Time',
+                    style: TextStyle(
+                      color: textButtonColor ??
+                          context
+                              .read<SweetPreferencesBloc>()
+                              .state
+                              .themeColors
+                              .grayly,
+                    )),
               ),
             ],
           ),
@@ -134,7 +159,15 @@ class EditChoresDialogState extends State<EditChoresDialog> {
           onPressed: () {
             Navigator.of(context).pop(); // Cancelar
           },
-          child: const Text('Cancel'),
+          child: Text('Cancel',
+              style: TextStyle(
+                color: textButtonColor ??
+                    context
+                        .read<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .grayly,
+              )),
         ),
         TextButton(
           onPressed: () {
@@ -150,7 +183,15 @@ class EditChoresDialogState extends State<EditChoresDialog> {
             );
             Navigator.of(context).pop(editedTodo);
           },
-          child: const Text('Apply Changes'),
+          child: Text('Apply Changes',
+              style: TextStyle(
+                color: textButtonColor ??
+                    context
+                        .read<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .grayly,
+              )),
         ),
       ],
     );

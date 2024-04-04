@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 
 class ThemeDecorations {
-  static InputDecoration kawaiBorder(
-          {required BuildContext context,
-          String? label,
-          String? hintext,
-          Color? color}) =>
+  static InputDecoration kawaiBorder({
+    required BuildContext context,
+    String? label,
+    String? hintext,
+    Color? color,
+    bool isDarkMode = false,
+  }) =>
       InputDecoration(
         labelText: label,
+        labelStyle: TextStyle(
+          color: color ?? (isDarkMode ? Colors.white : Colors.black),
+        ),
         hintText: hintext,
-        contentPadding: const EdgeInsets.all(20),
-        filled: color != null ? true : false,
         fillColor: color,
+        counterStyle: TextStyle(color: color),
+        contentPadding: const EdgeInsets.all(20),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: color ?? Colors.grey,
+            color: color ?? (isDarkMode ? Colors.white : Colors.black),
           ),
         ),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-              color: color ?? Theme.of(context).colorScheme.secondary,
+              color: color ?? (isDarkMode ? Colors.white : Colors.black),
             )),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: color ?? Colors.grey,
+            color: color ?? (isDarkMode ? Colors.white : Colors.black),
           ),
         ),
       );

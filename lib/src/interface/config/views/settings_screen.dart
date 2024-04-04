@@ -74,6 +74,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _updateDarkMode(bool value) async {
+    if (context.read<SweetPreferencesBloc>().state.typeTheme ==
+        SweetTheme.strawberry) {
+      SweetDialogs.alertInfo(
+          info: 'Straberry theme is not available in darkmode.',
+          title: "I'm sorry!");
+      return;
+    }
     context
         .read<SweetPreferencesBloc>()
         .add(ChangeDarkModeEvent(isDarkMode: value));
