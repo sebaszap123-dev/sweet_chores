@@ -16,6 +16,7 @@ import 'package:sweet_chores/src/data/blocs/blocs.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/domain/services/google_drive_service.dart';
 import 'package:sweet_chores/src/interface/common/common.dart';
+import 'package:sweet_chores/src/widgets/stroke_text.dart';
 
 @RoutePage()
 class SettingsScreen extends StatefulWidget {
@@ -173,9 +174,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           onPressed: () => getIt<SweetRouterCubit>().state.pop(),
         ),
-        title: Text(
-          'Settings',
-          style: Theme.of(context).textTheme.displayLarge,
+        title: StrokeText(
+          text: 'Settings',
+          strokeWidth: 4,
+          letterSpacing: 2,
+          textSize: 30,
+          strokeColor:
+              context.read<SweetPreferencesBloc>().state.themeColors.secondary,
         ),
         centerTitle: true,
       ),
@@ -290,7 +295,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           title: const Text('Backup chores'),
                           trailing: TextButton(
                             onPressed: _uploadBackup,
-                            child: const Text('Upload'),
+                            child: Text(
+                              'Upload',
+                              style: TextStyle(
+                                  color: context
+                                      .read<SweetPreferencesBloc>()
+                                      .state
+                                      .themeColors
+                                      .secondary),
+                            ),
                           ),
                         ),
                         ListTile(
@@ -301,7 +314,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             title: const Text('Restore chores'),
                             trailing: TextButton(
                               onPressed: _downloadBackup,
-                              child: const Text('Dowload'),
+                              child: Text(
+                                'Download',
+                                style: TextStyle(
+                                    color: context
+                                        .read<SweetPreferencesBloc>()
+                                        .state
+                                        .themeColors
+                                        .secondary),
+                              ),
                             )),
                         if (uploadingBackup) const Loading()
                       ],

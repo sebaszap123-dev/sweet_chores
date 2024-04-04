@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/interface/home/widgets/widgets.dart';
+import 'package:sweet_chores/src/widgets/stroke_text.dart';
 
 class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppbar({
@@ -38,9 +39,13 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
               size: sizeIcons,
             )),
       ],
-      title: Text(
-        'Sweet Chores',
-        style: Theme.of(context).textTheme.displayLarge,
+      title: StrokeText(
+        text: 'Sweet Chores',
+        strokeWidth: 4,
+        letterSpacing: 2,
+        textSize: 30,
+        strokeColor:
+            context.read<SweetPreferencesBloc>().state.themeColors.secondary,
       ),
       centerTitle: true,
     );
