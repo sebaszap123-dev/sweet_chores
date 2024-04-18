@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
