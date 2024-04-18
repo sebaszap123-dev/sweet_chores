@@ -217,7 +217,6 @@ class SweetChoresNotesBloc
 
   _alterCategoryEvent(
       AlterCategoryEvent event, Emitter<SweetChoresNotesState> emit) async {
-    // TODO: IS NOT FILTERING
     try {
       emit(state.copyWith(categoryStatus: CategoryStatus.loading));
       final temp = [...state.categories];
