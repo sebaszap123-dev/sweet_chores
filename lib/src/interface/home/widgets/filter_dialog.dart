@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
 
@@ -20,6 +21,20 @@ class FilterDialogState extends State<FilterDialog> {
     super.initState();
   }
 
+  Color get _textColor {
+    if (context.read<SweetPreferencesBloc>().state.typeTheme ==
+            SweetTheme.strawberry &&
+        !context.read<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.black;
+    }
+    if (context.read<SweetPreferencesBloc>().state.typeTheme ==
+            SweetTheme.cinnamon &&
+        context.read<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.white;
+    }
+    return Theme.of(context).colorScheme.tertiary;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -27,7 +42,7 @@ class FilterDialogState extends State<FilterDialog> {
       title: Text(
         'Filter chores',
         style: TextStyle(
-          color: Theme.of(context).colorScheme.tertiary,
+          color: _textColor,
         ),
       ),
       content: SizedBox(
@@ -52,9 +67,9 @@ class FilterDialogState extends State<FilterDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
+          child: Text(
             'Cancel',
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: _textColor),
           ),
         ),
       ],
@@ -68,18 +83,18 @@ class FilterDialogState extends State<FilterDialog> {
         children: [
           Icon(
             icon,
-            color: Theme.of(context).colorScheme.tertiary,
+            color: _textColor,
           ),
           const SizedBox(width: 8),
           Text(
             label,
-            style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+            style: TextStyle(color: _textColor),
           ),
         ],
       ),
       value: filter,
       groupValue: selectedFilter,
-      activeColor: Theme.of(context).colorScheme.tertiary,
+      activeColor: _textColor,
       onChanged: (value) {
         setState(() {
           selectedFilter = value!;

@@ -70,6 +70,13 @@ class AddTodoDialogState extends State<AddTodoDialog> {
     }
   }
 
+  Color? get textButtonColor {
+    if (context.watch<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.white;
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -81,7 +88,7 @@ class AddTodoDialogState extends State<AddTodoDialog> {
             'Add chore',
             style: GoogleFonts.spicyRice().copyWith(
               color: context
-                  .read<SweetPreferencesBloc>()
+                  .watch<SweetPreferencesBloc>()
                   .state
                   .themeColors
                   .primary,
@@ -105,17 +112,24 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                     RequiredValidator(errorText: 'This field is required'),
                 decoration: ThemeDecorations.kawaiBorder(
                   context: context,
-                  // color: Colors.white,
                   label: 'Title',
+                  isDarkMode:
+                      context.read<SweetPreferencesBloc>().state.isDarkMode,
                 ),
               ),
               const SizedBox(height: 16),
-              TextField(
-                controller: descriptionController,
-                decoration: ThemeDecorations.kawaiBorder(
-                  context: context,
-                  // color: Colors.white,
-                  label: 'Description',
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                    maxHeight: 300, maxWidth: double.infinity, minWidth: 150),
+                child: TextField(
+                  controller: descriptionController,
+                  maxLines: null,
+                  decoration: ThemeDecorations.kawaiBorder(
+                    context: context,
+                    label: 'Description',
+                    isDarkMode:
+                        context.read<SweetPreferencesBloc>().state.isDarkMode,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -131,7 +145,16 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                   const Spacer(),
                   TextButton(
                     onPressed: () => _selectDate(context),
-                    child: const Text('Choose Date'),
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(
+                          color: textButtonColor ??
+                              context
+                                  .read<SweetPreferencesBloc>()
+                                  .state
+                                  .themeColors
+                                  .grayly),
+                    ),
                   ),
                 ],
               ),
@@ -148,18 +171,28 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                   const Spacer(),
                   TextButton(
                     onPressed: () => _selectTime(context),
-                    child: const Text('Choose Time'),
+                    child: Text(
+                      'Choose Time',
+                      style: TextStyle(
+                          color: textButtonColor ??
+                              context
+                                  .read<SweetPreferencesBloc>()
+                                  .state
+                                  .themeColors
+                                  .grayly),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 5),
               Text('Select your list',
                   style: GoogleFonts.roboto().copyWith(
-                    color: context
-                        .read<SweetPreferencesBloc>()
-                        .state
-                        .themeColors
-                        .secondary,
+                    color: textButtonColor ??
+                        context
+                            .read<SweetPreferencesBloc>()
+                            .state
+                            .themeColors
+                            .grayly,
                     fontSize: 18,
                   )),
               const SizedBox(height: 5),
@@ -178,7 +211,17 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                             ? state.categories
                                 .map((e) => DropdownMenuItem<Categories>(
                                       value: e,
-                                      child: Text(e.name),
+                                      child: Text(
+                                        e.name,
+                                        style: TextStyle(
+                                            color: textButtonColor ??
+                                                context
+                                                    .read<
+                                                        SweetPreferencesBloc>()
+                                                    .state
+                                                    .themeColors
+                                                    .grayly),
+                                      ),
                                     ))
                                 .toList()
                             : [],
@@ -195,11 +238,12 @@ class AddTodoDialogState extends State<AddTodoDialog> {
                         onPressed: () => getIt<SweetRouterCubit>().state.push(
                               CategoriesManagerRoute(),
                             ),
-                        icon:
-                            const Icon(Icons.add_rounded, color: Colors.white),
-                        label: const Text(
+                        icon: Icon(Icons.add_rounded,
+                            color: textButtonColor ?? Colors.black),
+                        label: Text(
                           "Add new category",
-                          style: TextStyle(color: Colors.white),
+                          style:
+                              TextStyle(color: textButtonColor ?? Colors.black),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -222,7 +266,15 @@ class AddTodoDialogState extends State<AddTodoDialog> {
           onPressed: () {
             Navigator.of(context).pop(); // Cancelar
           },
-          child: const Text('Cancel'),
+          child: Text('Cancel',
+              style: TextStyle(
+                color: textButtonColor ??
+                    context
+                        .read<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .grayly,
+              )),
         ),
         TextButton(
           onPressed: () {
@@ -244,7 +296,15 @@ class AddTodoDialogState extends State<AddTodoDialog> {
               getIt<SweetRouterCubit>().state.pop(newTodo);
             }
           },
-          child: const Text('Add'),
+          child: Text('Add',
+              style: TextStyle(
+                color: textButtonColor ??
+                    context
+                        .read<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .grayly,
+              )),
         ),
       ],
     );

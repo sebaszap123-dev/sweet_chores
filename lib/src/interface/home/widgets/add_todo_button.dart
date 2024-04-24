@@ -12,9 +12,17 @@ class AddTodoButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () => showAddTodoDialog(context),
       backgroundColor: Theme.of(context).colorScheme.primary,
-      child: const Icon(
+      child: Icon(
         Icons.add,
         color: Colors.white,
+        semanticLabel: 'Add Todo',
+        shadows: [
+          Shadow(
+            color: Theme.of(context).colorScheme.secondary,
+            blurRadius: 15,
+            offset: Offset.fromDirection(0, 0),
+          )
+        ],
       ),
     );
   }

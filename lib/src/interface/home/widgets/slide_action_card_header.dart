@@ -65,7 +65,9 @@ class SlideActionCardHeader extends StatelessWidget {
               foregroundColor: Colors.white,
               borderRadius: BorderRadius.circular(10),
               icon: Icons.edit,
-              backgroundColor: Colors.blue, // Use your desired color
+              backgroundColor: Theme.of(context)
+                  .colorScheme
+                  .secondary, // Use your desired color
               label: 'Edit',
             ),
           ],

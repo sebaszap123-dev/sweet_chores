@@ -7,6 +7,8 @@ import 'package:sweet_chores/src/models/models.dart';
 
 import 'date_time_picker/sweet_due_date_picker.dart';
 
+// FOR IOS VERSION (TODO-MODAL-ADD)
+
 class BottomSheetModal extends StatefulWidget {
   const BottomSheetModal({super.key});
 
@@ -76,7 +78,6 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                 decoration: ThemeDecorations.kawaiBorder(
                   context: context,
                   hintext: 'Write your next amazing activity!',
-                  color: Colors.white,
                   label: 'Title',
                 ),
               ),
@@ -87,7 +88,6 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                 controller: taskTextController,
                 decoration: ThemeDecorations.kawaiBorder(
                   context: context,
-                  color: Colors.white,
                   label: 'Note',
                 ),
               ),

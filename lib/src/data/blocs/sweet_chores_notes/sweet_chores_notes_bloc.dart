@@ -225,14 +225,8 @@ class SweetChoresNotesBloc
 
       if (index != -1) {
         temp[index] = event.category;
-        final actives = temp.where((e) => e.isActive).toList();
-
-        if (actives.isEmpty) {
-          emit(state.copyWith(categoryStatus: CategoryStatus.success));
-        } else {
-          emit(state.copyWith(
-              categories: temp, categoryStatus: CategoryStatus.success));
-        }
+        emit(state.copyWith(
+            categories: temp, categoryStatus: CategoryStatus.success));
       } else {
         emit(state.copyWith(categoryStatus: CategoryStatus.error));
         throw Exception("Category not found");
