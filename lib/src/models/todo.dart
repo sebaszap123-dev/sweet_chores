@@ -56,6 +56,15 @@ class Todo {
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
+        "title": title,
+        "description": description,
+        "isDone": isDone ? 1 : 0,
+        "dueDate": dueDate,
+        "category_id": categoryID,
+        "hasTime": hasTime ? 1 : 0,
+      };
+  Map<String, dynamic> toJsonSql() => {
         "title": title,
         "description": description,
         "isDone": isDone ? 1 : 0,

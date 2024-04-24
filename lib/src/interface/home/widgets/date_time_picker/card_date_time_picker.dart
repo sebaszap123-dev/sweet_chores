@@ -29,7 +29,7 @@ class _CardDateTimePickerState extends State<_CardDateTimePicker> {
   String _getTimeOrDate() {
     if (currentTime != null) {
       return Picker.date == widget.type
-          ? parseDueDate(currentTime!.millisecondsSinceEpoch)!
+          ? parseDueDate(currentTime!.millisecondsSinceEpoch)
           : timeFormatted(currentTime!);
     } else {
       return Picker.date == widget.type ? 'Today' : '00:00';
@@ -37,7 +37,7 @@ class _CardDateTimePickerState extends State<_CardDateTimePicker> {
   }
 
   _disableTime() {
-    context.read<TodoBloc>().add(const SaveRawDate(false));
+    context.read<SweetChoresNotesBloc>().add(const DateChoresEvent(false));
   }
 
   _updateInnerDateOrTime(DateTime value) {
@@ -108,9 +108,11 @@ class _CardDateTimePickerState extends State<_CardDateTimePicker> {
                   }
                 });
               }
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              if (!currentFocus.hasPrimaryFocus) {
-                currentFocus.unfocus();
+              if (mounted) {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
               }
             },
           )

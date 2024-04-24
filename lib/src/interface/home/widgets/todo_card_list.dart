@@ -12,7 +12,7 @@ class TodoCardList extends StatefulWidget {
       required this.status,
       this.isEmpty = false});
   final List<Todo> todos;
-  final FilterStatus status;
+  final FilterTime status;
   final bool isEmpty;
   @override
   State<TodoCardList> createState() => _TodoCardListState();
@@ -20,11 +20,11 @@ class TodoCardList extends StatefulWidget {
 
 class _TodoCardListState extends State<TodoCardList> {
   void removeTodo(Todo todo) {
-    getIt<TodoBloc>().add(RemoveTodo(todo));
+    getIt<SweetChoresNotesBloc>().add(RemoveChoresEvent(todo));
   }
 
-  void alterTodo(int index) {
-    getIt<TodoBloc>().add(AlterTodo(index));
+  void alterTodo(Todo todo) {
+    getIt<SweetChoresNotesBloc>().add(AlterChoresEvent(todo));
   }
 
   List<bool> isOpen = [];
@@ -45,7 +45,7 @@ class _TodoCardListState extends State<TodoCardList> {
                   return TodoExpansionCard(
                     alterTodo: alterTodo,
                     category: context
-                        .watch<CategoriesBloc>()
+                        .watch<SweetChoresNotesBloc>()
                         .state
                         .getCategory(entry.value.categoryID),
                     index: entry.key,

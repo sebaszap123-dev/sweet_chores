@@ -7,6 +7,8 @@ import 'package:sweet_chores/src/models/models.dart';
 
 import 'date_time_picker/sweet_due_date_picker.dart';
 
+// FOR IOS VERSION (TODO-MODAL-ADD)
+
 class BottomSheetModal extends StatefulWidget {
   const BottomSheetModal({super.key});
 
@@ -27,14 +29,14 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
   }
 
   void _addTodo(Todo todo) {
-    context.read<TodoBloc>().add(AddTodo(todo));
+    context.read<SweetChoresNotesBloc>().add(AddChoresEvent(todo));
   }
 
   final EdgeInsets paddingFields = const EdgeInsets.symmetric(vertical: 10);
 
   @override
   Widget build(BuildContext context) {
-    final categoryBloc = context.watch<CategoriesBloc>();
+    final categoryBloc = context.watch<SweetChoresNotesBloc>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -76,7 +78,6 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                 decoration: ThemeDecorations.kawaiBorder(
                   context: context,
                   hintext: 'Write your next amazing activity!',
-                  color: Colors.white,
                   label: 'Title',
                 ),
               ),
@@ -87,7 +88,6 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                 controller: taskTextController,
                 decoration: ThemeDecorations.kawaiBorder(
                   context: context,
-                  color: Colors.white,
                   label: 'Note',
                 ),
               ),
@@ -103,11 +103,16 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
     );
   }
 
-  Widget _chooseListWidget(CategoriesBloc categoryBloc) {
+  // TODO-FEATURE-IOS: CHANGE THIS WITH DESIGN FOR IOS
+  Widget _chooseListWidget(SweetChoresNotesBloc categoryBloc) {
     return ListTile(
       leading: Icon(
-        selectedCategory?.iconData ?? Icons.category,
-        color: selectedCategory?.color,
+        selectedCategory?.iconData ??
+            (categoryBloc.state.categories.isEmpty
+                ? Icons.add_rounded
+                : categoryBloc.state.categories.first.iconData),
+        color: selectedCategory?.color ??
+            categoryBloc.state.categories.first.color,
       ),
       minLeadingWidth: 185,
       title: DecoratedBox(
@@ -122,7 +127,8 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
           isExpanded: false,
           value: selectedCategory ??
               (categoryBloc.state.categories.isEmpty
-                  ? Categories(name: 'awa', id: 1)
+                  ? Categories(
+                      name: 'add category', id: 0, iconData: Icons.add_rounded)
                   : categoryBloc.state.categories.first),
           items: categoryBloc.state.categories
               .map((category) => DropdownMenuItem<Categories>(
@@ -138,7 +144,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
     );
   }
 
-  void _onAdd(CategoriesBloc categoryBloc) {
+  void _onAdd(SweetChoresNotesBloc categoryBloc) {
     if (taskTitleController.text.isEmpty) {
       showDialog(
           context: context,

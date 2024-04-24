@@ -7,30 +7,28 @@ import 'package:sweet_chores/src/models/models.dart';
 
 class SlideActionCardHeader extends StatelessWidget {
   const SlideActionCardHeader({
-    super.key,
+    Key? key,
     required this.todo,
     required this.index,
     required this.category,
     required this.removeTodo,
     required this.alterTodo,
+    required this.editTodo,
     this.enableDescription = true,
     this.isOverDue = false,
-    required this.editTodo,
-  });
+  }) : super(key: key);
 
   final Todo todo;
   final int index;
   final Categories category;
   final void Function(Todo) removeTodo;
-  final void Function(int) alterTodo;
+  final void Function(Todo) alterTodo;
   final void Function() editTodo;
   final bool enableDescription;
   final bool isOverDue;
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Card(
       margin: EdgeInsets.zero,
       color: !isOverDue
@@ -67,102 +65,110 @@ class SlideActionCardHeader extends StatelessWidget {
               foregroundColor: Colors.white,
               borderRadius: BorderRadius.circular(10),
               icon: Icons.edit,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
+              backgroundColor: Theme.of(context)
+                  .colorScheme
+                  .secondary, // Use your desired color
               label: 'Edit',
             ),
           ],
         ),
-        child: SizedBox(
-          width: size.width,
-          height: size.height * 0.12,
-          child: Stack(
-            alignment: Alignment.center,
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(10),
+          titleAlignment: ListTileTitleAlignment.center,
+          leading: Icon(
+            Icons.circle,
+            color: category.color,
+            size: 30,
+          ),
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Positioned(
-                top: 20,
-                left: 15,
-                child: Icon(
-                  Icons.circle,
-                  color: category.color,
-                  size: 20,
-                ),
+              Text(
+                todo.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontSize: 20),
+                overflow: TextOverflow.ellipsis,
               ),
-              Positioned(
-                top: 18,
-                left: 50,
-                child: Column(
+              if (isOverDue)
+                const Icon(
+                  Icons.flag_circle_outlined,
+                  color: Colors.red,
+                ),
+            ],
+          ),
+          isThreeLine: todo.dueDate != null &&
+              (todo.description != null && todo.description!.isNotEmpty),
+          subtitle: !_validated
+              ? null
+              : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            todo.title,
+                    enableDescription &&
+                            todo.description != null &&
+                            todo.description!.isNotEmpty
+                        ? Text(
+                            todo.description!,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyLarge
-                                ?.copyWith(fontSize: 20),
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : const SizedBox(height: 5),
+                    if (todo.dueDate != null)
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_today_rounded,
+                            color: context
+                                .watch<SweetPreferencesBloc>()
+                                .state
+                                .themeColors
+                                .text,
+                            size: 18,
                           ),
-                        ),
-                        if (isOverDue)
-                          const Icon(
-                            Icons.warning_amber_rounded,
-                            color: Colors.red,
+                          const SizedBox(width: 4),
+                          Text(
+                            parseDueDate(todo.dueDate!, hasTime: todo.hasTime),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontSize: 16,
+                                    color: context
+                                        .watch<SweetPreferencesBloc>()
+                                        .state
+                                        .themeColors
+                                        .text),
                           ),
-                      ],
-                    ),
-                    _spacer(),
-                    if (enableDescription)
-                      todo.description != null
-                          ? SizedBox(
-                              width: size.width * 0.69,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  todo.description!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            )
-                          : Container(),
-                    _spacer(),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: todo.dueDate != null
-                          ? Text(
-                              'Due: ${parseDueDate(todo.dueDate, hasTime: todo.hasTime)!}',
-                            )
-                          : const Text('Due: when your desire!'),
-                    ),
+                        ],
+                      )
                   ],
                 ),
-              ),
-              Positioned(
-                right: 15,
-                child: _CheckBox(
-                  active: todo.isDone,
-                  onTap: () => alterTodo(index),
-                ),
-              ),
-            ],
+          trailing: _CheckBox(
+            active: todo.isDone,
+            onTap: () => alterTodo(todo),
           ),
         ),
       ),
     );
   }
+
+  bool get _validated {
+    return todo.dueDate != null ||
+        (todo.description != null && todo.description!.isNotEmpty);
+  }
 }
 
 class _CheckBox extends StatelessWidget {
   const _CheckBox({
-    this.active = false,
+    required this.active,
     required this.onTap,
   });
 
@@ -195,10 +201,4 @@ class _CheckBox extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _spacer() {
-  return const SizedBox(
-    height: 5,
-  );
 }

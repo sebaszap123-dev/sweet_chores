@@ -1,6 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
-import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 
 // Create storage
 
@@ -25,11 +24,15 @@ abstract class SweetSecurePreferences {
   /// CONSTANT KEY autodeleteTask time
   static const String _autoTime = 'sweet_delete_notes_time';
 
-  /// status if firstOpen or not
-  static final String _initialStatus = GlobalStatusApp.firstOpen.name;
+  /// CONSTANT KEY autodeleteTask time
+  static const String _deleteDays = 'sweet_delete_notes_days';
+  // TODO-FEATURE: MEJORAR ESTA LOGICA YA QUE ASÍ NO SE SABE SI YA HAY UN NEXT DATE
 
   /// Next backup date
   static const String _nextBackupDate = 'sweet_firebase_backup';
+
+  /// status if firstOpen or not
+  static final String _initialStatus = GlobalStatusApp.firstOpen.name;
 
   // ? GETTERS
 
@@ -45,10 +48,29 @@ abstract class SweetSecurePreferences {
     );
   }
 
+  /// Resets all key values to null
+  static Future<void> resetAllKeys() async {
+    await _storage.delete(key: _themeKey);
+    await _storage.delete(key: _statusKey);
+    await _storage.delete(key: _darkmodeKey);
+    await _storage.delete(key: _autoTaskKey);
+    await _storage.delete(key: _autoTime);
+    await _storage.delete(key: _deleteDays);
+    await _storage.delete(key: _nextBackupDate);
+  }
+
   static Future<DateTime?> get nextBackupDate async {
     final date = await _storage.read(key: _nextBackupDate);
     if (date != null) {
       return DateTime.tryParse(date);
+    }
+    return null;
+  }
+
+  static Future<int?> get deletDaysCurrent async {
+    final date = await _storage.read(key: _deleteDays);
+    if (date != null) {
+      return int.tryParse(date);
     }
     return null;
   }
@@ -102,12 +124,11 @@ abstract class SweetSecurePreferences {
         final autoValue = await _storage.read(key: _autoTime);
         if (autoValue != null) {
           try {
-            final timestamp = int.parse(autoValue);
-            final dateTimeValue =
-                DateTime.fromMillisecondsSinceEpoch(timestamp);
+            final dateTimeValue = DateTime.tryParse(autoValue);
             return dateTimeValue;
           } catch (e) {
-            SweetDialogs.unhandleErros(error: '$e');
+            // Catch errors in a different way here
+            // SweetDialogs.unhandleErros(error: '$e');
           }
         }
       }
@@ -143,6 +164,7 @@ abstract class SweetSecurePreferences {
     final now = DateTime.now();
     final timeLapse = now.add(Duration(days: time));
     await _storage.write(key: _autoTime, value: timeLapse.toIso8601String());
+    await _storage.write(key: _deleteDays, value: time.toString());
   }
 
   static Future<void> toggleTheme(SweetTheme value) async {

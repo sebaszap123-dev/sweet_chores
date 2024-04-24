@@ -1,4 +1,3 @@
-
 import '../../models/models.dart';
 
 abstract class TodoRepository {
@@ -19,4 +18,7 @@ abstract class TodoRepository {
 
   /// Delete one by id
   Future<int> deleteTodoById(int id);
+
+  /// Delete one by id
+  Future<bool> deleteDonesTodos();
 }

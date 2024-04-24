@@ -1,9 +1,17 @@
 part of 'sweet_preferences_bloc.dart';
 
 class SweetPreferencesState extends Equatable {
+  /// Now if user use the app if not show started route
   final bool firstTimeApp;
+
+  /// User wants to autodelete chores when done
   final bool isActiveAutoDelete;
+
+  /// Theme mode
   final bool isDarkMode;
+
+  /// Delete days
+  final int deleteDays;
   final ThemeData themeData;
   final SweetThemeColors themeColors;
   final SweetTheme typeTheme;
@@ -14,6 +22,7 @@ class SweetPreferencesState extends Equatable {
     this.firstTimeApp = true,
     this.isActiveAutoDelete = false,
     this.isDarkMode = false,
+    this.deleteDays = 7,
     this.typeTheme = SweetTheme.cinnamon,
     required this.themeData,
     this.status = SweetChoresStatus.initial,
@@ -28,6 +37,7 @@ class SweetPreferencesState extends Equatable {
     bool? isDarkMode,
     ThemeData? themeData,
     SweetChoresStatus? status,
+    int? deleteDays,
     SweetTheme? typeTheme,
     SweetThemeColors? themeColors,
   }) {
@@ -39,6 +49,7 @@ class SweetPreferencesState extends Equatable {
       isDarkMode: isDarkMode ?? this.isDarkMode,
       isActiveAutoDelete: isActiveAutoDelete ?? this.isActiveAutoDelete,
       themeColors: themeColors ?? this.themeColors,
+      deleteDays: deleteDays ?? this.deleteDays,
     );
   }
 

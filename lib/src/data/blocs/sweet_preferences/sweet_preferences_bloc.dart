@@ -25,6 +25,7 @@ class SweetPreferencesBloc
     final firstOpen = await SweetSecurePreferences.isFirstOpen;
     final isDarkMode = await SweetSecurePreferences.isDarkMode;
     final autoTask = await SweetSecurePreferences.isActiveAutoDelete;
+    final deleteDays = await SweetSecurePreferences.deletDaysCurrent;
     final themeColors = SweetThemeColors.fromMode(
         isDarkMode ? SweetMode.dark : SweetMode.light, theme);
     final themeData = SweetThemes.sweetThemeData(themeColors: themeColors);
@@ -35,18 +36,21 @@ class SweetPreferencesBloc
       firstTimeApp: firstOpen,
       isActiveAutoDelete: autoTask,
       themeColors: themeColors,
+      deleteDays: deleteDays,
       status: SweetChoresStatus.success,
     ));
   }
 
   void _onUpdateTheme(
       ChangeThemeEvent event, Emitter<SweetPreferencesState> emit) async {
+    emit(state.copyWith(status: SweetChoresStatus.loading));
     final colors = SweetThemeColors.fromMode(
         state.isDarkMode ? SweetMode.dark : SweetMode.light, event.theme);
     final theme = SweetThemes.sweetThemeData(themeColors: colors);
     await SweetSecurePreferences.toggleTheme(event.theme);
     emit(state.copyWith(
       themeData: theme,
+      themeColors: colors,
       typeTheme: event.theme,
       status: SweetChoresStatus.success,
     ));

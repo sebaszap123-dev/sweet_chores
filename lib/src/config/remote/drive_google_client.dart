@@ -46,17 +46,6 @@ class GoogleDriveClient {
     _accessToken = accessToken;
   }
 
-//   static Future updateDbToDrive(
-//       Future jsonFileFuture, String jsonFileName) async {
-//     gdrive_api.File file = gdrive_api.File.fromJson({"name": jsonFileName});
-//     file.id = jsonFileName;
-//     File jsonFile = await jsonFileFuture;
-// //if it doesn't work catch the error on future
-//     return (gdrive_api.files.update(file, jsonFileName,
-//         uploadMedia:
-//             gdrive_api.Media(jsonFile.openRead(), jsonFile.lengthSync())));
-//   }
-
   static Future<GoogleDriveClient> create(
       GoogleSignInAccount googleAccount, String accessToken) async {
     var component = GoogleDriveClient._create(googleAccount, accessToken);
@@ -150,8 +139,6 @@ class GoogleDriveClient {
         message: 'unable to create file on Google Drive',
       );
     }
-
-    print("Created File ID: ${fileCreation.id} on RemoteStorage");
     return fileCreation.id!;
   }
 
@@ -169,6 +156,14 @@ class GoogleDriveClient {
     }
   }
 
+  Future<bool> hasBackupFile() async {
+    var fileId = await _getFileIdFromGoogleDrive(fileName);
+    if (fileId != null) {
+      return true;
+    }
+    return false;
+  }
+
   Future<String?> downloadFile() async {
     try {
       var fileId = await _getFileIdFromGoogleDrive(fileName);
@@ -177,12 +172,26 @@ class GoogleDriveClient {
         final fileContent = await _downloadFileToDevice(fileId);
         return fileContent;
       }
-      SweetDialogs.unhandleErros(error: "File not found on storage");
-
       return null;
     } catch (e) {
       SweetDialogs.unhandleErros(error: "$e");
       return null;
     }
+  }
+
+  // Elimina el archivo de Google Drive si existe
+  Future<void> deleteBackupFile() async {
+    try {
+      var fileId = await _getFileIdFromGoogleDrive(fileName);
+      if (fileId != null) {
+        await _deleteFileFromGoogleDrive(fileId);
+      }
+    } catch (e) {
+      SweetDialogs.unhandleErros(error: '$e');
+    }
+  }
+
+  Future<void> _deleteFileFromGoogleDrive(String fileId) async {
+    await _driveApi.files.delete(fileId);
   }
 }

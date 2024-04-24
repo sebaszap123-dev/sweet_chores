@@ -21,7 +21,7 @@ class TodoExpansionCard extends StatefulWidget {
   final int index;
   final Categories category;
   final void Function(Todo) removeTodo;
-  final void Function(int) alterTodo;
+  final void Function(Todo) alterTodo;
 
   @override
   State<TodoExpansionCard> createState() => _TodoExpansionCardState();

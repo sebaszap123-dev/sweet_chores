@@ -5,32 +5,26 @@ part of 'login_bloc.dart';
 /// Represents the state of Login in the application.
 class LoginState extends Equatable {
   LoginState({
-    this.edittextController,
+    this.editEmailController,
     this.passwordController,
-    this.loginModelObj,
   });
 
-  TextEditingController? edittextController;
+  TextEditingController? editEmailController;
 
   TextEditingController? passwordController;
 
-  LoginModel? loginModelObj;
-
   @override
   List<Object?> get props => [
-        edittextController,
+        editEmailController,
         passwordController,
-        loginModelObj,
       ];
   LoginState copyWith({
-    TextEditingController? edittextController,
+    TextEditingController? editEmailController,
     TextEditingController? passwordController,
-    LoginModel? loginModelObj,
   }) {
     return LoginState(
-      edittextController: edittextController ?? this.edittextController,
+      editEmailController: editEmailController ?? this.editEmailController,
       passwordController: passwordController ?? this.passwordController,
-      loginModelObj: loginModelObj ?? this.loginModelObj,
     );
   }
 }

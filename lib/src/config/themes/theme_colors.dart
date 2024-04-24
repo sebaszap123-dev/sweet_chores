@@ -66,7 +66,7 @@ class SweetThemeColors {
 
   static final SweetThemeColors _lightCinnamonTheme = SweetThemeColors(
     // Primary 60 (blanco) Secondary 30 (#cee6ff) y tertiary 10 (#CFD7FF)
-    text: Colors.black,
+    text: const Color.fromRGBO(0, 0, 0, 1),
     primary: '#cee6ff'.toColor(),
     secondary: '#A0CAF4'.toColor(),
     tertiary: '#4F7CAC'.toColor(),

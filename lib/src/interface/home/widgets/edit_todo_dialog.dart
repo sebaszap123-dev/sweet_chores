@@ -3,18 +3,19 @@ import 'package:intl/intl.dart';
 import 'package:sweet_chores/src/config/themes/themes.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/blocs/blocs.dart';
+import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/models/models.dart';
 
-class EditTodoDialog extends StatefulWidget {
+class EditChoresDialog extends StatefulWidget {
   final Todo todo;
 
-  const EditTodoDialog({Key? key, required this.todo}) : super(key: key);
+  const EditChoresDialog({Key? key, required this.todo}) : super(key: key);
 
   @override
-  EditTodoDialogState createState() => EditTodoDialogState();
+  EditChoresDialogState createState() => EditChoresDialogState();
 }
 
-class EditTodoDialogState extends State<EditTodoDialog> {
+class EditChoresDialogState extends State<EditChoresDialog> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
   DateTime? selectedDate;
@@ -58,7 +59,15 @@ class EditTodoDialogState extends State<EditTodoDialog> {
       setState(() {
         selectedTime = picked;
       });
+      getIt<SweetChoresNotesBloc>().add(const DateChoresEvent(true));
     }
+  }
+
+  Color? get textButtonColor {
+    if (context.watch<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.white;
+    }
+    return null;
   }
 
   @override
@@ -77,19 +86,21 @@ class EditTodoDialogState extends State<EditTodoDialog> {
           TextField(
             controller: titleController,
             decoration: ThemeDecorations.kawaiBorder(
-              context: context,
-              // color: Colors.white,
-              label: 'Title',
-            ),
+                context: context,
+                // color: Colors.white,
+                label: 'Title',
+                isDarkMode:
+                    context.read<SweetPreferencesBloc>().state.isDarkMode),
           ),
           const SizedBox(height: 16),
           TextField(
             controller: descriptionController,
             decoration: ThemeDecorations.kawaiBorder(
-              context: context,
-              // color: Colors.white,
-              label: 'Description',
-            ),
+                context: context,
+                // color: Colors.white,
+                label: 'Description',
+                isDarkMode:
+                    context.read<SweetPreferencesBloc>().state.isDarkMode),
           ),
           const SizedBox(height: 16),
           Row(
@@ -104,7 +115,15 @@ class EditTodoDialogState extends State<EditTodoDialog> {
               const Spacer(),
               TextButton(
                 onPressed: () => _selectDate(context),
-                child: const Text('Choose Date'),
+                child: Text('Choose Date',
+                    style: TextStyle(
+                      color: textButtonColor ??
+                          context
+                              .read<SweetPreferencesBloc>()
+                              .state
+                              .themeColors
+                              .grayly,
+                    )),
               ),
             ],
           ),
@@ -121,7 +140,15 @@ class EditTodoDialogState extends State<EditTodoDialog> {
               const Spacer(),
               TextButton(
                 onPressed: () => _selectTime(context),
-                child: const Text('Choose Time'),
+                child: Text('Choose Time',
+                    style: TextStyle(
+                      color: textButtonColor ??
+                          context
+                              .read<SweetPreferencesBloc>()
+                              .state
+                              .themeColors
+                              .grayly,
+                    )),
               ),
             ],
           ),
@@ -132,7 +159,15 @@ class EditTodoDialogState extends State<EditTodoDialog> {
           onPressed: () {
             Navigator.of(context).pop(); // Cancelar
           },
-          child: const Text('Cancel'),
+          child: Text('Cancel',
+              style: TextStyle(
+                color: textButtonColor ??
+                    context
+                        .watch<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .grayly,
+              )),
         ),
         TextButton(
           onPressed: () {
@@ -142,23 +177,37 @@ class EditTodoDialogState extends State<EditTodoDialog> {
               description: descriptionController.text.isNotEmpty
                   ? descriptionController.text
                   : widget.todo.description,
-              dueDate: selectedDate != null
-                  ? DateTime(
-                          selectedDate!.year,
-                          selectedDate!.month,
-                          selectedDate!.day,
-                          selectedTime?.hour ?? 0,
-                          selectedTime?.minute ?? 0)
-                      .millisecondsSinceEpoch
-                  : null,
+              dueDate: myDateTime(date: selectedDate, time: selectedTime)
+                  ?.millisecondsSinceEpoch,
               hasTime: selectedTime != null,
             );
             Navigator.of(context).pop(editedTodo);
           },
-          child: const Text('Apply Changes'),
+          child: Text('Apply Changes',
+              style: TextStyle(
+                color: textButtonColor ??
+                    context
+                        .read<SweetPreferencesBloc>()
+                        .state
+                        .themeColors
+                        .grayly,
+              )),
         ),
       ],
     );
+  }
+}
+
+DateTime? myDateTime({DateTime? date, TimeOfDay? time}) {
+  if (date != null && time != null) {
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
+  } else if (date != null && time == null) {
+    return date;
+  } else if (time != null && date == null) {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day, time.hour, time.minute);
+  } else {
+    return null;
   }
 }
 
@@ -169,11 +218,11 @@ Future<void> showEditTodoDialog(BuildContext context,
     useSafeArea: true,
     context: context,
     builder: (context) {
-      return EditTodoDialog(todo: todo);
+      return EditChoresDialog(todo: todo);
     },
   );
   if (resp != null) {
     // ignore: use_build_context_synchronously
-    context.read<TodoBloc>().add(EditTodo(resp));
+    context.read<SweetChoresNotesBloc>().add(EditChoresEvent(resp));
   }
 }

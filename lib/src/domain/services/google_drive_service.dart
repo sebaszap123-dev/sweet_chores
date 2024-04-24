@@ -34,34 +34,64 @@ abstract class GoogleDriveService {
   }
 
   static Future<void> uploadFiles(GoogleDriveClient? client) async {
-    if (client != null) {
-      final resp = await SweetDialogs.backupRequired();
-      if (resp) {
+    try {
+      if (client != null) {
         final todos = await TodoHelper().getAllTodos();
-        final rawJson = todos.map((e) => e.toRawJson()).toList().toString();
-        final Map<String, String> map = {
+        final ca = await CategoriesService().getAllCategory();
+        final rawJson = todos.map((e) => e.toRawJson()).toList();
+        final rawCategories = ca.map((e) => e.toRawJson()).toList();
+        final Map<String, dynamic> map = {
           DatabaseNotes.tbNotes: rawJson,
-          DatabaseNotes.tbCategories: rawJson
+          DatabaseNotes.tbCategories: rawCategories
         };
         final dbBackup = json.encode(map);
         await client.uploadFile(dbBackup);
       }
+    } catch (e) {
+      SweetDialogs.unhandleErros(error: e.toString());
     }
   }
 
-  static Future<void> downloadBackup(GoogleDriveClient? driveClient) async {
+  static Future<bool?> downloadBackup(GoogleDriveClient? driveClient) async {
     if (driveClient != null) {
-      final file = driveClient.downloadFile();
-      file.then((value) {
-        if (value != null) {
+      final hasFile = await driveClient.hasBackupFile();
+      if (hasFile) {
+        final file = await driveClient.downloadFile();
+        if (file != null) {
           try {
             // Decodificar la cadena JSON a una lista de mapas
-            getIt<DatabaseManagerCubit>().restoreBackup(value);
+            return getIt<DatabaseManagerCubit>().restoreBackup(file);
           } catch (e) {
-            print('error $e');
+            SweetDialogs.unhandleErros(error: e.toString());
+            return false;
           }
         }
-      });
+      } else {
+        SweetDialogs.alertInfo(
+            info:
+                "It seems you haven't created a backup yet. Please create one first.",
+            title: "Oops! Cinnamon couldn't find a backup");
+        return null;
+      }
     }
+    return false;
+  }
+
+  static Future<bool> deleteAllData(GoogleDriveClient? driveClient) async {
+    if (driveClient != null) {
+      final hasFile = await driveClient.hasBackupFile();
+      if (hasFile) {
+        await driveClient.deleteBackupFile();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static Future<bool> hasBackupFile(GoogleDriveClient? driveClient) async {
+    if (driveClient != null) {
+      return await driveClient.hasBackupFile();
+    }
+    return false;
   }
 }

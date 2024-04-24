@@ -10,20 +10,16 @@ bool isOverDue(Todo todo) {
 
 String dateFormatted(DateTime date, TimeDates timeDates,
     {bool hasTime = false}) {
+  final now = DateTime.now();
   if (TimeDates.none == timeDates) {
-    return '${_getWeekDay(date.weekday)}, ${date.day} ${_getMonth(date.month)}${hasTime ? ', ${timeFormatted(date)}' : ''}';
+    return '${_getWeekDay(date.weekday)}, ${date.day} ${_getMonth(date.month)}, ${now.year == date.year ? '' : '${date.year}'}${hasTime ? ', ${timeFormatted(date)}' : ''}';
   } else {
     return '${timeDates.name}${hasTime ? ', ${timeFormatted(date)}' : ''}';
   }
 }
 
-String? parseDueDate(int? dueDate, {bool hasTime = false}) {
-  DateTime? date =
-      dueDate != null ? DateTime.fromMillisecondsSinceEpoch(dueDate) : null;
-
-  if (date == null) {
-    return null;
-  }
+String parseDueDate(int dueDate, {bool hasTime = false}) {
+  DateTime date = DateTime.fromMillisecondsSinceEpoch(dueDate);
 
   DateTime now = DateTime.now();
   DateTime today = DateTime(
@@ -61,51 +57,43 @@ String timeFormatted(DateTime time) {
 String _getWeekDay(int weekday) {
   switch (weekday) {
     case DateTime.monday:
-      return 'Monday';
+      return 'Mon';
     case DateTime.tuesday:
-      return 'Tuesday';
+      return 'Tue';
     case DateTime.wednesday:
-      return 'Wednesday';
+      return 'Wed';
     case DateTime.thursday:
-      return 'Thursday';
+      return 'Thur';
     case DateTime.friday:
-      return 'Friday';
+      return 'Fri';
     case DateTime.saturday:
-      return 'Saturday';
+      return 'Sat';
     case DateTime.sunday:
-      return 'Sunday';
+      return 'Sun';
     default:
       return 'Unknown';
   }
 }
 
 String _getMonth(int month) {
-  switch (month) {
-    case DateTime.january:
-      return "January";
-    case DateTime.february:
-      return "February";
-    case DateTime.march:
-      return "March";
-    case DateTime.april:
-      return "April";
-    case DateTime.may:
-      return "May";
-    case DateTime.june:
-      return "June";
-    case DateTime.july:
-      return "July";
-    case DateTime.august:
-      return "August";
-    case DateTime.september:
-      return "September";
-    case DateTime.october:
-      return "October";
-    case DateTime.november:
-      return "November";
-    case DateTime.december:
-      return "December";
-    default:
-      return "Unknown";
+  List<String> months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  if (month >= DateTime.january && month <= DateTime.december) {
+    return months[month - 1]; // Resta 1 para ajustar el índice de la lista
+  } else {
+    return "Unknown";
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sweet_chores/src/config/themes/themes.dart';
 import 'package:sweet_chores/src/core/app_export.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
 
@@ -8,11 +9,11 @@ class FilterDialog extends StatefulWidget {
   @override
   FilterDialogState createState() => FilterDialogState();
 
-  final FilterStatus selectedFilter;
+  final FilterTime selectedFilter;
 }
 
 class FilterDialogState extends State<FilterDialog> {
-  late FilterStatus selectedFilter;
+  late FilterTime selectedFilter;
 
   @override
   void initState() {
@@ -20,14 +21,28 @@ class FilterDialogState extends State<FilterDialog> {
     super.initState();
   }
 
+  Color get _textColor {
+    if (context.read<SweetPreferencesBloc>().state.typeTheme ==
+            SweetTheme.strawberry &&
+        !context.read<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.black;
+    }
+    if (context.read<SweetPreferencesBloc>().state.typeTheme ==
+            SweetTheme.cinnamon &&
+        context.read<SweetPreferencesBloc>().state.isDarkMode) {
+      return Colors.white;
+    }
+    return Theme.of(context).colorScheme.tertiary;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       title: Text(
-        'Filter To-do',
+        'Filter chores',
         style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
+          color: _textColor,
         ),
       ),
       content: SizedBox(
@@ -36,70 +51,64 @@ class FilterDialogState extends State<FilterDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildFilterRadio(
-                FilterStatus.all, 'All', Icons.calendar_today), // Agrega icono
-            _buildFilterRadio(FilterStatus.today, 'Today', Icons.today),
+                FilterTime.all, 'All', Icons.calendar_today), // Agrega icono
+            _buildFilterRadio(FilterTime.today, 'Today', Icons.today),
             _buildFilterRadio(
-                FilterStatus.week, 'This week', Icons.calendar_month),
+                FilterTime.week, 'This week', Icons.calendar_month),
+            _buildFilterRadio(FilterTime.month, 'This Month', Icons.date_range),
             _buildFilterRadio(
-                FilterStatus.month, 'This Month', Icons.date_range),
-            _buildFilterRadio(
-                FilterStatus.overDue, 'Overdue', Icons.warning_amber),
-            _buildFilterRadio(FilterStatus.done, 'Done', Icons.check_circle),
+                FilterTime.overDue, 'Overdue', Icons.warning_amber),
+            _buildFilterRadio(FilterTime.done, 'Done', Icons.check_circle),
           ],
         ),
       ),
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(selectedFilter);
-          },
-          child: Text(
-            'Apply',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
-          ),
-        ),
-        TextButton(
-          onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(
             'Cancel',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(color: _textColor),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildFilterRadio(FilterStatus filter, String label, IconData icon) {
-    return RadioListTile<FilterStatus>(
+  Widget _buildFilterRadio(FilterTime filter, String label, IconData icon) {
+    return RadioListTile<FilterTime>(
+      enableFeedback: true,
       title: Row(
         children: [
           Icon(
             icon,
-            color: Theme.of(context).colorScheme.primary,
+            color: _textColor,
           ),
           const SizedBox(width: 8),
           Text(
             label,
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            style: TextStyle(color: _textColor),
           ),
         ],
       ),
       value: filter,
       groupValue: selectedFilter,
+      activeColor: _textColor,
       onChanged: (value) {
         setState(() {
           selectedFilter = value!;
         });
+        Future.delayed(const Duration(milliseconds: 300));
+        Navigator.of(context).pop(selectedFilter);
       },
     );
   }
 }
 
 void showFilterDialog(BuildContext context,
-    {FilterStatus lastFilter = FilterStatus.all}) async {
-  final FilterStatus? selectedFilter = await showDialog<FilterStatus>(
+    {FilterTime lastFilter = FilterTime.all}) async {
+  final FilterTime? selectedFilter = await showDialog<FilterTime>(
     barrierDismissible: true,
     useSafeArea: true,
     context: context,
@@ -112,6 +121,6 @@ void showFilterDialog(BuildContext context,
 
   if (selectedFilter != null) {
     // ignore: use_build_context_synchronously
-    context.read<TodoBloc>().add(FilterTodos(filterStatus: selectedFilter));
+    context.read<SweetChoresNotesBloc>().add(FilterTimeEvent(selectedFilter));
   }
 }

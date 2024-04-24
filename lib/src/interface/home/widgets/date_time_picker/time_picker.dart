@@ -22,7 +22,7 @@ class _TimePickerState extends State<TimePicker> {
   }
 
   _timeSelected() {
-    context.read<TodoBloc>().add(const SaveRawDate(true));
+    context.read<SweetChoresNotesBloc>().add(const DateChoresEvent(true));
   }
 
   DateTime createDateTimeFromTime() {

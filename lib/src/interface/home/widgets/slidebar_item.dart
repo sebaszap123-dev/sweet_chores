@@ -48,8 +48,8 @@ class _SlidebarItemState extends State<SlidebarItem> {
             TextButton(
               onPressed: () {
                 context
-                    .read<CategoriesBloc>()
-                    .add(RemoveCategory(widget.category));
+                    .read<SweetChoresNotesBloc>()
+                    .add(RemoveCategoryEvent(widget.category));
                 context.router.pop();
               },
               child: const Text(

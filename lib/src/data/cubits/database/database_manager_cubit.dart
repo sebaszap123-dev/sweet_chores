@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sweet_chores/src/config/local/database_notes.dart';
 import 'package:sweet_chores/src/config/local/sweet_secure_preferences.dart';
 import 'package:sweet_chores/src/config/themes/theme_colors.dart';
+import 'package:sweet_chores/src/core/utils/sweet_chores_dialogs.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/models/models.dart';
@@ -35,7 +36,6 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
     return database;
   }
 
-  // TODO: CREATE OR ADD TO REPOSITORY AND IMPLEMENT THERE NOT HERE!!!!
   static Future<void> _autoDeleteTask(Database db) async {
     final isActive = await SweetSecurePreferences.isActiveAutoDelete;
     final timeLapse = await SweetSecurePreferences.nextDeleteDate;
@@ -92,7 +92,7 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
       await db.insert(
         DatabaseNotes.tbCategories,
         Categories(
-          name: 'to-do',
+          name: DatabaseNotes.defaultCategory,
           color: sweetIconColors[0],
           iconData: Icons.category_sharp,
         ).toJson(),
@@ -104,36 +104,74 @@ class DatabaseManagerCubit extends Cubit<DatabaseManagerState> {
 
   static Future<void> _databaseVersion2(Database db) async {}
 
-  Future<void> restoreBackup(String backup) async {
+  Future<void> onLogOut() async {
     final dbs = db;
+
     final batch = dbs.batch();
-    List<Todo> todos = [];
-    List<Categories> categories = [];
-    // Eliminar todos los registros existentes
-    batch.delete(DatabaseNotes.tbCategories);
+
     batch.delete(DatabaseNotes.tbNotes);
-
+    batch.delete(DatabaseNotes.tbCategories);
     await batch.commit();
+  }
 
-    // Decodificar el backup JSON
-    final Map<String, dynamic> backupData = convert.jsonDecode(backup);
+  Future<void> toDefaults() async {
+    await db.delete(DatabaseNotes.tbNotes);
+    await db.delete(DatabaseNotes.tbCategories);
+    final category = Categories(
+      name: DatabaseNotes.defaultCategory,
+      color: sweetIconColors[0],
+      iconData: Icons.category_sharp,
+    );
+    await db.insert(
+      DatabaseNotes.tbCategories,
+      category.toJson(),
+    );
+  }
 
-    // Insertar los nuevos registros
-    backupData.forEach((tableName, tableRecords) {
-      final data = convert.jsonDecode(tableRecords);
-      for (final record in data) {
-        batch.insert(tableName, record);
-        if (tableName == DatabaseNotes.tbNotes) {
-          todos.add(Todo.fromJson(record));
+  Future<bool> restoreBackup(String backup) async {
+    try {
+      final dbs = db;
+      final batch = dbs.batch();
+      backup;
+      List<Todo> todos = [];
+      List<Categories> categories = [];
+      // Decodificar el backup JSON
+      final Map<String, dynamic> backupData = convert.jsonDecode(backup);
+      backupData.forEach((key, value) {
+        // Comprueba si la clave es igual a la clave de notas de la base de datos
+        if (key == DatabaseNotes.tbNotes) {
+          // Si es así, convierte el valor JSON a un objeto Todo
+          for (var todo in value) {
+            todos.add(Todo.fromRawJson(todo));
+          }
         } else {
-          categories.add(Categories.fromJson(record));
+          for (var ca in value) {
+            categories.add(Categories.fromRawJson(ca));
+          }
+        }
+      });
+      // Eliminar todos los registros existentes
+      batch.delete(DatabaseNotes.tbCategories);
+      batch.delete(DatabaseNotes.tbNotes);
+
+      await batch.commit();
+      // Insertar los nuevos registros
+      if (todos.isNotEmpty) {
+        for (var todo in todos) {
+          batch.insert(DatabaseNotes.tbNotes, todo.toJson());
         }
       }
-    });
-    getIt<TodoBloc>().add(RestoreTodos(todos: todos));
-    getIt<CategoriesBloc>().add(RestoreCategoriesBackup(categories));
-    await batch.commit(continueOnError: false, noResult: true);
-
-    print('RESTORE BACKUP');
+      if (categories.isNotEmpty) {
+        for (var ca in categories) {
+          batch.insert(DatabaseNotes.tbCategories, ca.toJson());
+        }
+      }
+      await batch.commit(continueOnError: false, noResult: true);
+      getIt<SweetChoresNotesBloc>().add(RestoreChoresEvent(todos, categories));
+      return true;
+    } catch (e) {
+      SweetDialogs.databaseSqlite(error: '$e');
+      return false;
+    }
   }
 }
