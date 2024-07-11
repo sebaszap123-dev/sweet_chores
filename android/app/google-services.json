@@ -12,7 +12,20 @@
           "package_name": "com.starlight.sweet_chores"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "648705713770-gv538skots59f6mmp8calptimhq3aqui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.starlight.sweet_chores",
+            "certificate_hash": "a535c67656f9b67029519b776aba2061daf11989"
+          }
+        },
+        {
+          "client_id": "648705713770-dj6ijk2qc7jh1843q2q4ctastb3tvojf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCP0l9zHHB_d-tMT6Og3qZb8v5UYk9ofmM"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648705713770-dj6ijk2qc7jh1843q2q4ctastb3tvojf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "648705713770-ofjertunir46kotnrrrg4j88jhtmjfg8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.starlight.sweetChores"
+              }
+            }
+          ]
         }
       }
     }
