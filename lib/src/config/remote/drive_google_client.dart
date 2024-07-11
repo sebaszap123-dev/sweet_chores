@@ -152,7 +152,7 @@ class GoogleDriveClient {
             content: fileContent, parents: [folderId]);
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -174,7 +174,7 @@ class GoogleDriveClient {
       }
       return null;
     } catch (e) {
-      SweetDialogs.unhandleErros(error: "$e");
+      SweetDialogs.unhandledError(error: "$e");
       return null;
     }
   }
@@ -187,7 +187,7 @@ class GoogleDriveClient {
         await _deleteFileFromGoogleDrive(fileId);
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 

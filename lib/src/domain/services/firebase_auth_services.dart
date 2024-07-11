@@ -63,7 +63,7 @@ abstract class FirebaseAuthService {
         return false;
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
       return false;
     }
   }
@@ -136,7 +136,7 @@ abstract class FirebaseAuthService {
           info: 'Registration failed: ${e.message}',
           title: 'Oops! Cinnamon encountered an issue');
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -190,7 +190,7 @@ abstract class FirebaseAuthService {
           SweetDialogs.alertInfo(info: errorMessage, title: 'Error');
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: e.toString());
+      SweetDialogs.unhandledError(error: e.toString());
     }
   }
 
@@ -234,7 +234,7 @@ abstract class FirebaseAuthService {
           SweetDialogs.alertInfo(info: errorMessage, title: 'Error');
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: e.toString());
+      SweetDialogs.unhandledError(error: e.toString());
     }
     return false;
   }
@@ -249,7 +249,7 @@ abstract class FirebaseAuthService {
         SweetSecurePreferences.resetAllKeys();
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 

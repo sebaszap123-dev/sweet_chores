@@ -54,7 +54,7 @@ class SweetChoresNotesBloc
         todoStatus: TodoStatus.success,
       ));
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -87,7 +87,7 @@ class SweetChoresNotesBloc
 
       emit(state.copyWith(todoStatus: TodoStatus.success, todos: todos));
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -104,7 +104,7 @@ class SweetChoresNotesBloc
       todos.remove(event.todo);
       emit(state.copyWith(todos: todos, todoStatus: TodoStatus.success));
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -138,7 +138,7 @@ class SweetChoresNotesBloc
         emit(state.copyWith(todoStatus: TodoStatus.error));
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -176,7 +176,7 @@ class SweetChoresNotesBloc
         ));
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -194,7 +194,7 @@ class SweetChoresNotesBloc
           categories: temp, categoryStatus: CategoryStatus.success));
     } catch (e) {
       emit(state.copyWith(categoryStatus: CategoryStatus.error));
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -211,7 +211,7 @@ class SweetChoresNotesBloc
           categories: temp, categoryStatus: CategoryStatus.success));
     } catch (e) {
       emit(state.copyWith(categoryStatus: CategoryStatus.error));
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -233,7 +233,7 @@ class SweetChoresNotesBloc
       }
     } catch (e) {
       emit(state.copyWith(categoryStatus: CategoryStatus.error));
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 
@@ -248,7 +248,7 @@ class SweetChoresNotesBloc
           categoryStatus: CategoryStatus.success));
     } catch (e) {
       emit(state.copyWith(categoryStatus: CategoryStatus.error));
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
   }
 

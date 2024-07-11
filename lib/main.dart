@@ -8,6 +8,8 @@ import 'package:sweet_chores/src/config/router/sweet_router.dart';
 import 'package:sweet_chores/src/data/data_source.dart';
 import 'package:sweet_chores/src/data/servicelocator.dart';
 import 'package:sweet_chores/src/localization/app_localization.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 final globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
@@ -16,6 +18,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await serviceLocator();
+  if (kDebugMode) {
+    // Force disable Crashlytics collection while doing every day development.
+    // Temporarily toggle this to true if you want to test crash reporting in your app.
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
   Future.wait([
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

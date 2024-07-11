@@ -24,11 +24,11 @@ abstract class GoogleDriveService {
           token != null) {
         return await GoogleDriveClient.create(googleSignInAccount, token);
       } else {
-        SweetDialogs.unhandleErros(
+        SweetDialogs.unhandledError(
             error: "ups can't connect to your google drive account");
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: '$e');
+      SweetDialogs.unhandledError(error: '$e');
     }
     return null;
   }
@@ -48,7 +48,7 @@ abstract class GoogleDriveService {
         await client.uploadFile(dbBackup);
       }
     } catch (e) {
-      SweetDialogs.unhandleErros(error: e.toString());
+      SweetDialogs.unhandledError(error: e.toString());
     }
   }
 
@@ -62,7 +62,7 @@ abstract class GoogleDriveService {
             // Decodificar la cadena JSON a una lista de mapas
             return getIt<DatabaseManagerCubit>().restoreBackup(file);
           } catch (e) {
-            SweetDialogs.unhandleErros(error: e.toString());
+            SweetDialogs.unhandledError(error: e.toString());
             return false;
           }
         }

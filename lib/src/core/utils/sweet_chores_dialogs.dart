@@ -9,7 +9,7 @@ import 'package:sweet_chores/src/data/servicelocator.dart';
 
 abstract class SweetDialogs {
   static BuildContext? context = getIt<SweetRouterCubit>().getContext();
-  static unhandleErros({String? error}) {
+  static unhandledError({String? error}) {
     ArtSweetAlert.show(
       context: context!,
       artDialogArgs: ArtDialogArgs(
