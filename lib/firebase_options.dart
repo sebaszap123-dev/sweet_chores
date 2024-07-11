@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA33UO3y4KfmiP67FPqJX7vLmY3X8L8Mpw',
-    appId: '1:1013481572810:android:237c81a5375cbb96c3a733',
-    messagingSenderId: '1013481572810',
-    projectId: 'sweet-chores-ab84c',
-    storageBucket: 'sweet-chores-ab84c.appspot.com',
+    apiKey: 'AIzaSyCP0l9zHHB_d-tMT6Og3qZb8v5UYk9ofmM',
+    appId: '1:648705713770:android:21108ed652eb7978610c13',
+    messagingSenderId: '648705713770',
+    projectId: 'sweet-chores-1458a',
+    storageBucket: 'sweet-chores-1458a.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBrpKlyd10LAVzwCBIH9ReLINJGeUWFCYM',
-    appId: '1:1013481572810:ios:50404abc56115c61c3a733',
-    messagingSenderId: '1013481572810',
-    projectId: 'sweet-chores-ab84c',
-    storageBucket: 'sweet-chores-ab84c.appspot.com',
-    androidClientId: '1013481572810-0uk6ilc23trv4kpkuj4ucelq59gjnnhe.apps.googleusercontent.com',
-    iosClientId: '1013481572810-knnla7ifuvbpn1olmd52g6vgptrtvsmk.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBkwJqOHaemKM8ZguPvDEuLu0Jw-zPxJjw',
+    appId: '1:648705713770:ios:8b2675ad40be8053610c13',
+    messagingSenderId: '648705713770',
+    projectId: 'sweet-chores-1458a',
+    storageBucket: 'sweet-chores-1458a.appspot.com',
     iosBundleId: 'com.starlight.sweetChores',
   );
+
 }

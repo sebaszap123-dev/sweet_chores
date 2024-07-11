@@ -1,51 +1,26 @@
 {
   "project_info": {
-    "project_number": "1013481572810",
-    "project_id": "sweet-chores-ab84c",
-    "storage_bucket": "sweet-chores-ab84c.appspot.com"
+    "project_number": "648705713770",
+    "project_id": "sweet-chores-1458a",
+    "storage_bucket": "sweet-chores-1458a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1013481572810:android:237c81a5375cbb96c3a733",
+        "mobilesdk_app_id": "1:648705713770:android:21108ed652eb7978610c13",
         "android_client_info": {
           "package_name": "com.starlight.sweet_chores"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1013481572810-l193mifffadmrpci0jrlrc1ljqghiokf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.starlight.sweet_chores",
-            "certificate_hash": "65aa395b80cec4b4d21af015723ee5c6e707d3d2"
-          }
-        },
-        {
-          "client_id": "1013481572810-k813rord0anm63f6hgb37oflv5gicmib.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA33UO3y4KfmiP67FPqJX7vLmY3X8L8Mpw"
+          "current_key": "AIzaSyCP0l9zHHB_d-tMT6Og3qZb8v5UYk9ofmM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1013481572810-k813rord0anm63f6hgb37oflv5gicmib.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1013481572810-knnla7ifuvbpn1olmd52g6vgptrtvsmk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.starlight.sweetChores"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

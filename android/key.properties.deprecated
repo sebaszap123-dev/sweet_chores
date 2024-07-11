@@ -1,0 +1,4 @@
+storePassword=starlight
+keyPassword=starlight
+keyAlias=upload
+storeFile=../../keys/playstore-key.jks
